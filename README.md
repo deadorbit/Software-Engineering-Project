@@ -1,6 +1,6 @@
 # software_engineering_project
 
-A new Flutter project.
+This is example text for class
 
 ## Getting Started
 
