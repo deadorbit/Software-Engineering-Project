@@ -14,16 +14,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "text",
-      theme: ThemeData(
-        primaryColor: Colors.cyan,
-      ),
-      home: FavoritePage(),
-      routes: {
-        'browsing_page': (context) => const BrowsingPage(),
-        'history_page': (context) => const HistoryPage(),
-      },
-    );
+    
   }
 }
