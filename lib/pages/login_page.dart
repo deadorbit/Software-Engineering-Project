@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:software_engineering_project/main.dart'; // Assuming required
 import 'package:google_fonts/google_fonts.dart';
+import 'package:software_engineering_project/pages/landing_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -117,7 +119,17 @@ class _LoginPageState extends State<LoginPage> {
                                   child: const Text('Login'),
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {}, // To Do: other button logic
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.fade,
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        child: const LandingPage(),
+                                      ),
+                                    );
+                                  }, // To Do: other button logic
                                   child: const Text("Cancel"),
                                 ),
                               ],
