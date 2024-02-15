@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:software_engineering_project/main.dart'; // Assuming required
 import 'package:google_fonts/google_fonts.dart';
 import 'package:software_engineering_project/pages/landing_page.dart';
+import 'package:software_engineering_project/pages/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +22,45 @@ class _RegisterPageState extends State<RegisterPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+
+  void signUserUp() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+    try {
+      if (_passwordController.text == _confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+      } else {
+        wrongEmailMessage();
+      }
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/profile');
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      //Wrong Email
+      if (e.code == 'invalid-credential') {
+        wrongEmailMessage();
+      }
+    }
+  }
+
+  void wrongEmailMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text("Error handling information"),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   .spaceBetween, // Space buttons evenly
                               children: [
                                 ElevatedButton(
-                                  onPressed: () {}, // To Do: sign up logic
+                                  onPressed: signUserUp, // To Do: sign up logic
                                   child: const Text('Sign Up'),
                                 ),
                                 ElevatedButton(

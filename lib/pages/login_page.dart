@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:software_engineering_project/main.dart'; // Assuming required
@@ -18,6 +19,41 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  void signUserIn() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/profile');
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      //Wrong Email
+      if (e.code == 'invalid-credential') {
+        wrongEmailMessage();
+      }
+    }
+  }
+
+  void wrongEmailMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text("No User Found"),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                                   .spaceBetween, // Space buttons evenly
                               children: [
                                 ElevatedButton(
-                                  onPressed: () {}, // To Do: sign up logic
+                                  onPressed: signUserIn, // To Do: sign up logic
                                   child: const Text('Login'),
                                 ),
                                 ElevatedButton(
