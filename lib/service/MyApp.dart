@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'Pages/favorite_page.dart';
-import 'Pages/browsing_page.dart';
-import 'package:Pages/history_page.dart';
+import 'package:namer_app/pages/browsing_page.dart';
+import 'package:namer_app/pages/favorite_page.dart';
+import 'package:namer_app/pages/history_page.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

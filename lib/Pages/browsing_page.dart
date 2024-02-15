@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class BrowsingPage extends StatefulWidget {
   const BrowsingPage({super.key});

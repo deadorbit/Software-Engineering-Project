@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:namer_app/service/controller.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -8,25 +11,49 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+  final databaseController = DataBase_Controller();
+  String result = "Loading..."; // Initial state of the result
+  void getUsers() async {
+    String usersResult = await databaseController.getUsers();
+    setState(() {
+      result = usersResult; // Update the result with fetched data
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Favorite 1 Stock page"),
+        title: Center(child: Text("Saved Quotes", textAlign: TextAlign.center)),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "To browsing Page",
-            ),
-            ElevatedButton(
-                child: Text("Click me"),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('browsing_page');
-                })
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage("lib/images/background.png"),
+          fit: BoxFit.cover,
+        )),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "To browsing Page",
+              ),
+              ElevatedButton(
+                  child: Text("data"),
+                  onPressed: () {
+                    getUsers();
+                  }),
+              SizedBox(
+                height: 25,
+              ),
+              ElevatedButton(
+                  child: Text("browsing"),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('browsing_page');
+                  })
+            ],
+          ),
         ),
       ),
     );
