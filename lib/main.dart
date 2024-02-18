@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Pages/browsing_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -60,47 +61,47 @@ class _FavoritePageState extends State<FavoritePage> {
   }
 }
 
-class BrowsingPage extends StatefulWidget {
-  const BrowsingPage({super.key});
+// class BrowsingPage extends StatefulWidget {
+//   const BrowsingPage({super.key});
 
-  @override
-  State<BrowsingPage> createState() => _BrowsingPageState();
-}
+//   @override
+//   State<BrowsingPage> createState() => _BrowsingPageState();
+// }
 
-class _BrowsingPageState extends State<BrowsingPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text("browsing Stock Page"), automaticallyImplyLeading: false),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "To other pages",
-            ),
-            ElevatedButton(
-              child: Text("Back to fav"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            ElevatedButton(
-              child: Text("to history"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HistoryPage()),
-                );
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class _BrowsingPageState extends State<BrowsingPage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//           title: Text("browsing Stock Page"), automaticallyImplyLeading: false),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             Text(
+//               "To other pages",
+//             ),
+//             ElevatedButton(
+//               child: Text("Back to fav"),
+//               onPressed: () {
+//                 Navigator.pop(context);
+//               },
+//             ),
+//             ElevatedButton(
+//               child: Text("to history"),
+//               onPressed: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(builder: (context) => HistoryPage()),
+//                 );
+//               },
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
