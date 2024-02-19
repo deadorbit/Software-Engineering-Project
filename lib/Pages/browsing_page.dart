@@ -14,6 +14,7 @@ class BrowsingPage extends StatefulWidget {
 
 class _BrowsingPageState extends State<BrowsingPage> {
   List _stocks = [];
+  List _matches = [];
 
   Future<void> readJson() async {
     final String response =
@@ -34,13 +35,13 @@ class _BrowsingPageState extends State<BrowsingPage> {
     // Reads in JSON file used to display all stocks
     readJson();
 
-    // Extract stock names in new list
+    // Extracting the stock names into a new array
     List<String> stockNames = [];
     for (var stock in _stocks) {
       stockNames.add(stock['name']);
     }
 
-    // print(stockNames);
+    // print (stockNames);
 
     // Creating the query based on user input in the search box
     setState(() {
@@ -49,23 +50,30 @@ class _BrowsingPageState extends State<BrowsingPage> {
     });
   }
 
-  // // ----------------------------------------------------------------------------------------
-  // IN PROGRESS: Fuzzy search to display partial results during user input process 
-  Map<String, String> fuzzySearch(List stocks, String query) {
+  // -----------------------------------------------------------------------------
+  // IN PROGRESS: Fuzzy search to display partial results during user input process
+  void fuzzySearch(List stocks, String query) {
     final fuzzy = Fuzzy(stocks, options: FuzzyOptions(isCaseSensitive: false));
     final result = fuzzy.search(query);
-    
+
+    // TESTING PURPOSES: results of the function call
+    // print("The results are: $result");
+
     // For each item in the array, if the score is less than 0.01, print it
     // TODO: Alter the desired accuracy score as needed
     for (var item in result) {
-      if (item.score < 0.01) {
-        print(item.item);
-        return item.item ?? {"item": "No results"};
+      if (item.score < 0.2) {
+        if (!_matches.contains(item.item)) {
+          _matches.add(item.item);
+        }
+        print(_matches);
+
+        // TESTING PURPOSES: return of item.item
+        // return item.item;
       }
     }
-    return {"item": "No results"};
+    // return "No results";
   }
-  // ----------------------------------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +109,7 @@ class _BrowsingPageState extends State<BrowsingPage> {
                   ),
                 )),
           ),
-          _stocks.isEmpty
+          _matches.isEmpty
               ? Center(
                   child: Text(
                   'Heart a Stock to add it to Favourites Page',
@@ -110,14 +118,15 @@ class _BrowsingPageState extends State<BrowsingPage> {
                 ))
               : Expanded(
                   child: ListView.builder(
-                      // itemCount: _stocks.length,
-                      itemCount: fuzzySearch(_stocks, query).length,
+                      itemCount: _matches.length,
+                      // itemCount: fuzzySearch(_stocks, query).length,
                       itemBuilder: (context, index) {
                         return MyCard(
-                          stockName: fuzzySearch(_stocks, query),
-                          stockCode: fuzzySearch(_stocks, query),
+                          // stockName: fuzzySearch(_stocks, query),
+                          // stockCode: fuzzySearch(_stocks, query),
+                          stockName: _matches[index],
                           // stockName: _stocks[index]['name'],
-                          // stockCode: _stocks[index]['code'],
+                          stockCode: _stocks[index]['code'],
                         );
                       })),
         ],

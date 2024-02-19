@@ -6,9 +6,9 @@ class MyCard extends StatelessWidget {
 
   const MyCard({super.key, required this.stockName, required this.stockCode});
 
-  // void addToFavourites(String stockName) {
-  //   print(stockName + " was added to favourites");
-  // }
+  void addToFavourites(String stockName) {
+    print("$stockName was added to favourites");
+  }
 
   @override
   Widget build(BuildContext context) {
