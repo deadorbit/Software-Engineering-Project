@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:namer_app/service/controller.dart';
+import '../service/controller.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
