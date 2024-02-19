@@ -50,9 +50,10 @@ class _BrowsingPageState extends State<BrowsingPage> {
     });
   }
 
-  // -----------------------------------------------------------------------------
+  // // ----------------------------------------------------------------------------------------
   // IN PROGRESS: Fuzzy search to display partial results during user input process
   void fuzzySearch(List stocks, String query) {
+    var results = [];
     final fuzzy = Fuzzy(stocks, options: FuzzyOptions(isCaseSensitive: false));
     final result = fuzzy.search(query);
 
