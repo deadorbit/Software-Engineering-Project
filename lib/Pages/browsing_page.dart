@@ -51,7 +51,8 @@ class _BrowsingPageState extends State<BrowsingPage> {
 
   // // ----------------------------------------------------------------------------------------
   // IN PROGRESS: Fuzzy search to display partial results during user input process 
-  Map<String, String> fuzzySearch(List stocks, String query) {
+  void fuzzySearch(List stocks, String query) {
+    var results = [];
     final fuzzy = Fuzzy(stocks, options: FuzzyOptions(isCaseSensitive: false));
     final result = fuzzy.search(query);
     
@@ -59,11 +60,10 @@ class _BrowsingPageState extends State<BrowsingPage> {
     // TODO: Alter the desired accuracy score as needed
     for (var item in result) {
       if (item.score < 0.01) {
+        results.add(item.item);
         print(item.item);
-        return item.item ?? {"item": "No results"};
       }
     }
-    return {"item": "No results"};
   }
   // ----------------------------------------------------------------------------------------
 
@@ -110,14 +110,11 @@ class _BrowsingPageState extends State<BrowsingPage> {
                 ))
               : Expanded(
                   child: ListView.builder(
-                      // itemCount: _stocks.length,
-                      itemCount: fuzzySearch(_stocks, query).length,
+                      itemCount: _stocks.length,
                       itemBuilder: (context, index) {
                         return MyCard(
-                          stockName: fuzzySearch(_stocks, query),
-                          stockCode: fuzzySearch(_stocks, query),
-                          // stockName: _stocks[index]['name'],
-                          // stockCode: _stocks[index]['code'],
+                          stockName: _stocks[index]['name'],
+                          stockCode: _stocks[index]['code'],
                         );
                       })),
         ],
