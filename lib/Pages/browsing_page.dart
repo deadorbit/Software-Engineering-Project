@@ -41,7 +41,7 @@ class _BrowsingPageState extends State<BrowsingPage> {
         body: Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-        image: AssetImage('assets/images/background.png'),
+        image: AssetImage('lib/images/background.png'),
         fit: BoxFit.cover,
       )),
       child: Column(
