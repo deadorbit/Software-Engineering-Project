@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:software_engineering_project/main.dart';
 import '../service/controller.dart';
 import "package:firebase_auth/firebase_auth.dart";
 
