@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:software_engineering_project/main.dart';
 import '../service/controller.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -36,9 +37,6 @@ class _FavoritePageState extends State<FavoritePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "To browsing Page",
-              ),
               ElevatedButton(
                   child: Text("data"),
                   onPressed: () {
@@ -47,11 +45,6 @@ class _FavoritePageState extends State<FavoritePage> {
               SizedBox(
                 height: 25,
               ),
-              ElevatedButton(
-                  child: Text("browsing"),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('browsing_page');
-                  })
             ],
           ),
         ),
