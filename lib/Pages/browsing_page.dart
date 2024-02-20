@@ -21,8 +21,6 @@ class _BrowsingPageState extends State<BrowsingPage> {
     final data = await json.decode(response);
     setState(() {
       _stocks = data["stocks"];
-
-      print(_stocks);
     });
   }
 
