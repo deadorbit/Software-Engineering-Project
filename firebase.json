@@ -1,0 +1,24 @@
+{
+  "firestore": {
+<<<<<<< Updated upstream
+    "rules": "firestore.rules",
+=======
+    "rules": "\t",
+>>>>>>> Stashed changes
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

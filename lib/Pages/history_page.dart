@@ -18,23 +18,6 @@ class _HistoryPageState extends State<HistoryPage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "To other pages",
-            ),
-            ElevatedButton(
-                child: Text("To browsing"),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            ElevatedButton(
-                child: Text("To fav"),
-                onPressed: () {
-                  var nav = Navigator.of(context);
-                  nav.pop();
-                  nav.pop();
-                })
-          ],
         ),
       ),
     );
