@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:software_engineering_project/main.dart'; // Assuming required
+import 'package:software_engineering_project/Pages/authentification/login_page.dart';
+import 'package:software_engineering_project/Pages/authentification/register_page.dart';
+import 'package:software_engineering_project/components/background_container.dart';
+import 'package:software_engineering_project/main.dart';
 import 'package:google_fonts/google_fonts.dart';
+<<<<<<< Updated upstream:lib/pages/landing_page.dart
 import 'package:software_engineering_project/pages/login_page.dart';
 import 'package:software_engineering_project/pages/register_page.dart';
+=======
+>>>>>>> Stashed changes:lib/Pages/authentification/landing_page.dart
 
 void main() {
   runApp(const MyApp());
@@ -22,14 +28,7 @@ class _LandingPageState extends State<LandingPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          const BackgroundContainer(),
           SingleChildScrollView(
             child: SafeArea(
               child: Padding(

@@ -1,9 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:software_engineering_project/components/background_container.dart';
+import 'package:software_engineering_project/components/login_form.dart';
 import 'package:software_engineering_project/main.dart'; // Assuming required
 import 'package:google_fonts/google_fonts.dart';
+<<<<<<< Updated upstream:lib/pages/login_page.dart
 import 'package:software_engineering_project/pages/landing_page.dart';
+=======
+>>>>>>> Stashed changes:lib/Pages/authentification/login_page.dart
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +20,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+<<<<<<< Updated upstream:lib/pages/login_page.dart
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -54,20 +58,16 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
+=======
+  final _formKey = GlobalKey<FormState>();
+>>>>>>> Stashed changes:lib/Pages/authentification/login_page.dart
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          const BackgroundContainer(),
           SingleChildScrollView(
             child: SafeArea(
               child: Padding(
@@ -105,70 +105,9 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(
                                 height:
                                     30), // Add spacing between text and fields
-                            // ... your password fields and form content
-                            Column(
-                              children: [
-                                TextFormField(
-                                  controller: _emailController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Email',
-                                    prefixIcon: Icon(Icons.email),
-                                  ),
-                                  keyboardType: TextInputType.emailAddress,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your email';
-                                    } else if (!value.contains('@')) {
-                                      return 'Please enter a valid email address';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 16),
-                                const SizedBox(height: 16),
-                                TextFormField(
-                                  controller: _passwordController,
-                                  obscureText: true, // Hide password characters
-                                  decoration: const InputDecoration(
-                                    labelText: 'Password',
-                                    prefixIcon: Icon(Icons.lock),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your password';
-                                    } else if (value.length < 8) {
-                                      return 'Password must be at least 8 characters long';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 16),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .spaceBetween, // Space buttons evenly
-                              children: [
-                                ElevatedButton(
-                                  onPressed: signUserIn, // To Do: sign up logic
-                                  child: const Text('Login'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        type: PageTransitionType.fade,
-                                        duration:
-                                            const Duration(milliseconds: 500),
-                                        child: const LandingPage(),
-                                      ),
-                                    );
-                                  }, // To Do: other button logic
-                                  child: const Text("Cancel"),
-                                ),
-                              ],
+                            LoginForm(
+                              formKey:
+                                  _formKey, // Pass the signUserUp function here
                             ),
                           ],
                         ),
