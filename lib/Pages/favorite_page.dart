@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:software_engineering_project/main.dart';
 import '../service/controller.dart';
+import "package:firebase_auth/firebase_auth.dart";
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -12,6 +13,13 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+  final user = FirebaseAuth.instance.currentUser!;
+
+  void signUserOut(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, '/landing');
+  }
+
   final databaseController = DataBase_Controller();
   String result = "Loading..."; // Initial state of the result
   void getUsers() async {
@@ -25,6 +33,12 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => signUserOut(context), // Pass context here
+            icon: const Icon(Icons.logout),
+          ),
+        ],
         title: Center(child: Text("Saved Quotes", textAlign: TextAlign.center)),
       ),
       body: Container(
