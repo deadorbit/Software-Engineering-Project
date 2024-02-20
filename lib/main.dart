@@ -6,10 +6,8 @@ import 'package:software_engineering_project/Pages/history_page.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
 import 'Pages/authentification/landing_page.dart';
 import 'Pages/authentification/register_page.dart';
-import 'package:http/http.dart' as http;
 import 'package:software_engineering_project/Pages/authentification/auth_page.dart';
 import 'Pages/authentification/login_page.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {

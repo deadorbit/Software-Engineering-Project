@@ -1,9 +1,6 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "package:software_engineering_project/Pages/authentification/register_page.dart";
-import 'package:software_engineering_project/Pages/favorite_page.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
-import "package:software_engineering_project/main.dart";
 
 import "landing_page.dart";
 
