@@ -11,8 +11,15 @@ class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text("Learn Page", textAlign: TextAlign.center)),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/images/background.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        
       ),
     );
   }
