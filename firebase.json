@@ -1,10 +1,6 @@
 {
   "firestore": {
-<<<<<<< Updated upstream
     "rules": "firestore.rules",
-=======
-    "rules": "\t",
->>>>>>> Stashed changes
     "indexes": "firestore.indexes.json"
   },
   "hosting": {

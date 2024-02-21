@@ -7,7 +7,7 @@ class MyCard extends StatelessWidget {
   const MyCard({super.key, required this.stockName, required this.stockCode});
 
   void addToFavourites(String stockName) {
-    print(stockName + " was added to favourites");
+    print("$stockName was added to favourites");
   }
 
   @override
@@ -36,7 +36,7 @@ class MyCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  addToFavourites(stockName);
+                  // addToFavourites(stockName);
                 },
                 icon: Icon(Icons.star),
                 color: Color.fromARGB(255, 204, 136, 0),
