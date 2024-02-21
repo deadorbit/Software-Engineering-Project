@@ -1,145 +1,152 @@
 import 'package:flutter/material.dart';
-import 'Pages/browsing_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'service/firebase_options.dart';
+import 'service/MyApp.dart';
+import 'package:http/http.dart' as http;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  var apiKey = "LFZKJR58QXIC3JVG";
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "text",
+      debugShowCheckedModeBanner: false,
+      title: 'Bottom NavBar V2',
       theme: ThemeData(
-        primaryColor: Colors.cyan,
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: FavoritePage(),
+      home: MyHomePage(),
     );
   }
 }
 
-class FavoritePage extends StatefulWidget {
-  const FavoritePage({super.key});
-
+class MyHomePage extends StatefulWidget {
   @override
-  State<FavoritePage> createState() => _FavoritePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _FavoritePageState extends State<FavoritePage> {
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Favorite Stock page"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "To browsing Page",
+      backgroundColor: const Color.fromARGB(255, 227, 223, 223),
+      body: Stack(
+        children: [
+          Positioned(
+            bottom: 0,
+            left: 0,
+            child: Container(
+              width: size.width,
+              height: 80,
+              child: Stack(
+                children: [
+                  CustomPaint(
+                    size: Size(size.width, 80),
+                    painter: BNBCustomPainter(),
+                  ),
+                  Center(
+                    heightFactor: 0.6,
+                    child: FloatingActionButton(
+                      onPressed: () {},
+                      shape: CircleBorder(),
+                      backgroundColor: const Color.fromRGBO(204, 136, 0, 100),
+                      child: Icon(
+                        Icons.bookmark,
+                        color: const Color.fromRGBO(29, 74, 44, 100),
+                      ),
+                      elevation: 0.1,
+                    ),
+                  ),
+                  Container(
+                    width: size.width,
+                    height: 80,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.history),
+                          color: const Color.fromRGBO(204, 136, 0, 100),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.search),
+                          color: const Color.fromRGBO(204, 136, 0, 100),
+                          onPressed: () {},
+                        ),
+                        Container(
+                          width: size.width * 0.20,
+                        ),
+                        PopupMenuButton(
+                          color: const Color.fromRGBO(29, 74, 44, 100),
+                          itemBuilder: (context) => [
+                            _buildPopupMenuItem('History ', Icons.book),
+                            _buildPopupMenuItem(
+                                'Trade ', Icons.currency_exchange),
+                          ],
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.settings),
+                          color: const Color.fromRGBO(204, 136, 0, 100),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            ElevatedButton(
-                child: Text("Click me"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BrowsingPage()),
-                  );
-                })
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-// class BrowsingPage extends StatefulWidget {
-//   const BrowsingPage({super.key});
-
-//   @override
-//   State<BrowsingPage> createState() => _BrowsingPageState();
-// }
-
-// class _BrowsingPageState extends State<BrowsingPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//           title: Text("browsing Stock Page"), automaticallyImplyLeading: false),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(
-//               "To other pages",
-//             ),
-//             ElevatedButton(
-//               child: Text("Back to fav"),
-//               onPressed: () {
-//                 Navigator.pop(context);
-//               },
-//             ),
-//             ElevatedButton(
-//               child: Text("to history"),
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(builder: (context) => HistoryPage()),
-//                 );
-//               },
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
-
-  @override
-  State<HistoryPage> createState() => _HistoryPageState();
+PopupMenuItem _buildPopupMenuItem(String name, IconData iconData) {
+  return PopupMenuItem(
+    child: Row(
+      children: [
+        Icon(
+          iconData,
+          color: const Color.fromRGBO(204, 136, 0, 100),
+        ),
+        Text(name),
+      ],
+    ),
+  );
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class BNBCustomPainter extends CustomPainter {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Histroy tarde Page"),
-        automaticallyImplyLeading: false,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "To other pages",
-            ),
-            ElevatedButton(
-                child: Text("To browsing"),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            ElevatedButton(
-                child: Text("To fav"),
-                onPressed: () {
-                  var nav = Navigator.of(context);
-                  nav.pop();
-                  nav.pop();
-                })
-          ],
-        ),
-      ),
-    );
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = const Color.fromRGBO(29, 74, 44, 100)
+      ..style = PaintingStyle.fill;
+    Path path = Path()..moveTo(0, 20);
+    path.quadraticBezierTo(size.width * 0.20, 0, size.width * 0.35, 0);
+    path.quadraticBezierTo(size.width * 0.40, 0, size.width * 0.40, 20);
+    path.arcToPoint(Offset(size.width * 0.60, 20),
+        radius: Radius.circular(10.0), clockwise: false);
+    path.quadraticBezierTo(size.width * 0.60, 0, size.width * 0.65, 0);
+    path.quadraticBezierTo(size.width * 0.80, 0, size.width, 20);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    canvas.drawShadow(path, const Color.fromRGBO(204, 136, 0, 100), 5, true);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
