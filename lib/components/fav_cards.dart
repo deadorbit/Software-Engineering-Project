@@ -1,38 +1,69 @@
 import 'package:flutter/material.dart';
 
-class MyCard extends StatelessWidget {
+import '../service/controller.dart';
+
+class MyFavCard extends StatelessWidget {
   final String stockCode;
+  final double price;
+  final String userId;
 
-  const MyCard({super.key, required this.stockCode});
+  MyFavCard(
+      {super.key,
+      required this.stockCode,
+      required this.price,
+      required this.userId});
 
-  void openChart(String stockID) {}
-  void tarde(String stockID) {}
-  void unFav(String stockID) {}
+  final databaseController = DataBase_Controller();
+
+  void openChart() {}
+  void trade() {}
+  void unFav() async {
+    if (userId.isNotEmpty) {
+      await databaseController.deleteStock(userId, stockCode);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Color.fromARGB(255, 204, 136, 0),
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(8.0),
+      margin: EdgeInsets.symmetric(horizontal: 20.0), // Add horizontal margin
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Color.fromARGB(255, 204, 136, 0),
+          width: 2.0,
         ),
-        child: Row(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Column(
+        children: [
+          Row(
             textDirection: TextDirection.ltr,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(stockCode,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  )),
+              Expanded(
+                child: Text(stockCode,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('\$$price',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ],
+                ),
+              ),
               IconButton(
                 onPressed: () {
-                  openChart(stockCode);
+                  openChart();
                 },
                 icon: Icon(Icons.graphic_eq),
                 iconSize: 30,
@@ -40,7 +71,7 @@ class MyCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  tarde(stockCode);
+                  trade(); // Fixed typo from "tarde" to "trade"
                 },
                 icon: Icon(Icons.money),
                 iconSize: 30,
@@ -48,12 +79,16 @@ class MyCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  unFav(stockCode);
+                  unFav();
                 },
                 icon: Icon(Icons.heart_broken),
                 iconSize: 30,
                 color: Color.fromARGB(255, 222, 18, 18),
               ),
-            ]));
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
