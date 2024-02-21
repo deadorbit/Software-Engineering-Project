@@ -30,29 +30,19 @@ class _BrowsingPageState extends State<BrowsingPage> {
     });
   }
 
-  // String query = '';
-
   void onQueryChanged(String newQuery) {
-    // Reads in JSON file used to display all stocks
     readJson();
-    // final f = Fuse<String>(_stocks);
-    // Extracting the stock names into a new array
+
     List<String> stockNames = [];
     for (var stock in _stocks) {
       stockNames.add(stock['name']);
     }
 
-    // print (stockNames);
-
-    // Creating the query based on user input in the search box
     setState(() {
-      // query = newQuery;
       fuzzySearch(stockNames, newQuery);
     });
   }
 
-  // // ----------------------------------------------------------------------------------------
-  // IN PROGRESS: Fuzzy search to display partial results during user input process
   void fuzzySearch(List stocks, String query) {
     if (query.isEmpty) {
       _matches.clear();
@@ -60,7 +50,6 @@ class _BrowsingPageState extends State<BrowsingPage> {
     }
 
     double threshold = 0.5;
-    // var results = [];
     final fuzzy = Fuzzy(stocks,
         options: FuzzyOptions(
           isCaseSensitive: false,
@@ -71,10 +60,6 @@ class _BrowsingPageState extends State<BrowsingPage> {
 
     _matches.clear();
 
-    //print(fuzzy);
-    print("results are in the line after this");
-    print(result);
-    //print(query.length);
     if (query.length == 1) {
       threshold = 0.8;
     } else if (query.length < 4) {
@@ -82,13 +67,11 @@ class _BrowsingPageState extends State<BrowsingPage> {
     } else {
       threshold = .01;
     }
-    //print(threshold);
 
     // TESTING PURPOSES: areresults of the function call
     // print("The results : $result");
 
     // For each item in the array, if the score is less than 0.01, print it
-    // TODO: Alter the desired accuracy score as needed
     for (var item in result) {
       if (item.score <= threshold) {
         if (!_matches.contains(item.item)) {
@@ -101,7 +84,6 @@ class _BrowsingPageState extends State<BrowsingPage> {
         // return item.item;
       }
     }
-    // return "No results";
   }
 
   @override
