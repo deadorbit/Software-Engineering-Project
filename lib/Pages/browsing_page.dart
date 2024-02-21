@@ -147,7 +147,6 @@ class _BrowsingPageState extends State<BrowsingPage> {
               : Expanded(
                   child: ListView.builder(
                       itemCount: _matches.length,
-                      // itemCount: fuzzySearch(_stocks, query).length,
                       itemBuilder: (context, index) {
                         return MyCard(
                           stockName: _matches[index],
