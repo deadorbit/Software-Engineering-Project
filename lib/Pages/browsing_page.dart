@@ -14,7 +14,8 @@ class BrowsingPage extends StatefulWidget {
 
 class _BrowsingPageState extends State<BrowsingPage> {
   List _stocks = [];
-  List _matches = [];
+  List<String> _matches = [];
+  TextEditingController _queryController = TextEditingController();
 
   Future<void> readJson() async {
     final String response =
@@ -29,12 +30,12 @@ class _BrowsingPageState extends State<BrowsingPage> {
     });
   }
 
-  String query = '';
+  // String query = '';
 
   void onQueryChanged(String newQuery) {
     // Reads in JSON file used to display all stocks
     readJson();
-
+    // final f = Fuse<String>(_stocks);
     // Extracting the stock names into a new array
     List<String> stockNames = [];
     for (var stock in _stocks) {
@@ -45,28 +46,55 @@ class _BrowsingPageState extends State<BrowsingPage> {
 
     // Creating the query based on user input in the search box
     setState(() {
-      query = newQuery;
-      fuzzySearch(stockNames, query);
+      // query = newQuery;
+      fuzzySearch(stockNames, newQuery);
     });
   }
 
   // // ----------------------------------------------------------------------------------------
   // IN PROGRESS: Fuzzy search to display partial results during user input process
   void fuzzySearch(List stocks, String query) {
-    var results = [];
-    final fuzzy = Fuzzy(stocks, options: FuzzyOptions(isCaseSensitive: false));
+    if (query.isEmpty) {
+      _matches.clear();
+      return;
+    }
+
+    double threshold = 0.5;
+    // var results = [];
+    final fuzzy = Fuzzy(stocks,
+        options: FuzzyOptions(
+          isCaseSensitive: false,
+          findAllMatches: true,
+          matchAllTokens: true,
+        ));
     final result = fuzzy.search(query);
 
-    // TESTING PURPOSES: results of the function call
-    // print("The results are: $result");
+    _matches.clear();
+
+    //print(fuzzy);
+    print("results are in the line after this");
+    print(result);
+    //print(query.length);
+    if (query.length == 1) {
+      threshold = 0.8;
+    } else if (query.length < 4) {
+      threshold = 0.2;
+    } else {
+      threshold = .01;
+    }
+    //print(threshold);
+
+    // TESTING PURPOSES: areresults of the function call
+    // print("The results : $result");
 
     // For each item in the array, if the score is less than 0.01, print it
     // TODO: Alter the desired accuracy score as needed
     for (var item in result) {
-      if (item.score < 0.2) {
+      if (item.score <= threshold) {
         if (!_matches.contains(item.item)) {
           _matches.add(item.item);
         }
+        print("the matches are on the next line");
         print(_matches);
 
         // TESTING PURPOSES: return of item.item
@@ -90,6 +118,7 @@ class _BrowsingPageState extends State<BrowsingPage> {
           Container(
             padding: EdgeInsets.all(30),
             child: TextField(
+                controller: _queryController,
                 onChanged: onQueryChanged,
                 decoration: InputDecoration(
                   filled: true,
