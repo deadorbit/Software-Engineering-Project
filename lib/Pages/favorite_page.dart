@@ -43,6 +43,12 @@ class _FavoritePageState extends State<FavoritePage> {
     }
   }
 
+  void onUnFav(String stockCode) {
+    setState(() {
+      _stocks.removeWhere((stock) => stock.code == stockCode);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +79,7 @@ class _FavoritePageState extends State<FavoritePage> {
         child: _stocks.isEmpty
             ? Center(
                 child: Text(
-                  'Heart a Stock to add it to Favourites Page',
+                  'No saved quotes. Add some in the Browsing Page',
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: 'serif',
@@ -89,10 +95,13 @@ class _FavoritePageState extends State<FavoritePage> {
                         stockCode: _stocks[index].code,
                         price: _stocks[index].price,
                         userId: userId,
+                        onUnFav: () => setState(() {
+                          onUnFav(_stocks[index].code);
+                        }),
                       ),
                       SizedBox(
                         height: 10,
-                      )
+                      ),
                     ],
                   );
                 },

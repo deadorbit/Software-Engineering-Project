@@ -2,24 +2,34 @@ import 'package:flutter/material.dart';
 
 import '../service/controller.dart';
 
-class MyFavCard extends StatelessWidget {
+class MyFavCard extends StatefulWidget {
   final String stockCode;
   final double price;
   final String userId;
+  final VoidCallback onUnFav;
 
   MyFavCard(
       {super.key,
       required this.stockCode,
       required this.price,
-      required this.userId});
+      required this.userId,
+      required this.onUnFav});
 
+  @override
+  State<MyFavCard> createState() => _MyFavCardState();
+}
+
+class _MyFavCardState extends State<MyFavCard> {
   final databaseController = DataBase_Controller();
 
   void openChart() {}
+
   void trade() {}
+
   void unFav() async {
-    if (userId.isNotEmpty) {
-      await databaseController.deleteStock(userId, stockCode);
+    if (widget.userId.isNotEmpty) {
+      await databaseController.deleteStock(widget.userId, widget.stockCode);
+      widget.onUnFav();
     }
   }
 
@@ -43,7 +53,7 @@ class MyFavCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Text(stockCode,
+                child: Text(widget.stockCode,
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -53,7 +63,7 @@ class MyFavCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('\$$price',
+                    Text('\$${widget.price}',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -65,7 +75,7 @@ class MyFavCard extends StatelessWidget {
                 onPressed: () {
                   openChart();
                 },
-                icon: Icon(Icons.graphic_eq),
+                icon: Icon(Icons.add_chart),
                 iconSize: 30,
                 color: Color.fromARGB(255, 53, 239, 227),
               ),
@@ -73,7 +83,7 @@ class MyFavCard extends StatelessWidget {
                 onPressed: () {
                   trade(); // Fixed typo from "tarde" to "trade"
                 },
-                icon: Icon(Icons.money),
+                icon: Icon(Icons.account_balance_wallet),
                 iconSize: 30,
                 color: Color.fromARGB(255, 251, 255, 0),
               ),
