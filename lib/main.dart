@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineering_project/pages/auth_page.dart';
-import 'package:software_engineering_project/pages/profile_page.dart';
-import 'pages/register_page.dart';
-import 'pages/login_page.dart';
-import 'pages/landing_page.dart';
+import 'package:software_engineering_project/pages/authentification/landing_page.dart';
+import 'package:software_engineering_project/pages/authentification/login_page.dart';
+import 'package:software_engineering_project/pages/authentification/profile_page.dart';
+import 'package:software_engineering_project/pages/authentification/register_page.dart';
+import 'package:software_engineering_project/pages/authentification/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
