@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineering_project/components/background_container.dart';
-import 'package:software_engineering_project/components/registration_form.dart';
+import 'package:software_engineering_project/components/auth/registration_form.dart';
 import 'package:software_engineering_project/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
