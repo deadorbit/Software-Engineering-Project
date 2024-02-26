@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/my_card.dart';
 import 'package:fuzzy/fuzzy.dart';
+import '../service/controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BrowsingPage extends StatefulWidget {
   const BrowsingPage({super.key});
@@ -18,6 +20,32 @@ class _BrowsingPageState extends State<BrowsingPage> {
   final List<String> _matchedCodes = [];
 
   final TextEditingController _queryController = TextEditingController();
+
+  String userID = '';
+  List _currentFav = [];
+  final db = DataBase_Controller();
+
+  @override
+  void initState() {
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      setState(() {
+        userID = user.uid;
+      });
+      getCurrentFav();
+    }
+  }
+
+  void getCurrentFav() async {
+    if (userID.isNotEmpty) {
+      _currentFav = await db.getUserStocksByCustomId(userID);
+      setState(() {});
+    }
+  }
+
+  void addToFavourites(String stockName, String stockCode) {}
 
   Future<void> readJson() async {
     final String response =
@@ -106,7 +134,7 @@ class _BrowsingPageState extends State<BrowsingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(
         image: AssetImage('lib/images/background.png'),
         fit: BoxFit.cover,
@@ -114,31 +142,31 @@ class _BrowsingPageState extends State<BrowsingPage> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(30),
+            padding: const EdgeInsets.all(30),
             child: TextField(
                 controller: _queryController,
                 onChanged: onQueryChanged,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color.fromARGB(255, 255, 255, 255),
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
                   hintText: 'Search',
-                  hintStyle:
-                      TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  hintStyle: const TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255)),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         width: 2,
                         style: BorderStyle.solid,
                         color: Color.fromARGB(255, 204, 136, 0),
                       )),
-                  suffixIcon: Icon(
+                  suffixIcon: const Icon(
                     Icons.search,
                     color: Color.fromARGB(255, 204, 136, 0),
                   ),
                 )),
           ),
           _matches.isEmpty
-              ? Center(
+              ? const Center(
                   child: Text(
                   'Heart a Stock to add it to Favourites Page',
                   style: TextStyle(
@@ -149,6 +177,7 @@ class _BrowsingPageState extends State<BrowsingPage> {
                       itemCount: _matches.length,
                       itemBuilder: (context, index) {
                         return MyCard(
+                          userID: userID,
                           stockName: _matches[index],
                           stockCode: _matchedCodes[index],
                         );
