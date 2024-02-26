@@ -20,7 +20,8 @@ class _MyCardState extends State<MyCard> {
   final db = DataBase_Controller();
   bool _isFavorited = false;
   void addToFavourites(String stockName, String stockCode) async {
-    print(stockName + " was added to favourites");
+    //TESTING PURPOSES: make sure that the function is getting the stock name correct, and is working properly
+    //print(stockName + " was added to favourites");
     if (widget.userID.isNotEmpty) {
       await db.addAStock(widget.userID, stockName, stockCode);
     }

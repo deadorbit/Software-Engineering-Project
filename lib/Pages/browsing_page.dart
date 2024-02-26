@@ -117,7 +117,9 @@ class _BrowsingPageState extends State<BrowsingPage> {
           if (_matches.contains(stock['name']) &&
               !_matchedCodes.contains(stock['code'])) {
             _matchedCodes.add(stock['code']);
-            print(_matchedCodes);
+
+            //TESTING PURPOSES: check if the codes are being matched correctly with stocks currently being searched
+            // print(_matchedCodes);
           }
         }
 

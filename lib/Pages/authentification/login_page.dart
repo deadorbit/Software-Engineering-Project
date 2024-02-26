@@ -5,6 +5,7 @@ import 'package:software_engineering_project/main.dart'; // Assuming required
 import 'package:google_fonts/google_fonts.dart';
 
 import 'landing_page.dart';
+import '../favorite_page.dart';
 
 void main() {
   runApp(const MyApp());
