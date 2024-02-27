@@ -5,7 +5,6 @@ import '../models/stock_model.dart';
 class DataBase_Controller {
   //final String uid;
   DataBase_Controller();
-
   List<Stock> favStocks = [];
 
   // final CollectionReference favouritesCollection = FirebaseFirestore.instance
@@ -34,8 +33,7 @@ class DataBase_Controller {
             .get();
 
         for (var doc in stocksQuerySnapshot.docs) {
-          favStocks.add(
-              Stock(name: doc["name"], code: doc["code"]));
+          favStocks.add(Stock(name: doc["name"], code: doc["code"]));
         }
         return favStocks;
       } else {
