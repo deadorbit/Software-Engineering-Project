@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:software_engineering_project/Pages/authentification/landing_page.dart';
 import 'package:software_engineering_project/components/auth/passwordfield.dart';
+import 'package:software_engineering_project/models/user_model.dart';
 
 class RegistrationForm extends StatefulWidget {
   final GlobalKey<FormState> formKey; // Pass the form key from the parent page
@@ -22,6 +24,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final firestore = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   void signUserUp() async {
     showDialog(
@@ -36,12 +40,35 @@ class _RegistrationFormState extends State<RegistrationForm> {
           email: _emailController.text,
           password: _passwordController.text,
         );
+      createUserData();
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/nav');
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       authError(context, e);
     }
+  }
+
+  void createUserData() async{
+    final User? user = auth.currentUser;
+    final usersCollection = firestore.collection('Users');
+    String uid = "";
+    String email = "";
+    String? name = _usernameController.text;
+
+    if (user != null) {
+      uid = user.uid;
+      email = user.email!; // Assuming email is not null
+
+      UserModel userData = UserModel(
+        uid: uid,
+        name: name,
+        email: email, 
+      );
+      userData.createUser(usersCollection);
+    } 
+
+    Navigator.pop(context);// end loading icon
   }
 
   // ... other methods for handling form input, validation, and submission
