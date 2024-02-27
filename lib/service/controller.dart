@@ -3,8 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/stock_model.dart';
 
 class DataBase_Controller {
+  //final String uid;
   DataBase_Controller();
+
   List<Stock> favStocks = [];
+
+  // final CollectionReference favouritesCollection = FirebaseFirestore.instance
+  //     .collection('Users')
+  //     .doc()
+  //     .collection('FavStocks');
 
   Future<List<Stock>> getUserStocksByCustomId(String customUserId) async {
     try {
@@ -37,6 +44,29 @@ class DataBase_Controller {
     } catch (e) {
       print(e);
       return favStocks;
+    }
+  }
+
+  Future<void> addAStock(String userID, String name, String code) async {
+    try {
+      QuerySnapshot user = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('userId', isEqualTo: userID)
+          .get();
+
+      var userId = user.docs.first.id;
+
+      CollectionReference favouritesCollection = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .collection('FavStocks');
+
+      favouritesCollection.add({
+        'name': name,
+        'code': code,
+      });
+    } catch (err) {
+      print(err);
     }
   }
 
