@@ -28,7 +28,7 @@ class DataBase_Controller {
 
         for (var doc in stocksQuerySnapshot.docs) {
           favStocks.add(
-              Stock(name: doc["name"], code: doc["code"], price: doc["price"]));
+              Stock(name: doc["name"], code: doc["code"]));
         }
         return favStocks;
       } else {

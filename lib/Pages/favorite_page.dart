@@ -13,6 +13,7 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   String userId = ""; // Initialize as empty string
+  double _stockPrice = 9.00;
 
   @override
   void initState() {
@@ -93,7 +94,7 @@ class _FavoritePageState extends State<FavoritePage> {
                     children: [
                       MyFavCard(
                         stockCode: _stocks[index].code,
-                        price: _stocks[index].price,
+                        price: _stockPrice,
                         userId: userId,
                         onUnFav: () => setState(() {
                           onUnFav(_stocks[index].code);

@@ -16,9 +16,7 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
 
-
-
-  final List<Widget> _pages = [
+  /*final List<Widget> _pages = [
     Navigator(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(builder: (context) => FavoritePage());
@@ -44,11 +42,7 @@ class _NavBarState extends State<NavBar> {
         return MaterialPageRoute(builder: (context) => TradinPage());
       },
     ),
-    
-  ];
-
-
-
+  ]; */
 
   void _navigateBottomBar(int index) {
     setState(() {
@@ -56,12 +50,12 @@ class _NavBarState extends State<NavBar> {
     });
   }
 
-  /*final List<Widget> _pages = [
+  final List<Widget> _pages = [
     FavoritePage(),
     BrowsingPage(),
     HistoryPage(),
     LearnPage(),
-  ]; */
+  ];
 
   @override
   Widget build(BuildContext context) {
