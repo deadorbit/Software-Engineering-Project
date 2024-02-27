@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../components/fav_cards.dart';
+import '../models/stock_model.dart';
 import '../service/controller.dart';
 import "package:firebase_auth/firebase_auth.dart";
 
@@ -10,7 +12,19 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  final user = FirebaseAuth.instance.currentUser!;
+  String userId = ""; // Initialize as empty string
+
+  @override
+  void initState() {
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        userId = user.uid; // Assign userId if user is logged in
+      });
+    }
+    getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
+  }
 
   void signUserOut(BuildContext context) {
     FirebaseAuth.instance.signOut();
@@ -19,10 +33,19 @@ class _FavoritePageState extends State<FavoritePage> {
 
   final databaseController = DataBase_Controller();
   String result = "Loading..."; // Initial state of the result
+  List<Stock> _stocks = [];
   void getUsers() async {
-    String usersResult = await databaseController.getUsers();
+    if (userId.isNotEmpty) {
+      _stocks = await databaseController.getUserStocksByCustomId(userId);
+      setState(() {
+        // Update UI after fetching stocks
+      });
+    }
+  }
+
+  void onUnFav(String stockCode) {
     setState(() {
-      result = usersResult; // Update the result with fetched data
+      _stocks.removeWhere((stock) => stock.code == stockCode);
     });
   }
 
@@ -30,35 +53,59 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () => signUserOut(context), // Pass context here
+            onPressed: () => signUserOut(context),
             icon: const Icon(Icons.logout),
           ),
         ],
-        title: Center(child: Text("Saved Quotes", textAlign: TextAlign.center)),
+        title: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Text("Saved Quotes"),
+            ),
+          ],
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage("lib/images/background.png"),
-          fit: BoxFit.cover,
-        )),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                  child: Text("data"),
-                  onPressed: () {
-                    getUsers();
-                  }),
-              SizedBox(
-                height: 25,
-              ),
-            ],
+          image: DecorationImage(
+            image: AssetImage("lib/images/background.png"),
+            fit: BoxFit.cover,
           ),
         ),
+        child: _stocks.isEmpty
+            ? Center(
+                child: Text(
+                  'No saved quotes. Add some in the Browsing Page',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'serif',
+                  ),
+                ),
+              )
+            : ListView.builder(
+                itemCount: _stocks.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      MyFavCard(
+                        stockCode: _stocks[index].code,
+                        price: _stocks[index].price,
+                        userId: userId,
+                        onUnFav: () => setState(() {
+                          onUnFav(_stocks[index].code);
+                        }),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  );
+                },
+              ),
       ),
     );
   }

@@ -1,16 +1,11 @@
 class Stock {
   final String name;
   final String code;
+  final double price;
 
   Stock({
     required this.name,
     required this.code,
+    required this.price,
   });
-
-  factory Stock.fromJson(Map<String, dynamic> json) {
-    return Stock(
-      name: json[0]['name'],
-      code: json[0]['code'],
-    );
-  }
 }

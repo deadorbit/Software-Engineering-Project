@@ -14,6 +14,13 @@ class AuthPage extends StatelessWidget {
           builder: (context, snapshot) {
             // user is logged in
             if (snapshot.hasData) {
+              //TO DO: assign user to userModel and save it across app
+              //final firestore = FirebaseFirestore.instance;
+              //final FirebaseAuth auth = FirebaseAuth.instance;
+              //final User? user = auth.currentUser;
+              //final usersCollection = firestore.collection('Users');
+              //final tempUser = UserModel.fromUid(uid: user!.uid);
+
               return const NavBar();
             } else {
               return const LandingPage();
