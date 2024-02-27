@@ -36,11 +36,7 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text,
       );
       Navigator.pop(context);
-<<<<<<< HEAD
       Navigator.pushReplacementNamed(context, '/nav');
-=======
-      Navigator.pushReplacementNamed(context, '/favorite_page');
->>>>>>> 516646706ace5e30ed1e8429f24cd9741629431d
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       //Wrong Email
