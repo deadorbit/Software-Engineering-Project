@@ -1,7 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:software_engineering_project/Pages/authentification/landing_page.dart";
-import "package:software_engineering_project/Pages/authentification/profile_page.dart";
+import "package:software_engineering_project/service/nav_bar.dart";
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -14,7 +14,7 @@ class AuthPage extends StatelessWidget {
           builder: (context, snapshot) {
             // user is logged in
             if (snapshot.hasData) {
-              return ProfilePage();
+              return const NavBar();
             } else {
               return const LandingPage();
             }
