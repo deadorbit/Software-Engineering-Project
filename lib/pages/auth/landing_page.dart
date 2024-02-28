@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:software_engineering_project/Pages/authentification/login_page.dart';
-import 'package:software_engineering_project/Pages/authentification/register_page.dart';
+import 'package:software_engineering_project/Pages/auth/login_page.dart';
+import 'package:software_engineering_project/Pages/auth/register_page.dart';
 import 'package:software_engineering_project/components/background_container.dart';
 import 'package:software_engineering_project/main.dart';
 import 'package:google_fonts/google_fonts.dart';
