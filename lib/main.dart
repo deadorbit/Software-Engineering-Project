@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:software_engineering_project/Pages/authentification/profile_page.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
 import 'Pages/authentification/auth_page.dart';
 import 'Pages/authentification/landing_page.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/browsing': (context) => const BrowsingPage(),
         '/history': (context) => const HistoryPage(),
         '/nav': (context) => const NavBar(),
+        '/profile': (context) => ProfilePage(),
       },
     );
   }

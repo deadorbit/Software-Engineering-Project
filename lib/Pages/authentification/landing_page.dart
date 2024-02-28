@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:software_engineering_project/main.dart'; // Assuming required
+import 'package:software_engineering_project/Pages/authentification/login_page.dart';
+import 'package:software_engineering_project/Pages/authentification/register_page.dart';
+import 'package:software_engineering_project/components/background_container.dart';
+import 'package:software_engineering_project/main.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'login_page.dart';
-import 'register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,14 +23,7 @@ class _LandingPageState extends State<LandingPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('lib/images/background.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          const BackgroundContainer(),
           SingleChildScrollView(
             child: SafeArea(
               child: Padding(

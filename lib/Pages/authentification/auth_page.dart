@@ -1,6 +1,8 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:software_engineering_project/Pages/authentification/landing_page.dart";
+
+
 import "package:software_engineering_project/service/nav_bar.dart";
 
 class AuthPage extends StatelessWidget {
@@ -14,7 +16,7 @@ class AuthPage extends StatelessWidget {
           builder: (context, snapshot) {
             // user is logged in
             if (snapshot.hasData) {
-              return NavBar();
+
               //TO DO: assign user to userModel and save it across app
               //final firestore = FirebaseFirestore.instance;
               //final FirebaseAuth auth = FirebaseAuth.instance;
@@ -24,7 +26,7 @@ class AuthPage extends StatelessWidget {
 
               return const NavBar();
             } else {
-              return LandingPage();
+              return const LandingPage();
             }
             //user is not logged in
           }),
