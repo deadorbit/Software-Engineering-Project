@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:software_engineering_project/Pages/authentification/landing_page.dart';
+import 'package:software_engineering_project/components/auth/error_dialog.dart';
 
 class LoginForm extends StatefulWidget {
   final GlobalKey<FormState> formKey; // Pass the form key from the parent page
@@ -150,35 +151,10 @@ class _LoginFormState extends State<LoginForm> {
     }
 
   //Create Alert Dialog
-    // Create a visually appealing dialog
     showDialog(
       context: context,
-      barrierDismissible: true, // Allow user to dismiss by tapping outside
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)), // Rounded corners
-        title: const Text(
-          "Error",
-          style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
-        ),
-        content: Text(errorMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            ),
-            child: const Text("OK"),
-          ),
-          if (error.code == "invalid-email" || error.code == "wrong-password")
-            TextButton(
-              onPressed: () => Navigator.of(context).pushNamed('/login'), // Replace with your login route
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
-              ),
-              child: const Text("Go to Login"),
-            ),
-        ],
-      ),
+      barrierDismissible: true,
+      builder: (context) => ErrorDialog(errorMessage: errorMessage),
     );
   }
 }
