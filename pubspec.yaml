@@ -35,13 +35,6 @@ dependencies:
   http: ^1.2.0
   firebase_core: ^2.25.2
   cloud_firestore: ^4.15.4
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-  
->>>>>>> ef34a19533818c0f09f6effe94e6cfd34b7c9eb0
->>>>>>> Joshua
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -72,14 +65,5 @@ flutter:
     # - images/lambda.jpg
     - assets/images/background.png
     - assets/data/stocks.json
-<<<<<<< HEAD
     - assets/data/prices.json
     - lib/images/background.png
-=======
-<<<<<<< HEAD
-    - assets/data/prices.json
-    - lib/images/background.png
-=======
-    - lib/images/background.png
->>>>>>> ef34a19533818c0f09f6effe94e6cfd34b7c9eb0
->>>>>>> Joshua

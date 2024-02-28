@@ -60,7 +60,7 @@ class _FavoritePageState extends State<FavoritePage> {
             icon: const Icon(Icons.logout),
           ),
         ],
-        title: Stack(
+        title: const Stack(
           children: <Widget>[
             Align(
               alignment: Alignment.center,
@@ -70,14 +70,14 @@ class _FavoritePageState extends State<FavoritePage> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("lib/images/background.png"),
             fit: BoxFit.cover,
           ),
         ),
         child: _stocks.isEmpty
-            ? Center(
+            ? const Center(
                 child: Text(
                   'No saved quotes. Add some in the Browsing Page',
                   style: TextStyle(
@@ -93,13 +93,14 @@ class _FavoritePageState extends State<FavoritePage> {
                     children: [
                       MyFavCard(
                         stockCode: _stocks[index].code,
-                        price: _stocks[index].price,
+                        // price: _stocks[index].price,
+                        price: "12.99",
                         userId: userId,
                         onUnFav: () => setState(() {
                           onUnFav(_stocks[index].code);
                         }),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
