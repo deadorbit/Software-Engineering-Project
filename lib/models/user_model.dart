@@ -19,13 +19,13 @@ class UserModel {
 
   //Convert this to json format (probably to send to firestore)
   Map<String, dynamic> toJson() => {
-    'uid': uid,
+    'userId': uid,
     'name': name,
     'email': email,
   };
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    uid: json['uid'] as String,
+    uid: json['userId'] as String,
     name: json['name'] as String,
     email: json['email'] as String,
   );

@@ -1,23 +1,43 @@
 import 'package:flutter/material.dart';
+import '../service/controller.dart';
 
-class MyCard extends StatelessWidget {
+class MyCard extends StatefulWidget {
+  final String userID;
   final String stockName;
   final String stockCode;
 
-  const MyCard({super.key, required this.stockName, required this.stockCode});
+  const MyCard(
+      {super.key,
+      required this.userID,
+      required this.stockName,
+      required this.stockCode});
 
-  void addToFavourites(String stockName) {
-    print(stockName + " was added to favourites");
+  @override
+  State<MyCard> createState() => _MyCardState();
+}
+
+class _MyCardState extends State<MyCard> {
+  final db = DataBase_Controller();
+  bool _isFavorited = false;
+  void addToFavourites(String stockName, String stockCode) async {
+    //TESTING PURPOSES: make sure that the function is getting the stock name correct, and is working properly
+    //print(stockName + " was added to favourites");
+    if (widget.userID.isNotEmpty) {
+      await db.addAStock(widget.userID, stockName, stockCode);
+    }
+    setState(() {
+      _isFavorited = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color: Color.fromARGB(255, 204, 136, 0),
+            color: const Color.fromARGB(255, 204, 136, 0),
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(8.0),
@@ -26,20 +46,22 @@ class MyCard extends StatelessWidget {
             textDirection: TextDirection.ltr,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(stockName,
-                  style: TextStyle(
+              Text(widget.stockName,
+                  style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                   )),
               Text(
-                stockCode,
+                widget.stockCode,
               ),
               IconButton(
                 onPressed: () {
-                  addToFavourites(stockName);
+                  addToFavourites(widget.stockName, widget.stockCode);
                 },
-                icon: Icon(Icons.star),
-                color: Color.fromARGB(255, 204, 136, 0),
+                icon: (_isFavorited
+                    ? const Icon(Icons.star)
+                    : const Icon(Icons.star_border_outlined)),
+                color: const Color.fromARGB(255, 204, 136, 0),
               )
             ]));
   }
