@@ -66,4 +66,3 @@ flutter:
     - assets/images/background.png
     - assets/data/stocks.json
     - assets/data/prices.json
-    - lib/images/background.png
