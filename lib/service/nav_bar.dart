@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineering_project/Pages/browsing_page.dart';
-import 'package:software_engineering_project/Pages/favorite_page.dart';
-import 'package:software_engineering_project/Pages/history_page.dart';
-import 'package:software_engineering_project/Pages/learn_page.dart';
+import 'package:software_engineering_project/pages/browsing_page.dart';
+import 'package:software_engineering_project/pages/favorite_page.dart';
+import 'package:software_engineering_project/pages/history_page.dart';
+import 'package:software_engineering_project/pages/learn_page.dart';
 
-import '../Pages/trading_page.dart';
+import '../pages/trading_page.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
