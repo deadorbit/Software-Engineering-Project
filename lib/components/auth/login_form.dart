@@ -3,7 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:software_engineering_project/Pages/authentification/landing_page.dart';
+import 'package:software_engineering_project/pages/auth/landing_page.dart';
+import 'package:software_engineering_project/components/auth/error_dialog.dart';
 
 class LoginForm extends StatefulWidget {
   final GlobalKey<FormState> formKey; // Pass the form key from the parent page
@@ -123,18 +124,15 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> authError(BuildContext context, FirebaseException error) async {
-    print(error.code);
     // Create a user-friendly error message based on the error code
     String errorMessage = "";
     switch (error.code) {
       case "invalid-email":
         errorMessage = "Please enter a valid email address.";
         break;
-      case "weak-password":
-        errorMessage = "Your password is too weak. Please create a stronger password.";
-        break;
       case "email-already-in-use":
-        errorMessage = "The email address is already in use by another account.";
+        errorMessage =
+            "The email address is already in use by another account.";
         break;
       case "user-not-found":
         errorMessage = "The email address could not be found.";
@@ -143,42 +141,19 @@ class _LoginFormState extends State<LoginForm> {
         errorMessage = "Invalid email or password combination.";
         break;
       case "too-many-requests":
-        errorMessage = "Too many requests have been made to the server. Please try again later.";
+        errorMessage =
+            "Too many requests have been made to the server. Please try again later.";
         break;
       default:
-        errorMessage = "An error occurred during authentication. Please try again later.";
+        errorMessage =
+            "An error occurred during authentication. Please try again later.";
     }
 
-  //Create Alert Dialog
-    // Create a visually appealing dialog
+    //Create Alert Dialog
     showDialog(
       context: context,
-      barrierDismissible: true, // Allow user to dismiss by tapping outside
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)), // Rounded corners
-        title: const Text(
-          "Error",
-          style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
-        ),
-        content: Text(errorMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            ),
-            child: const Text("OK"),
-          ),
-          if (error.code == "invalid-email" || error.code == "wrong-password")
-            TextButton(
-              onPressed: () => Navigator.of(context).pushNamed('/login'), // Replace with your login route
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
-              ),
-              child: const Text("Go to Login"),
-            ),
-        ],
-      ),
+      barrierDismissible: true,
+      builder: (context) => ErrorDialog(errorMessage: errorMessage),
     );
   }
 }

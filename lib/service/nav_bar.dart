@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineering_project/Pages/browsing_page.dart';
-import 'package:software_engineering_project/Pages/favorite_page.dart';
-import 'package:software_engineering_project/Pages/history_page.dart';
-import 'package:software_engineering_project/Pages/learn_page.dart';
+import 'package:software_engineering_project/pages/browsing_page.dart';
+import 'package:software_engineering_project/pages/favorite_page.dart';
+import 'package:software_engineering_project/pages/history_page.dart';
+import 'package:software_engineering_project/pages/learn_page.dart';
+
+import '../pages/trading_page.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -13,6 +15,34 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
+
+  /*final List<Widget> _pages = [
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => FavoritePage());
+      },
+    ),
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => BrowsingPage());
+      },
+    ),
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => HistoryPage());
+      },
+    ),
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => LearnPage());
+      },
+    ),
+    Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => TradinPage());
+      },
+    ),
+  ]; */
 
   void _navigateBottomBar(int index) {
     setState(() {
