@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/my_card.dart';
 import 'package:fuzzy/fuzzy.dart';
-import '../service/controller.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class BrowsingPage extends StatefulWidget {
   const BrowsingPage({super.key});
@@ -20,32 +18,6 @@ class _BrowsingPageState extends State<BrowsingPage> {
   final List<String> _matchedCodes = [];
 
   final TextEditingController _queryController = TextEditingController();
-
-  String userID = '';
-  List _currentFav = [];
-  final db = DataBase_Controller();
-
-  @override
-  void initState() {
-    super.initState();
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      setState(() {
-        userID = user.uid;
-      });
-      getCurrentFav();
-    }
-  }
-
-  void getCurrentFav() async {
-    if (userID.isNotEmpty) {
-      _currentFav = await db.getUserStocksByCustomId(userID);
-      setState(() {});
-    }
-  }
-
-  void addToFavourites(String stockName, String stockCode) {}
 
   Future<void> readJson() async {
     final String response =
@@ -117,9 +89,7 @@ class _BrowsingPageState extends State<BrowsingPage> {
           if (_matches.contains(stock['name']) &&
               !_matchedCodes.contains(stock['code'])) {
             _matchedCodes.add(stock['code']);
-
-            //TESTING PURPOSES: check if the codes are being matched correctly with stocks currently being searched
-            // print(_matchedCodes);
+            print(_matchedCodes);
           }
         }
 
@@ -136,40 +106,39 @@ class _BrowsingPageState extends State<BrowsingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/background.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage('lib/images/background.png'),
+        fit: BoxFit.cover,
+      )),
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(30),
+            padding: EdgeInsets.all(30),
             child: TextField(
                 controller: _queryController,
                 onChanged: onQueryChanged,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  fillColor: Color.fromARGB(255, 255, 255, 255),
                   hintText: 'Search',
-                  hintStyle: const TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255)),
+                  hintStyle:
+                      TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         width: 2,
                         style: BorderStyle.solid,
                         color: Color.fromARGB(255, 204, 136, 0),
                       )),
-                  suffixIcon: const Icon(
+                  suffixIcon: Icon(
                     Icons.search,
                     color: Color.fromARGB(255, 204, 136, 0),
                   ),
                 )),
           ),
           _matches.isEmpty
-              ? const Center(
+              ? Center(
                   child: Text(
                   'Heart a Stock to add it to Favourites Page',
                   style: TextStyle(
@@ -177,16 +146,13 @@ class _BrowsingPageState extends State<BrowsingPage> {
                 ))
               : Expanded(
                   child: ListView.builder(
-                    itemCount: _matches.length,
-                    itemBuilder: (context, index) {
-                      return MyCard(
-                        userID: userID,
-                        stockName: _matches[index],
-                        stockCode: _matchedCodes[index],
-                      );
-                    },
-                  ),
-                ),
+                      itemCount: _matches.length,
+                      itemBuilder: (context, index) {
+                        return MyCard(
+                          stockName: _matches[index],
+                          stockCode: _matchedCodes[index],
+                        );
+                      })),
         ],
       ),
     ));

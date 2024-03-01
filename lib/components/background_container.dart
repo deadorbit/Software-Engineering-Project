@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 
 class BackgroundContainer extends StatelessWidget {
-  const BackgroundContainer({super.key});
+  const BackgroundContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

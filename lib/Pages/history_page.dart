@@ -12,7 +12,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("History trade Page"),
+        title: Text("Histroy tarde Page"),
         automaticallyImplyLeading: false,
       ),
       body: Center(
