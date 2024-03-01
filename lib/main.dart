@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
-
-import 'firebase_options.dart';
 import 'pages/auth/auth_page.dart';
 import 'pages/auth/landing_page.dart';
-import 'pages/auth/login_page.dart';
 import 'pages/auth/register_page.dart';
+import 'pages/auth/login_page.dart';
 import 'pages/browsing_page.dart';
 import 'pages/favorite_page.dart';
 import 'pages/history_page.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/auth', // Set the initial route to LandingPage
+      initialRoute: '/auth',
       routes: {
         '/landing': (context) => const LandingPage(),
         '/register': (context) => const RegisterPage(),

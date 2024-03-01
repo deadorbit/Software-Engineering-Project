@@ -1,15 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:software_engineering_project/pages/auth/landing_page.dart';
+import 'package:software_engineering_project/Pages/auth/landing_page.dart';
+import 'package:software_engineering_project/components/auth/error_dialog.dart';
+import 'package:software_engineering_project/components/auth/passwordfield.dart';
+import 'package:software_engineering_project/models/user_model.dart';
 
 class RegistrationForm extends StatefulWidget {
   final GlobalKey<FormState> formKey; // Pass the form key from the parent page
 
   const RegistrationForm({
-    Key? key,
+    super.key,
     required this.formKey,
-  }) : super(key: key);
+  });
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
@@ -21,6 +25,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final firestore = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   void signUserUp() async {
     showDialog(
@@ -31,23 +37,39 @@ class _RegistrationFormState extends State<RegistrationForm> {
           );
         });
     try {
-      if (_passwordController.text == _confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailController.text,
-          password: _passwordController.text,
-        );
-      } else {
-        wrongLoginDetails();
-      }
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      createUserData();
       Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, '/profile');
+      Navigator.pushReplacementNamed(context, '/nav');
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      //Wrong Email
-      if (e.code == 'invalid-credential') {
-        wrongLoginDetails();
-      }
+      authError(context, e);
     }
+  }
+
+  void createUserData() async {
+    final User? user = auth.currentUser;
+    final usersCollection = firestore.collection('Users');
+    String uid = "";
+    String email = "";
+    String? name = _usernameController.text;
+
+    if (user != null) {
+      uid = user.uid;
+      email = user.email!; // Assuming email is not null
+
+      UserModel userData = UserModel(
+        uid: uid,
+        name: name,
+        email: email,
+      );
+      userData.createUser(usersCollection);
+    }
+
+    Navigator.pop(context); // end loading icon
   }
 
   // ... other methods for handling form input, validation, and submission
@@ -85,25 +107,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
             ),
           ),
           const SizedBox(height: 16),
-          TextFormField(
-            controller: _passwordController,
-            obscureText: true, // Hide password characters
-            decoration: const InputDecoration(
-              labelText: 'Password',
-              prefixIcon: Icon(Icons.lock),
-            ),
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a password';
-              } else if (!RegExp(
-                      r"^^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-])[a-zA-Z0-9!@#$%^&*()-]{8,32}$")
-                  .hasMatch(value)) {
-                return 'Please enter a valid password.';
-              }
-              return null; // Input is valid
-            },
-          ),
+          PasswordField(controller: _passwordController),
           const SizedBox(height: 16),
           TextFormField(
             controller: _confirmPasswordController,
@@ -152,5 +156,42 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 
-  void wrongLoginDetails() {}
+  Future<void> authError(BuildContext context, FirebaseException error) async {
+    print(error.code);
+    // Create a user-friendly error message based on the error code
+    String errorMessage = "";
+    switch (error.code) {
+      case "invalid-email":
+        errorMessage = "Please enter a valid email address.";
+        break;
+      case "weak-password":
+        errorMessage =
+            "Your password is too weak. Please create a stronger password.";
+        break;
+      case "email-already-in-use":
+        errorMessage =
+            "The email address is already in use by another account.";
+        break;
+      case "user-not-found":
+        errorMessage = "The email address could not be found.";
+        break;
+      case "invalid-credential":
+        errorMessage = "Invalid email or password combination.";
+        break;
+      case "too-many-requests":
+        errorMessage =
+            "Too many requests have been made to the server. Please try again later.";
+        break;
+      default:
+        errorMessage =
+            "An error occurred during authentication. Please try again later.";
+    }
+
+    //Create Alert Dialog using error message
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => ErrorDialog(errorMessage: errorMessage),
+    );
+  }
 }

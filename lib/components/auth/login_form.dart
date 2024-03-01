@@ -1,15 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:software_engineering_project/pages/auth/landing_page.dart';
+import 'package:software_engineering_project/components/auth/error_dialog.dart';
 
 class LoginForm extends StatefulWidget {
   final GlobalKey<FormState> formKey; // Pass the form key from the parent page
 
   const LoginForm({
-    Key? key,
+    super.key,
     required this.formKey,
-  }) : super(key: key);
+  });
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -37,10 +40,7 @@ class _LoginFormState extends State<LoginForm> {
       Navigator.pushReplacementNamed(context, '/nav');
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      //Wrong Email
-      if (e.code == 'invalid-credential') {
-        wrongLoginDetails();
-      }
+      authError(context, e);
     }
   }
 
@@ -123,5 +123,42 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void wrongLoginDetails() {}
+  Future<void> authError(BuildContext context, FirebaseException error) async {
+    print(error.code);
+    // Create a user-friendly error message based on the error code
+    String errorMessage = "";
+    switch (error.code) {
+      case "invalid-email":
+        errorMessage = "Please enter a valid email address.";
+        break;
+      case "weak-password":
+        errorMessage =
+            "Your password is too weak. Please create a stronger password.";
+        break;
+      case "email-already-in-use":
+        errorMessage =
+            "The email address is already in use by another account.";
+        break;
+      case "user-not-found":
+        errorMessage = "The email address could not be found.";
+        break;
+      case "invalid-credential":
+        errorMessage = "Invalid email or password combination.";
+        break;
+      case "too-many-requests":
+        errorMessage =
+            "Too many requests have been made to the server. Please try again later.";
+        break;
+      default:
+        errorMessage =
+            "An error occurred during authentication. Please try again later.";
+    }
+
+    //Create Alert Dialog
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => ErrorDialog(errorMessage: errorMessage),
+    );
+  }
 }
