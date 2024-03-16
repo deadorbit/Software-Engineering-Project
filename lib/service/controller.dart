@@ -12,6 +12,48 @@ class DataBase_Controller {
   //     .collection('Users')
   //     .doc()
   //     .collection('FavStocks');
+  Future<double> getUserBalance(String customUserId) async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+
+      QuerySnapshot userQuerySnapshot =
+          await users.where('userId', isEqualTo: customUserId).get();
+
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        var userDocument = userQuerySnapshot.docs.first;
+        double balance = userDocument.get('balance');
+        return balance;
+      } else {
+        print("No user with the id");
+        return -2;
+      }
+    } catch (error) {
+      print("Failed to retrieve user balance: $error");
+      return -2;
+    }
+  }
+
+  Future<void> updateUserBalance(String customUserId, double value) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
+    QuerySnapshot userQuerySnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('userId', isEqualTo: customUserId)
+        .get();
+
+    if (userQuerySnapshot.docs.isNotEmpty) {
+      // Assuming the custom ID is unique and only one document should match
+      var userId = userQuerySnapshot.docs.first.id;
+      return users
+          .doc(userId)
+          .update({'balance': value})
+          .then((value) => print("balance Updated"))
+          .catchError((error) => print("Failed to update balance: $error"));
+    } else {
+      print("no user with the id");
+    }
+  }
 
   Future<List<Stock>> getUserStocksByCustomId(String customUserId) async {
     try {
@@ -34,8 +76,7 @@ class DataBase_Controller {
             .get();
 
         for (var doc in stocksQuerySnapshot.docs) {
-          favStocks.add(
-              Stock(name: doc["name"], code: doc["code"]));
+          favStocks.add(Stock(name: doc["name"], code: doc["code"]));
         }
         return favStocks;
       } else {

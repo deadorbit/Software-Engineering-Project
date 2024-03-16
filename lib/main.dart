@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:software_engineering_project/pages/trading_page.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
 import 'pages/auth/auth_page.dart';
 import 'pages/auth/landing_page.dart';
@@ -35,6 +36,15 @@ class MyApp extends StatelessWidget {
         '/browsing': (context) => const BrowsingPage(),
         '/history': (context) => const HistoryPage(),
         '/nav': (context) => const NavBar(),
+        '/trade': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return TradinPage(
+            stockCode: args['stockCode'],
+            userId: args['userId'],
+            price: args['price'],
+          );
+        },
       },
     );
   }

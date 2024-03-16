@@ -45,7 +45,17 @@ class _MyFavCardState extends State<MyFavCard> {
 
   void openChart() {}
 
-  void trade() {}
+  void trade() {
+    Navigator.pushReplacementNamed(
+      context,
+      '/trade',
+      arguments: {
+        'stockCode': widget.stockCode, // Example stock code
+        'userId': widget.userId, // Example user ID
+        'price': double.parse(widget.price),
+      },
+    );
+  }
 
   void unFav() async {
     if (widget.userId.isNotEmpty) {
