@@ -19,23 +19,23 @@ class UserModel {
 
   //Convert this to json format (probably to send to firestore)
   Map<String, dynamic> toJson() => {
-    'userId': uid,
-    'name': name,
-    'email': email,
-  };
+        'userId': uid,
+        'name': name,
+        'email': email,
+      };
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    uid: json['userId'] as String,
-    name: json['name'] as String,
-    email: json['email'] as String,
-  );
+        uid: json['userId'] as String,
+        name: json['name'] as String,
+        email: json['email'] as String,
+      );
 
   //Save user model to firestore
   Future<void> createUser(usersCollection) async {
     await usersCollection.doc(uid).set(toJson());
   }
 
-  //Retreieve UserModel from FirebaseFirestore database 
+  //Retreieve UserModel from FirebaseFirestore database
   Future<UserModel> fetchUser(usersCollection) async {
     final doc = await usersCollection.doc(uid).get();
     if (doc.exists) {
