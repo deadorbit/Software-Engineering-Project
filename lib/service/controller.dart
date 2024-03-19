@@ -168,6 +168,9 @@ class DataBase_Controller {
         'stockPrice': price,
         'dollarAmount': dollarAmount,
         'stockAmount': stockAmount,
+        'open': 1,
+        'profit': 0,
+        'timestamp': FieldValue.serverTimestamp(),
       });
     } catch (err) {
       print(err);

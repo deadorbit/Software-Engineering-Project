@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         '/trade': (context) {
           final args = ModalRoute.of(context)!.settings.arguments
               as Map<String, dynamic>;
-          return TradinPage(
+          return TradingPage(
             stockCode: args['stockCode'],
             userId: args['userId'],
             price: args['price'],

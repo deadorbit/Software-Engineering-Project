@@ -87,21 +87,14 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const Text("Saved Quotes"),
         actions: [
           IconButton(
             onPressed: () => signUserOut(context),
             icon: const Icon(Icons.logout),
           ),
         ],
-        title: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: Text("Saved Quotes"),
-            ),
-          ],
-        ),
       ),
       body: Container(
         decoration: BoxDecoration(

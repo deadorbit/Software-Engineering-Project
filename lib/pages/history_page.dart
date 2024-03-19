@@ -1,4 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../components/fav_cards.dart';
+import '../models/stock_model.dart';
+import '../service/controller.dart';
+import "package:firebase_auth/firebase_auth.dart";
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -8,17 +15,118 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  String userId = ""; // Initialize as empty string
+  List _prices = [];
+
+  @override
+  void initState() {
+    super.initState();
+    readJson();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        userId = user.uid; // Assign userId if user is logged in
+      });
+    }
+    getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
+  }
+
+  Future<void> readJson() async {
+    final String response =
+        await rootBundle.loadString('assets/data/prices.json');
+
+    final data = await json.decode(response);
+
+    setState(() {
+      _prices = data["prices"];
+
+      // Used for testing purposes only -- functionality testing
+      // print(_stocks);
+    });
+  }
+
+  // Function to get price by stock code
+  String getPriceByCode(String stockCode) {
+    // Assuming _prices is already populated with the JSON data
+    var priceInfo = _prices.firstWhere(
+      (price) => price['code'] == stockCode,
+      orElse: () => null,
+    );
+
+    if (priceInfo != null) {
+      return priceInfo['price']; // Return the price as a String
+    } else {
+      return 'Not Found'; // Stock code not found
+    }
+  }
+
+  void signUserOut(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, '/landing');
+  }
+
+  final databaseController = DataBase_Controller();
+  String result = "Loading..."; // Initial state of the result
+  List<Stock> _stocks = [];
+  void getUsers() async {
+    if (userId.isNotEmpty) {
+      _stocks = await databaseController.getUserStocksByCustomId(userId);
+      setState(() {
+        // Update UI after fetching stocks
+      });
+    }
+  }
+
+  void onUnFav(String stockCode) {
+    setState(() {
+      _stocks.removeWhere((stock) => stock.code == stockCode);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("History trade Page"),
-        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const Text("Transaction"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.png'),
+            fit: BoxFit.cover,
+          ),
         ),
+        child: _stocks.isEmpty
+            ? Center(
+                child: Text(
+                  'No transaction',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'serif',
+                  ),
+                ),
+              )
+            : ListView.builder(
+                itemCount: _stocks.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      MyFavCard(
+                        price: getPriceByCode(_stocks[index].code),
+                        stockCode: _stocks[index].code,
+                        userId: userId,
+                        onUnFav: () => setState(() {
+                          onUnFav(_stocks[index].code);
+                        }),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  );
+                },
+              ),
       ),
     );
   }
