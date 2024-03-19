@@ -842,6 +842,435 @@ class _LearnPageState extends State<LearnPage> {
                         """,
                   child: Text("\nTrading for Dummies - CGMTA - Part 3"),
                 ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhich Time Unit to Choose in your Trading?
+                        \nThe choice of time unit in trading determines the frequency of your trades. The smaller the unit of time, the greater the number of signals. Getting a lot of bullish/bearish signals is good, but you need time to monitor your trades and be responsive. Generally speaking, the smaller the unit of time, the more time you need to devote to trading. It is important to be able to stay focused on trading and nothing else. The choice of time unit depends on the time available, and the trader’s trading preferences. We can distinguish 3 main categories of people in trading: The full timers, the part timers, and the "don’t have timers".
+
+                        """,
+                  child: Text("\nTips for Good Traders - WTUCYT"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhat time unit for a full-time trader?
+                        \nA full-time trader is a trader who is not limited by time. They have all day to trade. In this case, the available time does not count in the choice of the time unit. It is the trading preferences that will guide their choice.
+                        \nIf you want to scalp, there are no questions to ask, it is very short term trading. The time unit will go from tick to 5 minutes at most.
+                        \nIf you want to swing trade, all possibilities are open to you. It is up to you to determine the unit of time that you feel comfortable with, the one that does not stress you too much. If you are stressed by nature, favour larger time units (not less than 1 hour). Similarly, if you are new to technical analysisyou will be slow to locate the different chart elements. Give yourself extra time by opting for a large time unit.
+                        \nThere is no one time unit that is better than others. No study shows that there is a link between the performance achieved and the time unit used. Fewer trading opportunities does not mean lower performance.
+                      
+                        """,
+                  child: Text("\nTips for Good Traders - WTUFTT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhat time unit for a full-time trader?
+                        \nThe more positions you take during the day, the smaller your positions should be. It is very important to adapt your risk management according to the time unit chosen. Indeed, on a 15 minute chart, the gains/losses are of the order of a few dozen points at most, whereas on a daily chart, they are in hundreds of points.
+                        \nThe right unit of time is the one that suits your investor profile. The one you perform best with!
+
+                        """,
+                  child: Text("\nTips for Good Traders - WTUFTT - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhat time unit for a part-time trader?
+                        \nA part-time trader is a trader who only has an hour or two per day to trade. The choice of time unit is therefore reduced compared to the full-time trader. There are two possibilities: 
+                        \nDo very short term trading: If you have 2 hours during the day, you have plenty of time to place trades on very short time units. Either you do scalping or you swing trade on a time unit that does not exceed 10minutes. That gives your trade concept time to come to fruition.
+                        \nMedium/long term trading: If short-term trading is not your thing, opt for a time unit between one hour and a month. The 15 minute and the 30 minute, are both too short to give time for your trade concept to come to fruition, and too fast which means you are obliged to monitor your trade too regularly. From 1 hour, you can for example place your orders at noon, and make a quick check at the end of the day after work to see where it is. The longer the time unit, the less you need to monitor your trade. Trading time is then reduced.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WTUPTT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhat time unit for a part-time trader?
+                        \nWhatever happens, NEVER forget to put a stop loss on all your trades! Even if you stay in front of the screen it is still essential, if you cannot supervise your trades, it is an absolute obligation!
+
+                        """,
+                  child: Text("\nTips for Good Traders - WTUPTT - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhat time unit for a "don’t have time" trader?
+                        \nA "don’t have time" trader is, as the name suggests, a trader who does not have the time to trade. Here again, we can split this into two types of people: 
+                        \nThose who don't have time to train for trading: In this case, there is nothing to say, it's a personal choice. We have the time to do things we want to do. Trader training takes a lot of time. Financial market experience is a very important element. A training phase is essential. It results in making a lot of mistakes which are, unfortunately, very useful to make to progress in trading.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WTUDHTT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhat counts in trading is to last, before thinking about making money. Most novice traders want to do short term trading but they are not prepared for it. Everything goes faster. So you need to be more reactive, know how to manage volatility, know how to manage stress and emotions, be able to detect trading signals at a glance on a chart, etc.
+                        \nTo start with short term trading is to shoot yourself in the foot. Try yourself first on time units that give you time to analyse properly, and then, if you feel ready, you can test trading the smaller time units (but not before). After that, it's all about your trading preferences.
+                        \nWhen I say try trading, I mean a demo account. It is important to determine the time unit that suits you best, unless you have real money to lose. Learning to trade is not a sprint, it's a marathon. Your money is your work tool, so you must preserve it to the maximum and use it wisely!
+
+                        """,
+                  child: Text("\nTips for Good Traders - Some Trading Tips"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nFrom a demo account to real account trading
+                        \nMoving to trading on a real account is the goal of all novice traders. If you read this page, you’ll discover the importance of a demo account for learning how to trade. The differences between a demo account and a real account are important. But when do you know that you are ready to switch from demo account to trading on a real account?
+
+                        """,
+                  child: Text("\nTips for Good Traders - FDARCT"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nQuestions to ask before switching from demo account to real account trading
+                        \nAm I able to generate earnings on a regular basis? : Having a positive demo account is not enough to justify switching to live account trading. It all depends on how.If you've just carried out a few trades and your trading account is positive, you're not ready for the real thing. To switch to real trading, you must be able to generate regular profits over a long period (at least several weeks). This does not mean that your demo account should only rise, but you should have an upward performance curve at the end of your test period.
+                        \nDo I apply money management? : If you don't know what that is, immediately forget about real account trading. Good risk management is as valuable as a good trading strategy. Money management limits damage during loss phases (which are an integral part of trading). This implies appropriate position sizes and therefore realistic performance targets. If you see trading as a way to make a fortune, make money quickly or double your capital, then you have understood nothing about trading. It would be easier to go to the casino.
+
+                        """,
+                  child: Text("\nTips for Good Traders - QABSDARAT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nQuestions to ask before switching from demo account to real account trading
+                        \nWhat is my trading strategy? : A trading strategy is a kind of checklist that you must apply for each trade. You should only take a position in the market if your trading strategy gives you a clear signal. A position should never be based on your market sentiment! If all your positions on your demo account are part of your trading plan, you can switch to live account trading. If you still have parasitic positions (out of strategy), you must absolutely eliminate them completely. On a real account, this kind of position usually does a lot of damage. The question to ask yourself to know if you follow a trading strategy well is: "Are you able to explain objectively the reasons for each of your positions?”
+                        \nWhen I say trading strategy, I mean yours, not a trading strategy that you copied from another trader. Every trader is different because of his trading preferences and his psychology. So you need to find the strategy that fits your investor profile. With time and practice, you will evolve this trading strategy on your demo and real account based on your financial market experience.
+
+                        """,
+                  child: Text("\nTips for Good Traders - QABSDARAT - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nQuestions to ask before switching from demo account to real account trading
+                        \nOn what time units do I process? : Having a strategy is good, but you need to know on which time unit to apply it. Choosing a time unit in trading depends on the time you have available and also according to trading preferences. Short-term trading is often much more stressful than long-term trading.
+                        \nAm I sure of myself? : If you have any doubts about your trading strategy, if you don't feel ready to switch to a real account, then stay a bit longer on the demo account. To move into reality, you have to have confidence in your strategy. It will allow you not to question it with each series of losing trades on a real account. You must also feel capable of managing any market situation. For example, what do you do in the event of an explosion of volatility (when a news item is published) on the financial markets? Do you still trade, or do you stop trading until things calm down? Your demo account experience should allow you to answer this type of question.
+
+                        """,
+                  child: Text("\nTips for Good Traders - QABSDARAT - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nQuestions to ask before switching from demo account to real account trading
+                        \nDo I accept loss? : Losing is part of trading. If you do not accept losing, you cannot win in trading. You must be able to put your ego aside and not lose your temper if a trade is losing, never move your stop loss if the price moves in an unfavourable direction, accept that it is the market that has the last word. The best analysis in the world does not guarantee a winning trade. In technical analysis, you establish scenarios and you favour the one that has the highest probability of coming to fruition. If a trade loses, it's not that you're a bad trader, it's just that the market didn't prove you right. It'll happen almost every day. It shouldn't make you change your trading strategy.
+
+                        """,
+                  child: Text("\nTips for Good Traders - QABSDARAT - Part 4"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe differences between a demo account and a real account
+                        \nThe advantages of a demo account are numerous but answering all these questions does not guarantee that you will be a winner in your real account trading. A demo account is a way to learn rigour and discipline in trading, these are two basic qualities to succeed in the financial markets. They allow you to manage your risk well but also to apply your trading strategy to the letter. 
+                        \nPeople who are not rigorous and disciplined in life will take longer before they are ready to switch to real account trading. On the other hand, in reality, it is often those who are the first to trade on a real account. It inevitably ends in the total loss of invested capital. A demo account is for practice, and without practice, it's impossible to be good at trading. It's the same in life.
+                        
+                        """,
+                  child: Text("\nTips for Good Traders - TDBDARA - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe differences between a demo account and a real account
+                        \nBut then why is demo account trading so different from real account trading? For the one and only reason: there's your money at stake. On a demo account, you have nothing to gain or lose. It is therefore easier to be objective in your positions, more rational. Indeed, money exacerbates emotions. Emotions are at the root of the majority of trading losses among individual traders.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDBDARA - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWith financial markets, you always have the impression that you can make money quickly and effortlessly. It stokes the lure of profit. This greed pushes traders to take additional risks, risks they would not have taken on a demo account. As a result, traders no longer apply the money management rules they learned on the demo account. All you need is a trade with strong leverage or no stop loss to enter the infernal spiral that will inevitably lead to the loss of your capital.
+                        \nConversely, trading on a real account will reinforce your refusal to accept a loss. It is for this reason that many traders do not place a stop loss or move the stop to avoid it being hit on a real account. We can never repeat it enough, it is impossible to win on the financial markets if you do not accept loosing.
+
+                        """,
+                  child: Text("\nTips for Good Traders - Risk Management"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nFollowing a trading strategy to the letter on a demo account is easy. But continuing to apply your trading strategy after a losing streak of trades is more complicated. That's why you should test your trading strategy at length on a demo account. It allows you not to question it and to be confident in its ability to make up your losses on a real trading account. If your trading strategy is a winner, you have to tell yourself that a losing series of trades is just lost time but not your money. 
+                        \nThis is difficult to conceive for novice traders, but trading is a financial investment. It involves risks, we must be aware of this but judge the relevance of the investment over the long term, not the short term. With real account trading, it's the same. It doesn't matter if you end a day or a week in negative. The important thing is that your trading account mounts, that you make your investment grow over the long term.
+
+                        """,
+                  child: Text("\nTips for Good Traders - Trading Strategy"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhen should you switch from a demo account to real account trading? Only you can answer that. There are no specific rules. Each trader is different and will take more or less time to be ready. You should not neglect your learning phase on a demo account, it is an essential foundation to succeed in real life. You learn rigour and discipline. On a real account, the goal is to learn to manage your emotions. If you can control them and replicate your demo account behaviour in the real world, your chances of trading success are high. 
+                        \nManaging emotions is not an easy thing, it is what usually takes the most time. It is with experience that you will understand this. That's why it's not uncommon to raze your real trading account in its early days. I also went through this painful stage. So it is better not to deposit too much in the first place because the risk is high. Often the risk isn't the market, it's you! (See page: psychology: the trader's enemy). The sooner you are able to manage your emotions, the sooner you will win in your trading.
+
+                        """,
+                  child: Text("\nTips for Good Traders - Conclusion"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nTips to improve your trading performance
+                        \nNovice traders make a lot of mistakes in their trading. It is important to remember some trading tips through this non-exhaustive list.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TITP"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nReason with a percentage
+                        \nAll beginner traders reason in earned money. Since the amount of their deposit is generally small, they use leverage to increase their earnings (in the end it is their loss that is greater). Earning €5 on a trade is not really a hard sell. But on a 500 dollaraccount, that's 1%. That's great performance. So stop thinking in terms of money. Have you ever seen a financial institution that does not speak to you in terms of percentage? No, the only ones that do are the ads you find on binary options like winning €1,500 in 2 hours.
+                        \nIt is not wise to reason in money terms. To succeed in trading, you have to be able to stop thinking about money. It avoids taking extra risks and keeps your head cool.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nDon't aim to earn money
+                        \nI know it may sound strange to say this, given that most people come to the financial markets to earn money. This objective quickly becomes an obsession. Money is then your only guide and it gives way to your emotions. I'll make it quick, you will end up razing your trading account. If you are new to trading and even if you are more experienced, the goal is not to earn money but to last. Lasting allows you to progress, improve your trading and therefore ultimately make gains. If the financial markets and trading do not interest you, then find yourself another occupation. In trading, there must be a notion of pleasure, a desire to learn, to work on oneself.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nAlways place a stop loss
+                        \nIt's a classic, but it never hurts to repeat it. When we look at the brokers' statistics, we see that a large majority of novice traders do not place a stop loss. In some cases they end up cutting their position manually, nauseated by trading but it is already too late. As a result, their average earnings are lower than their average losses on all their trades. It's hard to win under these conditions. I suggest that you consult the page Let the gains run and take the losses.
+                        \nA stop loss is mandatory on all your positions. So stop being smart and thinking you're stronger than everyone else, accept your loss! You can't win trading if you don't know how to lose.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nTake the time to train yourself well
+                        \nBeing well trained is synonymous with using a demo account. And when I say demo account, it's not just to test the platform by passing a few trades. The demo account is where you need to build the basics of your trading strategy and learn to manage your risk. A demo account actually teaches you discipline and rigour that are two essential elements if you don't want to raze your trading account. So yes, sometimes it's boring to be on a demo account, but remember trading tip no. 2.
+                        \nBecoming a trader takes time, work and a lot of patience! If you're in a hurry in life, move on, trading is not for you! Trading is a bit like golf, one day you think you have understood everything and in fact that's not the case.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 4"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nDo not anticipate movements
+                        \nIt is a great classic for novice traders. They detect a bearish or bullish signal but do not wait for it to be validated before taking a position. For example, they will enter long before the neck line break of a double/triple bottom. For them this figure is bullish, so why wait? Two reasons:
+                        \nAs long as the bearish/bullish signal is not given, the uncertainty on the future evolution of the price is stronger. The technical analysis is based on probabilities. If you do not wait for the confirmation of the signal, you greatly decrease the chances of your trade’s success. 
+                        \nThat leads to regrets. You tell yourself afterwards that you should never have taken this trade since the signal was not given. And regrets, lead to a lot of bad things in trading, it is the open door to emotions (enemy of the trader, see psychology and trading). If you have waited for the bearish/bullish signal to take a position, you have no regrets. It's just that the market didn't agree with you, but that doesn't mean you were wrong to take the signal. Being wrong and the market making you wrong are two totally different things!
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 5"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nStay focused on technical analysis
+                        \nIf you do technical analysis, do not pollute your mind with fundamental analysis. To master fundamental analysis well, you need knowledge that beginners generally do not have. Moreover, the fundamental sometimes sends signals contrary to technical analysis and you feel lost, you do not know what to do. In the long run, fundamental analysis is always right, but if you try to use it in the short/medium term, the effects are disastrous. If you want to have a broad view of the prices, look at the daily or weekly charts.
+                        \nIt is also better not to pollute your mind with the various news items that are published throughout the day. They only confuse you, you look for logical reasoning to the market reaction and very often there is none. It is simply the high frequency trading machines that are having fun. If the movement according to the news is frank, technical analysis will allow you to capture it. There is no need to look at the published figure. You can do it but after the fact, with a rested mind, not in the heat of the moment.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 6 - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nStay focused on technical analysis
+                        \nBy hearing things everywhere, they end up influencing us in our trading, by giving us a reason to trade. We've kind of already made the choice in our heads and we are blind to anything but that. This type of behaviour leads to errors, to a misinterpretation of the signals sent by the technical analysis.
+                        \nCareful, I'm not saying you shouldn't look at the international economic calendar of the day to see the different publications. To be aware that news is going to be published is good (it means that you are not surprised by volatility), but to try to analyse it is, in my opinion, to be avoided.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 6 - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nDo not use leverage
+                        \nLeverage is poison. For individuals, it should be prohibited or severely restricted on each position. Using a little leverage on each of these positions, why not, in moderation, but using leverage on a single position will necessarily lead to the loss of your capital.
+                        \nI pull my hair out when I see some novice traders looking for brokers offering the most leverage. Leverage is your enemy. If you think leverage, you think money, and if you think money, your emotions will dictate your trading and you will lose all your capital. If almost all individual traders are losing out in the financial markets, it is because of this. Stop believing yourself superior, you are like everyone else, run away from leverage and instead try to last.
+                        \nIf you process CFDs, never use leverage! If you trade Forex, always choose a broker with micro lots (0.01 or 1000 units). If you have a small trading account, you will be forced to use leverage against your will (if you deposit less than €1,000), so limit your number of simultaneous positions (2 or 3, never more). I suggest that you read the page: Money management for small Forex accounts.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 7"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nGain confidence
+                        \nNovice traders always tend to want to copy everything without thinking. You don't copy a trade just because the trader is supposed to be good, you copy it only if you fully agree with what he says, if it is in line with your trading strategy. You will not make money by copying a trader for the simple reason that you do not know how he manages his risk, when exactly he cuts his position, if an element has made him change his mind. Copying this does not teach you how to trade, it just makes you dependent. Be inspired yes, copy no!
+                        \nYour best advisor is yourself. A demo account is there for you to gain self-confidence. It will also allow you to gain confidence in your trading strategy and be able not to question it at the slightest phase of loss. It is essential.
+                        \nHaving self-confidence is daring to take a position when your trading strategy gives you a bearish/bullish signal, daring to go to the end of your trade (not cutting your gain position too early), knowing how to take your loss when it is necessary while knowing that you are able to catch up later.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIP 8"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThis long list of trading tips is incomplete. I simply addressed the points that I felt were essential in dealing with the most common mistakes made by novice traders. Do not hesitate to complete it, to react, to share your experience.
+
+                        """,
+                  child: Text("\nTips for Good Traders - Conclusion"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThere are many reasons why individuals trade
+                        \nProfit motive: This is the first cause of loss on the financial markets. If you start trading for the sole purpose of making money quickly, you will always end up losing money. We must accept that earning money is only a long-term goal. In the short term, nobody ever does, so stop thinking you'll be the exception!
+                        \nSensation of freedom: Trading offers the possibility of being your own boss. The problem is that you have to be able to impose binding rules on yourself to be a winner in your trading.
+                        \nThe desire to learn: It is indispensable for success but it is important to set a learning to tradeplanor risk losing yourself in the infinite possibilities of trading. You must be able to say stop, at some point, in order to test your trading strategy.
+                        
+                        """,
+                  child: Text("\nTips for Good Traders - TMRWIT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThere are many reasons why individuals trade
+                        \nEliminate routine: Like any job (because yes trading is a job like any other), you can't escape routine. Trading that wins is boring and routine trading. 
+                        \nStimulate the mind: Our mind is a powerful weapon for whoever tries to control it. If you can't control it, your emotions take over and it will be impossible for you to win in your trading.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TMRWIT - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWinning recipe for trading
+                        \nIf you're expecting a magical recipe, you should stop here. I am not here to sell you dreams (I let certain trainers do that for me). To succeed in trading, you must have a lot of time, not deny the task, be able to question yourself and accept loosing! If you are not ready to lose your money, then trading is not for you. That's a key notion!
+                        \nThe recipe for trading that win is, for me, made up of several elements:
+
+                        """,
+                  child: Text("\nTips for Good Traders - WRT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWinning recipe for trading
+                        \nTechnical knowledge: You must be able to identify chart patterns to plot your support/resistance levels, to know how to interpret and understand the key technical indicators. In short, these are all the basic elements of technical analysis.
+                        \nNovice traders often tend to want to find a miracle indicator, to think that the more complex their strategy, the more likely they are to win in their trading. That's totally wrong! 
+                        \nThere are thousands of winning strategies; there are no better ones than the others. The important thing is to find a strategy that seems coherent, that you understand, that corresponds to you! I can only give you one piece of advice: Keep it simple! There is plenty to do with the basic elements of technical analysis and traditional technical indicators. Don't waste your time scratching around learning how to trade. It's often time lost but also money!
+
+                        """,
+                  child: Text("\nTips for Good Traders - WRT - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWinning recipe for trading
+                        \nI also include the concept of risk management (money management). Risk management is what helps you get through the loss phases without too much damage. Managing losses well (besides not abusing leverage) means not being afraid to accept a loss. The sooner you are able to take your losses quickly (and recognize quickly when a trade goes wrong), the sooner you will win. The difference between a winning and losing strategy is often there.
+                        \nSelf-control: This is the most important element in trading. Novice traders are often unaware of this but trading requires a huge amount of work on themselves. You have to be able to fight your emotions and before you get there, take your time.
+                        \nOften it is not the trading strategy that makes you lose money, but the mismanagement of emotions. You must be able to manage them in both the loss and gain phases.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WRT - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWinning recipe for trading
+                        \nYou must also accept that you cannot win every time. Losing trades are part of trading. Similarly, your trading strategy will not always end the day or even the week in a positive light. You have to accept it. A trading strategy is judged over the long term, at the end of each month.
+                        \nTrading is an activity that initially generates a lot of emotions (frustration, depression, euphoria, stress, etc.). Learning to control yourself is learning not to let your emotions dictate your actions.
+                        \nYou will acquire some little by little, depending on your trading disillusions. Because yes, at the beginning, trading is made of frustration, irritation, demotivation phases, a desire to throw in the towel, etc. Like any other activity, trading is learned by making mistakes. By dint of committing them, you will gradually be able to draw conclusions that will lead your trading to evolve. Ultimately, it is the accumulation of all these errors that will lead you to trading that wins.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WRT - Part 4"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWinning recipe for trading
+                        \nThis experience makes you progress in the technical field (evolution of your trading strategy, thoughts, etc.) and in the psychological field (learning to control yourself).
+                        \nIf you hope to make money right away, trading is not for you. You're going to go through a lot before you get there. For me, trading is like a high level sport. Very few people can do this because you need the skills (technical knowledge), mental strength (self-control) and above all a lot of work (experience).
+
+                        """,
+                  child: Text("\nTips for Good Traders - WRT - Part 5"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCreate routine in your trading
+                        \nI've been talking about self-control. It's a vague notion for most of you. You probably ask yourself the question "How do you learn to control your emotions?”
+                        \nThis question is often answered by experience. It is true, by dint of being confronted with certain situations and feeling emotions, you will gradually get your mind used to this stimulation. Emotions will thus diminish over time by the force of habit.
+                        \nBut experience is not the only way to learn to control your emotions. You need to create routine in your trading. This routine must be carried out at different levels:
+
+                        """,
+                  child: Text("\nTips for Good Traders - CRT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCreate routine in your trading
+                        \nTrading strategy: Once you have found a trading strategy to test, focus only on that strategy. Ignore other strategies, do not seek to develop it. Far too many novice traders change strategies like they change shirts. One day it's one, the next day it's another. You can't be a winner in your trading by operating like this.
+                        \nThe elements of development, the avenues of reflection, it is during the research phase of your strategy that you test them but once you have fixed one for yourself, test it until the end (at least one month of trading, that is the minimum). If the test is inconclusive, you can then use all the elements you have collected to make it evolve.
+                        \nEven if your strategy loses, during the test period, you at least forced yourself to follow a trading plan. This allows you to learn rigour and discipline. Without these two elements, even with a good trading strategy, you will end up losing (giving in to your emotions).
+
+                        """,
+                  child: Text("\nTips for Good Traders - CRT - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCreate routine in your trading
+                        \nOf course, if you see that your strategy only loses, you have to change it. On the other hand, if you win 1 trade out of 2 but you lose at the end of the month, you are mismanaging your gains and losses. You cut your winning positions too early and cut the losing positions too late. It is not necessarily the strategy that needs to be changed in this case, but a different risk management approach.
+                        \nState of mind: Many novice traders think that a position can be opened at any time. No! You should only open a position if it is during the time period in your day that you dedicate to trading.
+                        \nTrading requires a high degree of concentration, a state of mind dedicated to this activity. This means not being tired, being in a trading environment (no noise around) and also fixed hours. Trading when you have the time is not the way to trade properly. It doesn't matter during your technical knowledge learning phase but if you are on a real account to test your trading strategy, it's different. Your body needs a landmark.
+
+                        """,
+                  child: Text("\nTips for Good Traders - CRT - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCreate routine in your trading
+                        \nWe also see this in top-level sport. Take a tennis player who is used to playing in the afternoon. If you make them play in the morning, they will have a bad game because their body has no landmark, it is not used to playing at that time. It is the same with trading, you can more easily be rigorous and disciplined in your trading if you impose certain rules on yourself.
+                        \nConsider all possible scenarios: Each time you open a position, you must consider the gain and also the loss. What will you do if the price reaches this level? Will you cut, will you hold your position? Will you take your profits if your objective is reached? If a sudden reversal occurs, what will you do? When are you going to move your stop loss?
+                        
+                        """,
+                  child: Text("\nTips for Good Traders - CRT - Part 4"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCreate routine in your trading
+                        \nAll these questions must be answered before opening a position, so that you are not subject to your emotions. We often think that in trading it is necessary to constantly adapt to changes in the price, that we can only undergo them. No! All these elements must be part of your trading strategy. Answering these questions beforehand means that you avoid being overly influenced by your emotions when making a decision. An experienced trader can adapt but a novice trader is not capable of doing so.
+                        \nDon't leave anything to chance. The objective of trading is not to open a maximum position, but to do things right. Then, no matter the outcome, the market decides, you can do nothing about it. 
+
+                        """,
+                  child: Text("\nTips for Good Traders - CRT - Part 5"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCreate routine in your trading
+                        \nYou must have no regrets, no matter if the price moved to hit your stop loss or if you have made a huge loss on a move (which you see after the fact). After each trade, you should be able to say to yourself: "I have followed my trading plan" and if the same configuration occurs, you must treat it the same way. Beware, however, of excessive routine, boring trading can make a trader lose.
+
+                        """,
+                  child: Text("\nTips for Good Traders - CRT - Part 6"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nConclusion
+                        \nThere is no magic formula in trading. Success is achieved through sound technical knowledge, self-control and financial market experience. Learning is done at the cost of a lot of mistakes which are essential to making you evolve towards trading that wins. Whether it's trading strategy, risk management or emotional control, it's all based on rigour and discipline. Trading that wins is mechanical, boring and emotionless.
+
+                        """,
+                  child: Text("\nTips for Good Traders - Conclusion"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nHow to become a good trader?
+                        \nBefore you can think about making money from your trading, you must first become a good trader, learn to trade well. Novice traders often make the mistake of wanting to earn as much as possible in as little time as possible.That is not trading. Trading is an investment activity, so the objective is to make your capital grow little by little.
+                        \nBecoming a good trader is a long process, it takes time and a lot of work. So the first step is to accept it.If you are not ready to make efforts, do not start trading, this will prevent you from losing your money.
+
+                        """,
+                  child: Text("\nTips for Good Traders - HBGT"),
+                ),
               ],
               onChanged: (_value) => {
                 print(_value.toString()),
