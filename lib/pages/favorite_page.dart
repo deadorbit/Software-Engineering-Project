@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../components/fav_cards.dart';
 import '../models/stock_model.dart';
 import '../service/controller.dart';
@@ -13,10 +16,12 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   String userId = ""; // Initialize as empty string
+  List _prices = [];
 
   @override
   void initState() {
     super.initState();
+    readJson();
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       setState(() {
@@ -24,6 +29,35 @@ class _FavoritePageState extends State<FavoritePage> {
       });
     }
     getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
+  }
+
+  Future<void> readJson() async {
+    final String response =
+        await rootBundle.loadString('assets/data/prices.json');
+
+    final data = await json.decode(response);
+
+    setState(() {
+      _prices = data["prices"];
+
+      // Used for testing purposes only -- functionality testing
+      // print(_stocks);
+    });
+  }
+
+  // Function to get price by stock code
+  String getPriceByCode(String stockCode) {
+    // Assuming _prices is already populated with the JSON data
+    var priceInfo = _prices.firstWhere(
+      (price) => price['code'] == stockCode,
+      orElse: () => null,
+    );
+
+    if (priceInfo != null) {
+      return priceInfo['price']; // Return the price as a String
+    } else {
+      return 'Not Found'; // Stock code not found
+    }
   }
 
   void signUserOut(BuildContext context) {
@@ -72,7 +106,7 @@ class _FavoritePageState extends State<FavoritePage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("lib/images/background.png"),
+            image: AssetImage('assets/images/background.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -92,8 +126,8 @@ class _FavoritePageState extends State<FavoritePage> {
                   return Column(
                     children: [
                       MyFavCard(
+                        price: getPriceByCode(_stocks[index].code),
                         stockCode: _stocks[index].code,
-                        price: _stocks[index].price,
                         userId: userId,
                         onUnFav: () => setState(() {
                           onUnFav(_stocks[index].code);

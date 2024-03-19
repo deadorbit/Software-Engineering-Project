@@ -70,6 +70,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
         uid: uid,
         name: name,
         email: email,
+        balance: 0,
+        totalProfit: 0,
       );
 
       await userData
