@@ -147,4 +147,30 @@ class DataBase_Controller {
       print(e);
     }
   }
+
+  Future<void> addTrans(String userID, String code, double price,
+      double dollarAmount, double stockAmount) async {
+    try {
+      QuerySnapshot user = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('userId', isEqualTo: userID)
+          .get();
+
+      var userId = user.docs.first.id;
+
+      CollectionReference favouritesCollection = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .collection('Transactions');
+
+      favouritesCollection.add({
+        'stockCode': code,
+        'stockPrice': price,
+        'dollarAmount': dollarAmount,
+        'stockAmount': stockAmount,
+      });
+    } catch (err) {
+      print(err);
+    }
+  }
 }

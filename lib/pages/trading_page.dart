@@ -36,8 +36,18 @@ class _TradinPageState extends State<TradinPage> {
     });
   }
 
-  void placeTrade() {
+  void depositMoney() async {
+    await databaseController.updateUserBalance(widget.userId, balance + 5000);
+    setState(() {
+      balance = balance + 5000; // Update balance with fetched value
+    });
+  }
+
+  void placeTrade() async {
     double amountOfStock = double.parse(balanceController.text) / widget.price;
+
+    databaseController.addTrans(widget.userId, widget.stockCode, widget.price,
+        double.parse(balanceController.text), amountOfStock);
 
     showDialog(
       context: context,
@@ -50,6 +60,13 @@ class _TradinPageState extends State<TradinPage> {
         );
       },
     );
+    databaseController.updateUserBalance(
+        widget.userId, balance - double.parse(balanceController.text));
+    setState(() {
+      balance = balance -
+          double.parse(
+              balanceController.text); // Update balance with fetched value
+    });
     balanceController.clear();
   }
 
@@ -93,7 +110,20 @@ class _TradinPageState extends State<TradinPage> {
             ),
           ),
           Positioned(
-            top: 60, // Adjust this value as needed
+            top: 30,
+            right: 0,
+            child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                child: ElevatedButton(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    child: Text("Deposit 5k \$"),
+                  ),
+                  onPressed: depositMoney,
+                )),
+          ),
+          Positioned(
+            top: 100, // Adjust this value as needed
             left: 0,
             right: 0,
             child: Padding(
@@ -102,13 +132,22 @@ class _TradinPageState extends State<TradinPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Amount of ${widget.stockCode} you want to invest",
+                    "Current price of ${widget.stockCode} is ${widget.price}",
                     style: TextStyle(
                       fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: const Color.fromARGB(255, 255, 0, 0),
+                    ),
+                  ),
+                  Text(
+                    "Enter the Amount of ${widget.stockCode} you want to invest",
+                    style: TextStyle(
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
+
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                     child: TextField(
