@@ -41,7 +41,7 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   Future<void> fetchAlbum() async {
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < _stocks.length; i++) {
       var stock = _stocks[i]['code'];
       try {
         var resp =
@@ -54,11 +54,13 @@ class _NewsPageState extends State<NewsPage> {
         //print(jsonData.length);
 
         for (int i = 0; i < 2; i++) {
+          add = false;
           String title = jsonData[i]['title'].toString();
           Uri link = Uri.parse(jsonData[i]['link']);
           String publisher = jsonData[i]['publisher'].toString();
           if (jsonData[i].length > 7) {
             if (!_headlines.contains(title)) {
+              //print(title);
               var photo = jsonData[i]['thumbnail'];
 
               var photo2 = photo['resolutions'][0]['url'];
@@ -101,7 +103,11 @@ class _NewsPageState extends State<NewsPage> {
             children: <Widget>[
               Align(
                 alignment: Alignment.center,
-                child: Text("Breaking News"),
+                child: Text("Breaking News",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    )),
               ),
             ],
           ),
