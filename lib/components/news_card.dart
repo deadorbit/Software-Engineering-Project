@@ -33,10 +33,9 @@ class _NewsCardState extends State<NewsCard> {
       child: Column(
         children: [
           Container(
-            height: 70,
+            height: 90,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-            padding:
-                const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+            padding: const EdgeInsets.only(left: 6, right: 6),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8.0),
@@ -47,28 +46,29 @@ class _NewsCardState extends State<NewsCard> {
             child: Row(
               children: [
                 Container(
-                  height: 70,
-                  width: 70,
-                  margin: const EdgeInsets.only(right: 15),
+                  // height: 70,
+                  width: 120,
+                  margin: const EdgeInsets.only(right: 10),
                   child: Image.network(widget.thumbnail),
                 ),
-                SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                Expanded(
+                  // padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         widget.headline,
                         softWrap: true,
                         maxLines: 3,
-                        overflow: TextOverflow.clip,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
+                      const SizedBox(height: 4),
                       Text(
                         widget.publisher,
                         style: const TextStyle(
