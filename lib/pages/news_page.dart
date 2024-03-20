@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
@@ -8,8 +11,107 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  final List<String> _headlines = [];
+  final List<Uri> _links = [];
+  final List<String> _thumbnails = [];
+  final List<String> _publishers = [];
+  List _stocks = [];
+  @override
+  void initState() {
+    super.initState;
+    readJson();
+  }
+
+  bool add = false;
+  String url = '';
+  Future<void> readJson() async {
+    final String response =
+        await rootBundle.loadString('assets/data/stocks.json');
+
+    final data = await json.decode(response);
+
+    setState(() {
+      _stocks = data["stocks"];
+
+      // Used for testing purposes only -- functionality testing
+      // print(_stocks);
+    });
+    fetchAlbum();
+  }
+
+  Future<void> fetchAlbum() async {
+    for (int i = 0; i < _stocks.length; i++) {
+      var stock = _stocks[i]['code'];
+      try {
+        var resp =
+            await http.get(Uri.parse('http://10.0.2.2:5000/stock/$stock/news'));
+        // var resp = await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
+        var jsonData = jsonDecode(resp.body);
+
+        //TESTING PURPOSES
+        // print("${jsonData[0]['title']}");
+        //print(jsonData.length);
+
+        for (int i = 0; i < jsonData.length; i++) {
+          String title = jsonData[i]['title'].toString();
+          Uri link = Uri.parse(jsonData[i]['link']);
+          String publisher = jsonData[i]['publisher'].toString();
+          if (jsonData[i].length > 7) {
+            if (!_headlines.contains(title)) {
+              var photo = jsonData[i]['thumbnail'];
+
+              var photo2 = photo['resolutions'][0]['url'];
+
+              url = photo2.toString();
+
+              //TESTING PURPOSES
+              //print(photo2);
+              add = true;
+            }
+          }
+
+          setState(() {
+            if (add) {
+              _headlines.add(title);
+              _links.add(link);
+              _thumbnails.add(url);
+              _publishers.add(publisher);
+            }
+          });
+        }
+        //  String data = jsonData[0]['title'].toString();
+
+        // setState(() {
+        //   _news.add(data);
+        // });
+
+        // print("data");
+        // print(data);
+
+        //TESTING PURPOSES
+        // print("news");
+        // for (int i = 0; i < _headlines.length; i++) {
+        //   print(_headlines[i]);
+        //   print(_thumbnails[i]);
+        // }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+        appBar: AppBar(
+      title: const Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.center,
+            child: Text("Breaking News"),
+          ),
+        ],
+      ),
+    ));
   }
 }

@@ -8,7 +8,7 @@ class MyFavCard extends StatefulWidget {
   final String stockCode;
   final String userId;
   final VoidCallback onUnFav;
-  final String price;
+  String price;
 
   MyFavCard(
       {super.key,
@@ -24,7 +24,7 @@ class MyFavCard extends StatefulWidget {
 class _MyFavCardState extends State<MyFavCard> {
   final databaseController = DataBase_Controller();
 
-  /*@override
+  @override
   void initState() {
     super.initState();
     getPrice(); // Fetch the price when the widget is first created
@@ -36,12 +36,17 @@ class _MyFavCardState extends State<MyFavCard> {
       var resp = await http
           .get(Uri.parse('http://10.0.2.2:8000/stock/$stockCode1/time/1d'));
       // var resp = await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
+      String trying = resp.toString();
       var jsonData = jsonDecode(resp.body);
-      widget._price = jsonData["Close"].toDouble();
+      print(jsonData);
+      String responseString =
+          "[{\"Open\":174.0899963379,\"High\":176.6049957275,\"Low\":173.0299987793,\"Close\":176.0800018311,\"Volume\":54808559,\"Dividends\":0.0,\"Stock Splits\":0.0}]";
+      var responseObject = jsonDecode(responseString);
+      print(responseObject);
     } catch (e) {
       print(e);
     }
-  } */
+  }
 
   void openChart() {}
 
