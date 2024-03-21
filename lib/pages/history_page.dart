@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/fav_cards.dart';
+import '../components/transactionCard.dart';
 import '../models/stock_model.dart';
+import '../models/transaction_model.dart';
 import '../service/controller.dart';
 import "package:firebase_auth/firebase_auth.dart";
 
@@ -60,17 +62,12 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
-  void signUserOut(BuildContext context) {
-    FirebaseAuth.instance.signOut();
-    Navigator.pushReplacementNamed(context, '/landing');
-  }
-
   final databaseController = DataBase_Controller();
   String result = "Loading..."; // Initial state of the result
-  List<Stock> _stocks = [];
+  List<Trans> _transactions = [];
   void getUsers() async {
     if (userId.isNotEmpty) {
-      _stocks = await databaseController.getUserStocksByCustomId(userId);
+      _transactions = await databaseController.getTransactions(userId);
       setState(() {
         // Update UI after fetching stocks
       });
@@ -79,7 +76,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
   void onUnFav(String stockCode) {
     setState(() {
-      _stocks.removeWhere((stock) => stock.code == stockCode);
+      _transactions.removeWhere((stock) => stock.code == stockCode);
     });
   }
 
@@ -97,10 +94,10 @@ class _HistoryPageState extends State<HistoryPage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: _stocks.isEmpty
+        child: _transactions.isEmpty
             ? Center(
                 child: Text(
-                  'No transaction',
+                  'No transactions',
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: 'serif',
@@ -108,20 +105,14 @@ class _HistoryPageState extends State<HistoryPage> {
                 ),
               )
             : ListView.builder(
-                itemCount: _stocks.length,
+                itemCount: _transactions.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      MyFavCard(
-                        price: getPriceByCode(_stocks[index].code),
-                        stockCode: _stocks[index].code,
+                      TransactionCard(
+                        price: getPriceByCode(_transactions[index].code),
+                        stockCode: _transactions[index].code,
                         userId: userId,
-                        onUnFav: () => setState(() {
-                          onUnFav(_stocks[index].code);
-                        }),
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                     ],
                   );

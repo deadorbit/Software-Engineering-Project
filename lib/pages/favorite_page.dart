@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,7 @@ class _FavoritePageState extends State<FavoritePage> {
         userId = user.uid; // Assign userId if user is logged in
       });
     }
+
     getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
   }
 

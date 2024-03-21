@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:software_engineering_project/models/transaction_model.dart';
 
 import '../models/stock_model.dart';
 
@@ -7,6 +8,7 @@ class DataBase_Controller {
   DataBase_Controller();
 
   List<Stock> favStocks = [];
+  List<Trans> trans = [];
 
   // final CollectionReference favouritesCollection = FirebaseFirestore.instance
   //     .collection('Users')
@@ -74,6 +76,7 @@ class DataBase_Controller {
             .doc(userId)
             .collection("FavStocks")
             .get();
+        print(stocksQuerySnapshot.size);
 
         for (var doc in stocksQuerySnapshot.docs) {
           favStocks.add(Stock(name: doc["name"], code: doc["code"]));
@@ -174,6 +177,46 @@ class DataBase_Controller {
       });
     } catch (err) {
       print(err);
+    }
+  }
+
+  Future<List<Trans>> getTransactions(String customUserId) async {
+    try {
+      // Query the 'Users' collection to find the document with the matching custom ID
+      QuerySnapshot userQuerySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('userId', isEqualTo: customUserId)
+          .get();
+
+      // Check if a document with the custom ID exists
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        // Assuming the custom ID is unique and only one document should match
+        var userId = userQuerySnapshot.docs.first.id;
+
+        // Now that you have the Firebase document ID, you can query the 'stocks' sub-collection
+        QuerySnapshot stocksQuerySnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(userId)
+            .collection("Transactions")
+            .get();
+
+        print(stocksQuerySnapshot.size);
+
+        for (var doc in stocksQuerySnapshot.docs) {
+          trans.add(Trans(
+              code: doc["stockCode"],
+              dollarAmount: doc["dollarAmount"],
+              priceBought: doc["stockPrice"],
+              stockAmount: doc["stockAmount"]));
+        }
+        print(trans);
+        return trans;
+      } else {
+        return trans;
+      }
+    } catch (e) {
+      print(e);
+      return trans;
     }
   }
 }

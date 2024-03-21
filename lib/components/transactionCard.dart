@@ -7,15 +7,14 @@ import '../service/controller.dart';
 class TransactionCard extends StatefulWidget {
   final String stockCode;
   final String userId;
-  final VoidCallback onUnFav;
   final String price;
 
-  TransactionCard(
-      {super.key,
-      required this.stockCode,
-      required this.userId,
-      required this.onUnFav,
-      required this.price});
+  TransactionCard({
+    super.key,
+    required this.stockCode,
+    required this.userId,
+    required this.price,
+  });
 
   @override
   State<TransactionCard> createState() => _TransactionCardState();
@@ -24,92 +23,112 @@ class TransactionCard extends StatefulWidget {
 class _TransactionCardState extends State<TransactionCard> {
   final databaseController = DataBase_Controller();
 
-  void openChart() {}
-
-  void trade() {
-    Navigator.pushReplacementNamed(
-      context,
-      '/trade',
-      arguments: {
-        'stockCode': widget.stockCode, // Example stock code
-        'userId': widget.userId, // Example user ID
-        'price': double.parse(widget.price),
-      },
-    );
-  }
-
-  void unFav() async {
-    if (widget.userId.isNotEmpty) {
-      await databaseController.deleteStock(widget.userId, widget.stockCode);
-      widget.onUnFav();
-    }
-  }
+  void closeTrade() {}
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0), // Add horizontal margin
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: Color.fromARGB(255, 204, 136, 0),
-          width: 2.0,
-        ),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Column(
-        children: [
-          Row(
-            textDirection: TextDirection.ltr,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(widget.stockCode,
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    )),
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      elevation: 5.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      child: Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                widget.stockCode,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('\$${widget.price}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ],
+            ),
+            Column(
+              mainAxisSize:
+                  MainAxisSize.min, // Set the main axis size to minimum
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Align items to the end
+              children: [
+                Text(
+                  'Amount',
+                  style: TextStyle(
+                    fontSize: 16, // Adjusted for visual hierarchy
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey,
+                  ),
+                ),
+                Text(
+                  '\$${widget.price}', // Assuming this represents the profit value
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 25,
+            ),
+            // Column for profit label and value
+            Column(
+              mainAxisSize:
+                  MainAxisSize.min, // Set the main axis size to minimum
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Align items to the end
+              children: [
+                Text(
+                  'Profit',
+                  style: TextStyle(
+                    fontSize: 16, // Adjusted for visual hierarchy
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey,
+                  ),
+                ),
+                Text(
+                  '\$${widget.price}', // Assuming this represents the profit value
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            ElevatedButton(
+              onPressed: closeTrade,
+              child: Text(
+                "CLOSE",
+                style: TextStyle(
+                  color: Colors.red, // Text color
+                  fontWeight: FontWeight.bold, // Text bold
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  openChart();
-                },
-                icon: Icon(Icons.add_chart),
-                iconSize: 30,
-                color: Color.fromARGB(255, 53, 239, 227),
+              style: ElevatedButton.styleFrom(
+                foregroundColor:
+                    Colors.red, // Text color when using foregroundColor
+                backgroundColor: Colors.white, // Button background color
+                textStyle: TextStyle(
+                  fontWeight: FontWeight
+                      .bold, // Ensures any text in this button is bold
+                ),
+                side: BorderSide(
+                    color: Colors.red, width: 3), // Border color and width
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(10), // Slightly rounded corners
+                ),
               ),
-              IconButton(
-                onPressed: () {
-                  trade(); // Fixed typo from "tarde" to "trade"
-                },
-                icon: Icon(Icons.account_balance_wallet),
-                iconSize: 30,
-                color: Color.fromARGB(255, 251, 255, 0),
-              ),
-              IconButton(
-                onPressed: () {
-                  unFav();
-                },
-                icon: Icon(Icons.heart_broken),
-                iconSize: 30,
-                color: Color.fromARGB(255, 222, 18, 18),
-              ),
-            ],
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,12 +1,10 @@
-class Transaction {
-  final String name;
+class Trans {
   final String code;
   final double dollarAmount;
   final double stockAmount;
   final double priceBought;
 
-  Transaction({
-    required this.name,
+  Trans({
     required this.code,
     required this.dollarAmount,
     required this.priceBought,
