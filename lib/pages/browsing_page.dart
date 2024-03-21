@@ -22,7 +22,6 @@ class _BrowsingPageState extends State<BrowsingPage> {
   final TextEditingController _queryController = TextEditingController();
 
   String userID = '';
-  List _currentFav = [];
   final db = DataBase_Controller();
 
   @override
@@ -34,14 +33,6 @@ class _BrowsingPageState extends State<BrowsingPage> {
       setState(() {
         userID = user.uid;
       });
-      getCurrentFav();
-    }
-  }
-
-  void getCurrentFav() async {
-    if (userID.isNotEmpty) {
-      _currentFav = await db.getUserStocksByCustomId(userID);
-      setState(() {});
     }
   }
 

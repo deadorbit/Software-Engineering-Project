@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,10 +39,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
           );
         });
     try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailController.text,
-          password: _passwordController.text,
-        );
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
       createUserData();
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/nav');
@@ -50,26 +52,40 @@ class _RegistrationFormState extends State<RegistrationForm> {
     }
   }
 
-  void createUserData() async{
-    final User? user = auth.currentUser;
-    final usersCollection = firestore.collection('Users');
-    String uid = "";
-    String email = "";
-    String? name = _usernameController.text;
+  void createUserData() async {
+    try {
+      final User? user = auth.currentUser;
+      if (user == null) {
+        throw Exception(
+          "User not logged in",
+        );
+      }
 
-    if (user != null) {
-      uid = user.uid;
-      email = user.email!; // Assuming email is not null
+      final usersCollection = firestore.collection('Users');
+      final uid = user.uid;
+      final email = user.email!;
+      final name = _usernameController.text;
 
-      UserModel userData = UserModel(
+      final userData = UserModel(
         uid: uid,
         name: name,
-        email: email, 
+        email: email,
+        balance: 0,
+        totalProfit: 0,
       );
-      userData.createUser(usersCollection);
-    } 
 
-    Navigator.pop(context);// end loading icon
+      await userData
+          .createUser(usersCollection); // Await the completion of the creation
+
+      Navigator.pop(context);
+    } on Exception catch (error) {
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => ErrorDialog(errorMessage: error.toString()),
+      );
+    } //finally {}
   }
 
   // ... other methods for handling form input, validation, and submission
@@ -156,7 +172,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 
-    Future<void> authError(BuildContext context, FirebaseException error) async {
+  Future<void> authError(BuildContext context, FirebaseException error) async {
     print(error.code);
     // Create a user-friendly error message based on the error code
     String errorMessage = "";
@@ -165,10 +181,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
         errorMessage = "Please enter a valid email address.";
         break;
       case "weak-password":
-        errorMessage = "Your password is too weak. Please create a stronger password.";
+        errorMessage =
+            "Your password is too weak. Please create a stronger password.";
         break;
       case "email-already-in-use":
-        errorMessage = "The email address is already in use by another account.";
+        errorMessage =
+            "The email address is already in use by another account.";
         break;
       case "user-not-found":
         errorMessage = "The email address could not be found.";
@@ -177,10 +195,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
         errorMessage = "Invalid email or password combination.";
         break;
       case "too-many-requests":
-        errorMessage = "Too many requests have been made to the server. Please try again later.";
+        errorMessage =
+            "Too many requests have been made to the server. Please try again later.";
         break;
       default:
-        errorMessage = "An error occurred during authentication. Please try again later.";
+        errorMessage =
+            "An error occurred during authentication. Please try again later.";
     }
 
     //Create Alert Dialog using error message

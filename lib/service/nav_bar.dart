@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineering_project/pages/browsing_page.dart';
-import 'package:software_engineering_project/pages/favorite_page.dart';
-import 'package:software_engineering_project/pages/history_page.dart';
-import 'package:software_engineering_project/pages/learn_page.dart';
 
+import '../pages/browsing_page.dart';
+import '../pages/favorite_page.dart';
+import '../pages/history_page.dart';
+import '../pages/learn_page.dart';
+import '../pages/news_page.dart';
 import '../pages/trading_page.dart';
 
 class NavBar extends StatefulWidget {
@@ -53,6 +54,7 @@ class _NavBarState extends State<NavBar> {
   final List<Widget> _pages = [
     FavoritePage(),
     BrowsingPage(),
+    NewsPage(),
     HistoryPage(),
     LearnPage(),
   ];
@@ -68,6 +70,7 @@ class _NavBarState extends State<NavBar> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Fav'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'News'),
           BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Learn'),
         ],
