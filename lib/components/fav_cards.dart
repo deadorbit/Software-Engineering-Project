@@ -7,14 +7,17 @@ import '../service/controller.dart';
 class MyFavCard extends StatefulWidget {
   final String stockCode;
   final String userId;
-  final VoidCallback onUnFav;
   final String price;
 
-  MyFavCard(
+  final VoidCallback onUnFav;
+  final VoidCallback onOpenChart;
+
+  const MyFavCard(
       {super.key,
       required this.stockCode,
       required this.userId,
       required this.onUnFav,
+      required this.onOpenChart,
       required this.price});
 
   @override
@@ -43,7 +46,9 @@ class _MyFavCardState extends State<MyFavCard> {
     }
   } */
 
-  void openChart() {}
+  void openChart() {
+    widget.onOpenChart();
+  }
 
   void trade() {}
 

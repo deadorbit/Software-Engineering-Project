@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,25 +53,39 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   void createUserData() async {
-    final User? user = auth.currentUser;
-    final usersCollection = firestore.collection('Users');
-    String uid = "";
-    String email = "";
-    String? name = _usernameController.text;
+    try {
+      final User? user = auth.currentUser;
+      if (user == null) {
+        throw Exception(
+          "User not logged in",
+        );
+      }
 
-    if (user != null) {
-      uid = user.uid;
-      email = user.email!; // Assuming email is not null
+      final usersCollection = firestore.collection('Users');
+      final uid = user.uid;
+      final email = user.email!;
+      final name = _usernameController.text;
 
-      UserModel userData = UserModel(
+      final userData = UserModel(
         uid: uid,
         name: name,
         email: email,
+        balance: 0,
+        totalProfit: 0,
       );
-      userData.createUser(usersCollection);
-    }
 
-    Navigator.pop(context); // end loading icon
+      await userData
+          .createUser(usersCollection); // Await the completion of the creation
+
+      Navigator.pop(context);
+    } on Exception catch (error) {
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => ErrorDialog(errorMessage: error.toString()),
+      );
+    } //finally {}
   }
 
   // ... other methods for handling form input, validation, and submission

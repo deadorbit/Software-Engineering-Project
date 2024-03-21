@@ -44,6 +44,8 @@ dependencies:
   page_transition: ^2.1.0
   firebase_auth: ^4.17.4
   url_launcher: ^6.2.5
+  fl_chart: ^0.66.2
+  modal_bottom_sheet: ^3.0.0
 
 dev_dependencies:
   flutter_test:

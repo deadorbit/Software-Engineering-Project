@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:software_engineering_project/components/charts/chart_display.dart';
 import '../components/fav_cards.dart';
 import '../models/stock_model.dart';
 import '../service/controller.dart';
@@ -83,6 +85,16 @@ class _FavoritePageState extends State<FavoritePage> {
     });
   }
 
+  void onOpenStock(String stockCode) async {
+    await showMaterialModalBottomSheet(
+      context: context,
+      expand: true, // Makes the sheet expand to full height
+      backgroundColor:
+          Colors.transparent, // Set background color to transparent
+      builder: (context) => ChartDisplay(stockTicker: stockCode),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +106,7 @@ class _FavoritePageState extends State<FavoritePage> {
             icon: const Icon(Icons.logout),
           ),
         ],
-        title: Stack(
+        title: const Stack(
           children: <Widget>[
             Align(
               alignment: Alignment.center,
@@ -104,14 +116,14 @@ class _FavoritePageState extends State<FavoritePage> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/background.png'),
             fit: BoxFit.cover,
           ),
         ),
         child: _stocks.isEmpty
-            ? Center(
+            ? const Center(
                 child: Text(
                   'No saved quotes. Add some in the Browsing Page',
                   style: TextStyle(
@@ -132,8 +144,11 @@ class _FavoritePageState extends State<FavoritePage> {
                         onUnFav: () => setState(() {
                           onUnFav(_stocks[index].code);
                         }),
+                        onOpenChart: () => setState(() {
+                          onOpenStock(_stocks[index].code);
+                        }),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],

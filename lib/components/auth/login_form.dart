@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:software_engineering_project/components/auth/forgot_password.dart';
 import 'package:software_engineering_project/pages/auth/landing_page.dart';
 import 'package:software_engineering_project/components/auth/error_dialog.dart';
 
@@ -90,7 +91,24 @@ class _LoginFormState extends State<LoginForm> {
               return null; // Input is valid
             },
           ),
-          const SizedBox(height: 36),
+          const SizedBox(height: 6),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      const ForgotPasswordPopup(),
+                ),
+                child: const Text(
+                  'Forgot password?',
+                  style: TextStyle(color: Colors.green), // Style the text
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
           Row(
             mainAxisAlignment:
                 MainAxisAlignment.spaceBetween, // Space buttons evenly
