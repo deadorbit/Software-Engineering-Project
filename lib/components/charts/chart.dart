@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:software_engineering_project/service/api_manipulation.dart';
+
+Future<List<FlSpot>> getStockHistory(String stockTicker) async {
+  APIManipulation manipulation = APIManipulation();
+  await manipulation.getOneMonthJson(stockTicker);
+  return [];
+}
 
 class Chart extends StatelessWidget {
   final String stockTicker;
