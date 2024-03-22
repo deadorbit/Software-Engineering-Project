@@ -3,15 +3,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-<<<<<<< HEAD
-=======
 import 'package:software_engineering_project/components/auth/forgot_password.dart';
 import 'package:software_engineering_project/pages/auth/landing_page.dart';
->>>>>>> dev
 import 'package:software_engineering_project/components/auth/error_dialog.dart';
 
 import '../../pages/auth/landing_page.dart';
-
 
 class LoginForm extends StatefulWidget {
   final GlobalKey<FormState> formKey; // Pass the form key from the parent page
