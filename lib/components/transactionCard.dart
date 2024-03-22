@@ -66,7 +66,7 @@ class _TransactionCardState extends State<TransactionCard> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: Colors.black,
                   ),
                 ),
               ],
@@ -90,7 +90,7 @@ class _TransactionCardState extends State<TransactionCard> {
                   ),
                 ),
                 Text(
-                  '\$${widget.price}', // Assuming this represents the profit value
+                  '0', // Assuming this represents the profit value
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
