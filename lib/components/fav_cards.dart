@@ -9,12 +9,14 @@ class MyFavCard extends StatefulWidget {
   final String userId;
   final VoidCallback onUnFav;
   String price;
+  final VoidCallback onOpenChart;
 
   MyFavCard(
       {super.key,
       required this.stockCode,
       required this.userId,
       required this.onUnFav,
+      required this.onOpenChart,
       required this.price});
 
   @override
@@ -45,7 +47,9 @@ class _MyFavCardState extends State<MyFavCard> {
     }
   }
 
-  void openChart() {}
+  void openChart() {
+    widget.onOpenChart();
+  }
 
   void trade() {
     Navigator.pushReplacementNamed(

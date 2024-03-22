@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+<<<<<<< HEAD
+=======
+import '../components/news_card.dart';
+>>>>>>> dev
 
 class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
@@ -52,12 +56,21 @@ class _NewsPageState extends State<NewsPage> {
         // print("${jsonData[0]['title']}");
         //print(jsonData.length);
 
+<<<<<<< HEAD
         for (int i = 0; i < jsonData.length; i++) {
+=======
+        for (int i = 0; i < 2; i++) {
+          add = false;
+>>>>>>> dev
           String title = jsonData[i]['title'].toString();
           Uri link = Uri.parse(jsonData[i]['link']);
           String publisher = jsonData[i]['publisher'].toString();
           if (jsonData[i].length > 7) {
             if (!_headlines.contains(title)) {
+<<<<<<< HEAD
+=======
+              //print(title);
+>>>>>>> dev
               var photo = jsonData[i]['thumbnail'];
 
               var photo2 = photo['resolutions'][0]['url'];
@@ -79,6 +92,7 @@ class _NewsPageState extends State<NewsPage> {
             }
           });
         }
+<<<<<<< HEAD
         //  String data = jsonData[0]['title'].toString();
 
         // setState(() {
@@ -87,6 +101,8 @@ class _NewsPageState extends State<NewsPage> {
 
         // print("data");
         // print(data);
+=======
+>>>>>>> dev
 
         //TESTING PURPOSES
         // print("news");
@@ -104,6 +120,7 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+<<<<<<< HEAD
       title: const Stack(
         children: <Widget>[
           Align(
@@ -113,5 +130,45 @@ class _NewsPageState extends State<NewsPage> {
         ],
       ),
     ));
+=======
+          title: const Stack(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: Text("Breaking News",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ),
+            ],
+          ),
+        ),
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            children: [
+              _headlines.isEmpty
+                  ? const Center(child: Text('Loading...'))
+                  : Expanded(
+                      child: ListView.builder(
+                          itemCount: _headlines.length,
+                          itemBuilder: (context, index) {
+                            return NewsCard(
+                              headline: _headlines[index],
+                              publisher: _publishers[index],
+                              thumbnail: _thumbnails[index],
+                              url: _links[index],
+                            );
+                          }))
+            ],
+          ),
+        ));
+>>>>>>> dev
   }
 }

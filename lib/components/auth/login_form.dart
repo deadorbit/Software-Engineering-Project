@@ -3,6 +3,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+<<<<<<< HEAD
+=======
+import 'package:software_engineering_project/components/auth/forgot_password.dart';
+import 'package:software_engineering_project/pages/auth/landing_page.dart';
+>>>>>>> dev
 import 'package:software_engineering_project/components/auth/error_dialog.dart';
 
 import '../../pages/auth/landing_page.dart';
@@ -92,7 +97,24 @@ class _LoginFormState extends State<LoginForm> {
               return null; // Input is valid
             },
           ),
-          const SizedBox(height: 36),
+          const SizedBox(height: 6),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      const ForgotPasswordPopup(),
+                ),
+                child: const Text(
+                  'Forgot password?',
+                  style: TextStyle(color: Colors.green), // Style the text
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
           Row(
             mainAxisAlignment:
                 MainAxisAlignment.spaceBetween, // Space buttons evenly
@@ -126,18 +148,15 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> authError(BuildContext context, FirebaseException error) async {
-    print(error.code);
     // Create a user-friendly error message based on the error code
     String errorMessage = "";
     switch (error.code) {
       case "invalid-email":
         errorMessage = "Please enter a valid email address.";
         break;
-      case "weak-password":
-        errorMessage = "Your password is too weak. Please create a stronger password.";
-        break;
       case "email-already-in-use":
-        errorMessage = "The email address is already in use by another account.";
+        errorMessage =
+            "The email address is already in use by another account.";
         break;
       case "user-not-found":
         errorMessage = "The email address could not be found.";
@@ -146,13 +165,15 @@ class _LoginFormState extends State<LoginForm> {
         errorMessage = "Invalid email or password combination.";
         break;
       case "too-many-requests":
-        errorMessage = "Too many requests have been made to the server. Please try again later.";
+        errorMessage =
+            "Too many requests have been made to the server. Please try again later.";
         break;
       default:
-        errorMessage = "An error occurred during authentication. Please try again later.";
+        errorMessage =
+            "An error occurred during authentication. Please try again later.";
     }
 
-  //Create Alert Dialog
+    //Create Alert Dialog
     showDialog(
       context: context,
       barrierDismissible: true,
