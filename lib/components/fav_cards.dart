@@ -36,13 +36,10 @@ class _MyFavCardState extends State<MyFavCard> {
       var resp = await http
           .get(Uri.parse('http://10.0.2.2:8000/stock/$stockCode1/time/1d'));
       // var resp = await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
-      var jsonData = jsonDecode(resp.body.toString());
+      var jsonData = jsonDecode(resp.body);
       print(jsonData);
-      String responseString =
-          "[{\"Open\":174.0899963379,\"High\":176.6049957275,\"Low\":173.0299987793,\"Close\":176.0800018311,\"Volume\":54808559,\"Dividends\":0.0,\"Stock Splits\":0.0}]";
-      print(responseString);
-      var responseObject = jsonDecode(responseString);
-      print(responseObject);
+      var jsonData2 = jsonDecode(jsonData);
+      print(jsonData2[0]['Close']);
     } catch (e) {
       print(e);
     }

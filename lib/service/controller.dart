@@ -198,10 +198,9 @@ class DataBase_Controller {
             .collection('Users')
             .doc(userId)
             .collection("Transactions")
+            .where("open", isEqualTo: 1)
+            .orderBy("timestamp", descending: true)
             .get();
-
-        print(stocksQuerySnapshot.size);
-
         for (var doc in stocksQuerySnapshot.docs) {
           trans.add(Trans(
               code: doc["stockCode"],
@@ -209,7 +208,6 @@ class DataBase_Controller {
               priceBought: doc["stockPrice"],
               stockAmount: doc["stockAmount"]));
         }
-        print(trans);
         return trans;
       } else {
         return trans;
