@@ -71,13 +71,7 @@ class _TradingPageState extends State<TradingPage> {
       appBar: AppBar(
         title: Text("Trading Page"),
         centerTitle: true,
-        backgroundColor: Colors.deepPurple,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () => Navigator.pushReplacementNamed(context, '/nav'),
-          ),
-        ],
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -102,7 +96,7 @@ class _TradingPageState extends State<TradingPage> {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey),
+                    color: Colors.black),
               ),
               SizedBox(height: 20),
               TextField(
@@ -120,7 +114,7 @@ class _TradingPageState extends State<TradingPage> {
               SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Color.fromARGB(255, 232, 7, 7),
+                  foregroundColor: Color.fromARGB(255, 0, 0, 0),
                   backgroundColor:
                       Colors.green, // Text color (Foreground color)
                   shape: BeveledRectangleBorder(

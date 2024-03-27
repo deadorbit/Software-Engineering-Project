@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:software_engineering_project/components/charts/chart_display.dart';
+import 'package:software_engineering_project/service/nav_bar.dart';
 import '../components/fav_cards.dart';
 import '../models/stock_model.dart';
 import '../service/controller.dart';
@@ -141,6 +142,7 @@ class _FavoritePageState extends State<FavoritePage> {
                         onOpenChart: () => setState(() {
                           onOpenStock(_stocks[index].code);
                         }),
+                        navigatorKey: navigatorKey,
                       ),
                       const SizedBox(
                         height: 10,

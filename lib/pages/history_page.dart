@@ -97,7 +97,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       TransactionCard(
                         onClose: onClose,
                         open: _transactions[index].open,
-                        profit: _transactions[index].profit,
+                        profitClosed: _transactions[index].profit,
                         priceBought: _transactions[index].priceBought,
                         stockCode: _transactions[index].code,
                         userId: userId,

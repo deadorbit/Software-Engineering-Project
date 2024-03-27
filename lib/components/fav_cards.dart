@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../pages/trading_page.dart';
 import '../service/controller.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class MyFavCard extends StatefulWidget {
   final String stockCode;
   final String userId;
   final VoidCallback onUnFav;
   final VoidCallback onOpenChart;
+  final GlobalKey<NavigatorState> navigatorKey;
 
   MyFavCard({
     super.key,
@@ -16,6 +19,7 @@ class MyFavCard extends StatefulWidget {
     required this.userId,
     required this.onUnFav,
     required this.onOpenChart,
+    required this.navigatorKey,
   });
 
   @override
@@ -55,15 +59,12 @@ class _MyFavCardState extends State<MyFavCard> {
   }
 
   void trade() {
-    Navigator.pushReplacementNamed(
-      context,
-      '/trade',
-      arguments: {
-        'stockCode': widget.stockCode, // Example stock code
-        'userId': widget.userId, // Example user ID
-        'price': double.parse(price),
-      },
-    );
+    widget.navigatorKey.currentState?.push(MaterialPageRoute(
+        builder: (context) => TradingPage(
+              stockCode: widget.stockCode,
+              userId: widget.userId,
+              price: double.parse(price),
+            )));
   }
 
   void unFav() async {

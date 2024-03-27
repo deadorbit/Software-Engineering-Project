@@ -10,7 +10,7 @@ class TransactionCard extends StatefulWidget {
   final double priceBought;
   final double amountStock;
   final double amountDollar;
-  final double profit;
+  final double profitClosed;
   final bool open;
   final String transId;
   final VoidCallback onClose;
@@ -23,7 +23,7 @@ class TransactionCard extends StatefulWidget {
       required this.amountDollar,
       required this.amountStock,
       required this.open,
-      required this.profit,
+      required this.profitClosed,
       required this.transId,
       required this.onClose});
 
@@ -34,7 +34,7 @@ class TransactionCard extends StatefulWidget {
 class _TransactionCardState extends State<TransactionCard> {
   final databaseController = DataBase_Controller();
   String currentPrice = "0";
-  double profit = 0;
+  double profitOpen = 0;
 
   @override
   void initState() {
@@ -53,9 +53,10 @@ class _TransactionCardState extends State<TransactionCard> {
       String string = price.toStringAsFixed(2);
       double pripeRound = double.parse(string);
       double profit1 = widget.amountStock * (pripeRound - widget.priceBought);
+
       setState(() {
         currentPrice = string;
-        profit = profit1;
+        profitOpen = profit1;
       });
     } catch (e) {
       print(e);
@@ -64,8 +65,10 @@ class _TransactionCardState extends State<TransactionCard> {
 
   void closeTrade() async {
     double baalce = await databaseController.getUserBalance(widget.userId);
-    databaseController.updateUserBalance(widget.userId, baalce + profit);
-    databaseController.closeTransaction(widget.userId, profit, widget.transId);
+    databaseController.updateUserBalance(
+        widget.userId, baalce + widget.amountDollar + profitOpen);
+    databaseController.closeTransaction(
+        widget.userId, profitOpen, widget.transId);
     widget.onClose();
   }
 
@@ -128,20 +131,37 @@ class _TransactionCardState extends State<TransactionCard> {
                       fontWeight: FontWeight.normal,
                       color: Colors.grey),
                 ),
-                SizedBox(
-                  width: 80,
-                  child: Text(
-                    '${profit.toStringAsFixed(2)}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: profit == 0.0
-                          ? Colors.grey
-                          : (profit < 0 ? Colors.red : Colors.blue),
-                    ),
-                  ),
-                ),
+                widget.open
+                    ? SizedBox(
+                        width: 80,
+                        child: Text(
+                          '${profitOpen.toStringAsFixed(2)}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: profitOpen == 0.0
+                                ? Colors.grey
+                                : (profitOpen < 0 ? Colors.red : Colors.blue),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        width: 80,
+                        child: Text(
+                          '${widget.profitClosed.toStringAsFixed(2)}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: widget.profitClosed == 0.0
+                                ? Colors.grey
+                                : (widget.profitClosed < 0
+                                    ? Colors.red
+                                    : Colors.blue),
+                          ),
+                        ),
+                      )
               ],
             ),
             widget.open
@@ -161,7 +181,18 @@ class _TransactionCardState extends State<TransactionCard> {
                       ),
                     ),
                   )
-                : SizedBox(width: 10),
+                : SizedBox(
+                    width: 100,
+                    child: Text(
+                      'CLOSED',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),
