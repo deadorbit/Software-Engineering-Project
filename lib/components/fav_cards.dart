@@ -8,16 +8,15 @@ class MyFavCard extends StatefulWidget {
   final String stockCode;
   final String userId;
   final VoidCallback onUnFav;
-  String price;
   final VoidCallback onOpenChart;
 
-  MyFavCard(
-      {super.key,
-      required this.stockCode,
-      required this.userId,
-      required this.onUnFav,
-      required this.onOpenChart,
-      required this.price});
+  MyFavCard({
+    super.key,
+    required this.stockCode,
+    required this.userId,
+    required this.onUnFav,
+    required this.onOpenChart,
+  });
 
   @override
   State<MyFavCard> createState() => _MyFavCardState();
@@ -25,6 +24,8 @@ class MyFavCard extends StatefulWidget {
 
 class _MyFavCardState extends State<MyFavCard> {
   final databaseController = DataBase_Controller();
+
+  String price = "0";
 
   @override
   void initState() {
@@ -36,12 +37,14 @@ class _MyFavCardState extends State<MyFavCard> {
     var stockCode1 = widget.stockCode;
     try {
       var resp = await http
-          .get(Uri.parse('http://10.0.2.2:8000/stock/$stockCode1/time/1d'));
+          .get(Uri.parse('http://10.0.2.2:5000/stock/$stockCode1/time/1d'));
       // var resp = await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
       var jsonData = jsonDecode(resp.body);
-      print(jsonData);
       var jsonData2 = jsonDecode(jsonData);
-      print(jsonData2[0]['Close']);
+      String price1 = jsonData2[0]['Close'].toStringAsFixed(2);
+      setState(() {
+        price = price1;
+      });
     } catch (e) {
       print(e);
     }
@@ -58,7 +61,7 @@ class _MyFavCardState extends State<MyFavCard> {
       arguments: {
         'stockCode': widget.stockCode, // Example stock code
         'userId': widget.userId, // Example user ID
-        'price': double.parse(widget.price),
+        'price': double.parse(price),
       },
     );
   }
@@ -100,7 +103,7 @@ class _MyFavCardState extends State<MyFavCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('\$${widget.price}',
+                    Text('\$${price}',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

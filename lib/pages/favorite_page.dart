@@ -133,7 +133,6 @@ class _FavoritePageState extends State<FavoritePage> {
                   return Column(
                     children: [
                       MyFavCard(
-                        price: getPriceByCode(_stocks[index].code),
                         stockCode: _stocks[index].code,
                         userId: userId,
                         onUnFav: () => setState(() {

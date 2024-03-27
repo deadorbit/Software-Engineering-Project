@@ -76,7 +76,6 @@ class DataBase_Controller {
             .doc(userId)
             .collection("FavStocks")
             .get();
-        print(stocksQuerySnapshot.size);
 
         for (var doc in stocksQuerySnapshot.docs) {
           favStocks.add(Stock(name: doc["name"], code: doc["code"]));
@@ -172,7 +171,7 @@ class DataBase_Controller {
         'dollarAmount': dollarAmount,
         'stockAmount': stockAmount,
         'open': 1,
-        'profit': 0,
+        'profit': 0.0,
         'timestamp': FieldValue.serverTimestamp(),
       });
     } catch (err) {
@@ -181,6 +180,53 @@ class DataBase_Controller {
   }
 
   Future<List<Trans>> getTransactions(String customUserId) async {
+    try {
+      // Clear the list each time to prevent duplication
+      trans.clear();
+
+      // Query the 'Users' collection to find the document with the matching custom ID
+      QuerySnapshot userQuerySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('userId', isEqualTo: customUserId)
+          .get();
+
+      // Check if a document with the custom ID exists
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        // Assuming the custom ID is unique and only one document should match
+        var userId = userQuerySnapshot.docs.first.id;
+
+        // Query the 'Transactions' sub-collection
+        QuerySnapshot stocksQuerySnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(userId)
+            .collection("Transactions")
+            .orderBy("open", descending: true)
+            .orderBy("timestamp", descending: true)
+            .get();
+
+        // Populate the transactions list with the latest data
+        for (var doc in stocksQuerySnapshot.docs) {
+          trans.add(Trans(
+              code: doc["stockCode"],
+              dollarAmount: doc["dollarAmount"],
+              priceBought: doc["stockPrice"],
+              stockAmount: doc["stockAmount"],
+              open: doc["open"] == 1,
+              profit: doc["profit"],
+              ID: doc.id));
+        }
+        return trans;
+      } else {
+        return trans;
+      }
+    } catch (e) {
+      print(e);
+      return trans; // Return the potentially cleared or empty list if an error occurs
+    }
+  }
+
+  Future<void> closeTransaction(
+      String customUserId, double profit, String transId) async {
     try {
       // Query the 'Users' collection to find the document with the matching custom ID
       QuerySnapshot userQuerySnapshot = await FirebaseFirestore.instance
@@ -194,27 +240,18 @@ class DataBase_Controller {
         var userId = userQuerySnapshot.docs.first.id;
 
         // Now that you have the Firebase document ID, you can query the 'stocks' sub-collection
-        QuerySnapshot stocksQuerySnapshot = await FirebaseFirestore.instance
+        await FirebaseFirestore.instance
             .collection('Users')
             .doc(userId)
             .collection("Transactions")
-            .where("open", isEqualTo: 1)
-            .orderBy("timestamp", descending: true)
-            .get();
-        for (var doc in stocksQuerySnapshot.docs) {
-          trans.add(Trans(
-              code: doc["stockCode"],
-              dollarAmount: doc["dollarAmount"],
-              priceBought: doc["stockPrice"],
-              stockAmount: doc["stockAmount"]));
-        }
-        return trans;
-      } else {
-        return trans;
-      }
+            .doc(transId)
+            .update({
+          "open": 0,
+          "profit": profit,
+        });
+      } else {}
     } catch (e) {
       print(e);
-      return trans;
     }
   }
 }

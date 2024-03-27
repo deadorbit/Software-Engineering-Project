@@ -23,28 +23,13 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   void initState() {
     super.initState();
-    readJson();
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       setState(() {
         userId = user.uid; // Assign userId if user is logged in
       });
     }
-    getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
-  }
-
-  Future<void> readJson() async {
-    final String response =
-        await rootBundle.loadString('assets/data/prices.json');
-
-    final data = await json.decode(response);
-
-    setState(() {
-      _prices = data["prices"];
-
-      // Used for testing purposes only -- functionality testing
-      // print(_stocks);
-    });
+    getTransactions(); // Invoke getUsers here or wherever it makes sense after userId is set
   }
 
   // Function to get price by stock code
@@ -62,22 +47,22 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
+  void onClose() {
+    getTransactions();
+  }
+
   final databaseController = DataBase_Controller();
   String result = "Loading..."; // Initial state of the result
   List<Trans> _transactions = [];
-  void getUsers() async {
+  void getTransactions() async {
     if (userId.isNotEmpty) {
-      _transactions = await databaseController.getTransactions(userId);
+      var updatedTransactions =
+          await databaseController.getTransactions(userId);
       setState(() {
-        // Update UI after fetching stocks
+        _transactions =
+            updatedTransactions; // This will refresh the UI with the updated list
       });
     }
-  }
-
-  void onUnFav(String stockCode) {
-    setState(() {
-      _transactions.removeWhere((stock) => stock.code == stockCode);
-    });
   }
 
   @override
@@ -110,9 +95,15 @@ class _HistoryPageState extends State<HistoryPage> {
                   return Column(
                     children: [
                       TransactionCard(
-                        price: getPriceByCode(_transactions[index].code),
+                        onClose: onClose,
+                        open: _transactions[index].open,
+                        profit: _transactions[index].profit,
+                        priceBought: _transactions[index].priceBought,
                         stockCode: _transactions[index].code,
                         userId: userId,
+                        amountDollar: _transactions[index].dollarAmount,
+                        amountStock: _transactions[index].stockAmount,
+                        transId: _transactions[index].ID,
                       ),
                     ],
                   );
