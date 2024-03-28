@@ -48,8 +48,7 @@ class _TransactionCardState extends State<TransactionCard> {
       var resp = await http
           .get(Uri.parse('http://10.0.2.2:5000/stock/$stockCode1/time/1d'));
       var jsonData = jsonDecode(resp.body);
-      var jsonData2 = jsonDecode(jsonData);
-      double price = jsonData2[0]['Close'];
+      double price = jsonData[0]['Close'];
       String string = price.toStringAsFixed(2);
       double pripeRound = double.parse(string);
       double profit1 = widget.amountStock * (pripeRound - widget.priceBought);

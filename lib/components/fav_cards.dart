@@ -43,9 +43,9 @@ class _MyFavCardState extends State<MyFavCard> {
       var resp = await http
           .get(Uri.parse('http://10.0.2.2:5000/stock/$stockCode1/time/1d'));
       // var resp = await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
+
       var jsonData = jsonDecode(resp.body);
-      var jsonData2 = jsonDecode(jsonData);
-      String price1 = jsonData2[0]['Close'].toStringAsFixed(2);
+      String price1 = jsonData[0]['Close'].toStringAsFixed(2);
       setState(() {
         price = price1;
       });
