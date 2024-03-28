@@ -36,7 +36,7 @@ class _MyFavCardState extends State<MyFavCard> {
     var stockCode1 = widget.stockCode;
     try {
       var resp = await http
-          .get(Uri.parse('http://10.0.2.2:8000/stock/$stockCode1/time/1d'));
+          .get(Uri.parse('http://10.0.2.2:5000/stock/$stockCode1/time/1d'));
       // var resp = await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
       var jsonData = jsonDecode(resp.body);
       print(jsonData);
