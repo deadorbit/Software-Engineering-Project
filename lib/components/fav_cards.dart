@@ -96,7 +96,7 @@ class _MyFavCardState extends State<MyFavCard> {
               Expanded(
                 child: Text(widget.stockCode,
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     )),
               ),
