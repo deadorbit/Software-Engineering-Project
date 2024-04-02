@@ -1,13 +1,20 @@
 import 'dart:convert';
+// import 'dart:ffi';
+// import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:software_engineering_project/components/charts/chart_display.dart';
+import 'package:software_engineering_project/service/nav_bar.dart';
 import '../components/fav_cards.dart';
 import '../models/stock_model.dart';
 import '../service/controller.dart';
 import "package:firebase_auth/firebase_auth.dart";
+
+//imports for browsing page
+import '../components/my_card.dart';
+import 'package:fuzzy/fuzzy.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -19,18 +26,129 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   String userId = ""; // Initialize as empty string
   List _prices = [];
+  List<Stock> _stocks = [];
+
+  //initializing lists and variables for browsing part
+  List _browsingStocks = [];
+  final List<String> _matches = [];
+  final List<String> _matchedCodes = [];
+  final TextEditingController _queryController = TextEditingController();
+  bool _isBrowsing = false;
+  final List<bool> _favs = [];
 
   @override
   void initState() {
     super.initState();
     readJson();
     final user = FirebaseAuth.instance.currentUser;
+
     if (user != null) {
       setState(() {
         userId = user.uid; // Assign userId if user is logged in
       });
     }
+
     getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
+  }
+
+  //functions for browsing
+
+  void addToFavourites(String stockName, String stockCode) {
+    setState(() {
+      Stock stock = Stock(name: stockName, code: stockCode);
+      _stocks.add(stock);
+      _isBrowsing = false;
+      _queryController.clear();
+    });
+
+    // print(_isBrowsing);
+  }
+
+  Future<void> loadStocks() async {
+    final String response =
+        await rootBundle.loadString('assets/data/stocks.json');
+
+    final data = await json.decode(response);
+
+    setState(() {
+      _browsingStocks = data["stocks"];
+
+      for (var stock in _browsingStocks) {
+        // Check if the stock code is present in the list of favorited stocks
+        bool isFavorited =
+            _stocks.any((favStock) => favStock.code == stock['code']);
+
+        // Add the 'isFavorited' field to the stock map
+        stock['isFav'] = isFavorited;
+      }
+
+      // print(_browsingStocks);
+    });
+  }
+
+  void onQueryChanged(String newQuery) {
+    loadStocks();
+
+    List<String> stockNames = [];
+    // for (var stock in _browsingStocks) {
+    //   stockNames.add(stock['name']);
+    // }
+
+    setState(() {
+      for (var stock in _browsingStocks) {
+        stockNames.add(stock['name']);
+        _matches.add(stock['name']);
+      }
+      _isBrowsing = true;
+      fuzzySearch(stockNames, newQuery);
+    });
+  }
+
+  void fuzzySearch(List stocks, String query) {
+    if (query.isEmpty) {
+      _matches.clear();
+      _matchedCodes.clear();
+      _favs.clear();
+      return;
+    }
+
+    double threshold = 1;
+
+    final fuzzy = Fuzzy(stocks,
+        options: FuzzyOptions(
+          isCaseSensitive: false,
+          findAllMatches: true,
+          threshold: threshold,
+        ));
+
+    final result = fuzzy.search(query);
+
+    //these were in my other code, but if I take them off, what happens?
+    _matches.clear();
+    _matchedCodes.clear();
+    _favs.clear();
+
+    if (query.length == 1) {
+      threshold = .8;
+    } else if (query.length < 4) {
+      threshold = .2;
+    } else {
+      threshold = 0.01;
+    }
+
+    for (var item in result) {
+      if (item.score <= threshold) {
+        _matches.add(item.item);
+
+        for (var stock in _browsingStocks) {
+          if (_matches.contains(stock['name']) &&
+              !_matchedCodes.contains(stock['code'])) {
+            _matchedCodes.add(stock['code']);
+            _favs.add(stock['isFav']);
+          }
+        }
+      }
+    }
   }
 
   Future<void> readJson() async {
@@ -69,7 +187,6 @@ class _FavoritePageState extends State<FavoritePage> {
 
   final databaseController = DataBase_Controller();
   String result = "Loading..."; // Initial state of the result
-  List<Stock> _stocks = [];
   void getUsers() async {
     if (userId.isNotEmpty) {
       _stocks = await databaseController.getUserStocksByCustomId(userId);
@@ -98,64 +215,104 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () => signUserOut(context),
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-        title: const Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: Text("Saved Quotes"),
-            ),
-          ],
-        ),
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: const Text("Saved Quotes"),
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () => signUserOut(context),
+      //       icon: const Icon(Icons.logout),
+      //     ),
+      //   ],
+      // ),
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.png'),
-            fit: BoxFit.cover,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: _stocks.isEmpty
-            ? const Center(
-                child: Text(
-                  'No saved quotes. Add some in the Browsing Page',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'serif',
-                  ),
-                ),
-              )
-            : ListView.builder(
-                itemCount: _stocks.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      MyFavCard(
-                        price: getPriceByCode(_stocks[index].code),
-                        stockCode: _stocks[index].code,
-                        userId: userId,
-                        onUnFav: () => setState(() {
-                          onUnFav(_stocks[index].code);
-                        }),
-                        onOpenChart: () => setState(() {
-                          onOpenStock(_stocks[index].code);
-                        }),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(30),
+                child: TextField(
+                    controller: _queryController,
+                    onChanged: onQueryChanged,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color.fromARGB(255, 255, 255, 255),
+                      hintText: 'Browse stocks...',
+                      hintStyle: const TextStyle(
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontWeight: FontWeight.w400,
                       ),
-                      const SizedBox(
-                        height: 10,
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            width: 2,
+                            style: BorderStyle.solid,
+                            color: Color.fromARGB(255, 204, 136, 0),
+                          )),
+                      suffixIcon: const Icon(
+                        Icons.search,
+                        color: Color.fromARGB(255, 204, 136, 0),
                       ),
-                    ],
-                  );
-                },
+                    )),
               ),
-      ),
+              _isBrowsing == false
+                  ? _stocks.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'No saved quotes. Add some in the Browsing Page',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'serif',
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: _stocks.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  MyFavCard(
+                                    stockCode: _stocks[index].code,
+                                    userId: userId,
+                                    onUnFav: () => setState(() {
+                                      onUnFav(_stocks[index].code);
+                                    }),
+                                    onOpenChart: () => setState(() {
+                                      onOpenStock(_stocks[index].code);
+                                    }),
+                                    navigatorKey: navigatorKey,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        )
+                  : Expanded(
+                      child: ListView.builder(
+                          itemCount: _matches.length,
+                          itemBuilder: (context, index) {
+                            return MyCard(
+                              addToFavourites: () => setState(() {
+                                addToFavourites(
+                                    _matches[index], _matchedCodes[index]);
+                              }),
+                              isFav: _favs[index],
+                              userID: userId,
+                              stockName: _matches[index],
+                              stockCode: _matchedCodes[index],
+                            );
+                          }))
+            ],
+          )),
     );
   }
 }

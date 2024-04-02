@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../pages/trading_page.dart';
 import '../service/controller.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class MyFavCard extends StatefulWidget {
   final String stockCode;
   final String userId;
-  final String price;
-
   final VoidCallback onUnFav;
   final VoidCallback onOpenChart;
+  final GlobalKey<NavigatorState> navigatorKey;
 
-  const MyFavCard(
-      {super.key,
-      required this.stockCode,
-      required this.userId,
-      required this.onUnFav,
-      required this.onOpenChart,
-      required this.price});
+  MyFavCard({
+    super.key,
+    required this.stockCode,
+    required this.userId,
+    required this.onUnFav,
+    required this.onOpenChart,
+    required this.navigatorKey,
+  });
 
   @override
   State<MyFavCard> createState() => _MyFavCardState();
@@ -27,7 +29,9 @@ class MyFavCard extends StatefulWidget {
 class _MyFavCardState extends State<MyFavCard> {
   final databaseController = DataBase_Controller();
 
-  /*@override
+  String price = "0";
+
+  @override
   void initState() {
     super.initState();
     getPrice(); // Fetch the price when the widget is first created
@@ -37,20 +41,31 @@ class _MyFavCardState extends State<MyFavCard> {
     var stockCode1 = widget.stockCode;
     try {
       var resp = await http
-          .get(Uri.parse('http://10.0.2.2:8000/stock/$stockCode1/time/1d'));
+          .get(Uri.parse('http://10.0.2.2:5000/stock/$stockCode1/time/1d'));
       // var resp = await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
+
       var jsonData = jsonDecode(resp.body);
-      widget._price = jsonData["Close"].toDouble();
+      String price1 = jsonData[0]['Close'].toStringAsFixed(2);
+      setState(() {
+        price = price1;
+      });
     } catch (e) {
       print(e);
     }
-  } */
+  }
 
   void openChart() {
     widget.onOpenChart();
   }
 
-  void trade() {}
+  void trade() {
+    widget.navigatorKey.currentState?.push(MaterialPageRoute(
+        builder: (context) => TradingPage(
+              stockCode: widget.stockCode,
+              userId: widget.userId,
+              price: double.parse(price),
+            )));
+  }
 
   void unFav() async {
     if (widget.userId.isNotEmpty) {
@@ -81,7 +96,7 @@ class _MyFavCardState extends State<MyFavCard> {
               Expanded(
                 child: Text(widget.stockCode,
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     )),
               ),
@@ -89,7 +104,7 @@ class _MyFavCardState extends State<MyFavCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('\$${widget.price}',
+                    Text('\$${price}',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

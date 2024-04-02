@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 import '../components/news_card.dart';
 
 class NewsPage extends StatefulWidget {

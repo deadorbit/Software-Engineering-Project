@@ -6,6 +6,7 @@ import '../components/my_card.dart';
 import 'package:fuzzy/fuzzy.dart';
 import '../service/controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../models/stock_model.dart';
 
 class BrowsingPage extends StatefulWidget {
   const BrowsingPage({super.key});
@@ -18,6 +19,9 @@ class _BrowsingPageState extends State<BrowsingPage> {
   List _stocks = [];
   final List<String> _matches = [];
   final List<String> _matchedCodes = [];
+  bool _isBrowsing = true;
+  final List<bool> _favs = [];
+  List<Stock> _favStocks = [];
 
   final TextEditingController _queryController = TextEditingController();
 
@@ -46,6 +50,13 @@ class _BrowsingPageState extends State<BrowsingPage> {
 
     setState(() {
       _stocks = data["stocks"];
+
+      for (var stock in _stocks) {
+        bool isFavorited =
+            _favStocks.any((favStock) => favStock.code == stock['code']);
+
+        stock['isFav'] = isFavorited;
+      }
 
       // Used for testing purposes only -- functionality testing
       // print(_stocks);
@@ -108,6 +119,7 @@ class _BrowsingPageState extends State<BrowsingPage> {
           if (_matches.contains(stock['name']) &&
               !_matchedCodes.contains(stock['code'])) {
             _matchedCodes.add(stock['code']);
+            _favs.add(stock['isFav']);
 
             //TESTING PURPOSES: check if the codes are being matched correctly with stocks currently being searched
             // print(_matchedCodes);
@@ -171,6 +183,10 @@ class _BrowsingPageState extends State<BrowsingPage> {
                     itemCount: _matches.length,
                     itemBuilder: (context, index) {
                       return MyCard(
+                        addToFavourites: () => setState(() {
+                          _isBrowsing = false;
+                        }),
+                        isFav: _favs[index],
                         userID: userID,
                         stockName: _matches[index],
                         stockCode: _matchedCodes[index],
