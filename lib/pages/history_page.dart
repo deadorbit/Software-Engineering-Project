@@ -68,17 +68,6 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('lib/images/background.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-
-        
-=======
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Transaction"),
@@ -120,7 +109,6 @@ class _HistoryPageState extends State<HistoryPage> {
                   );
                 },
               ),
->>>>>>> dev
       ),
     );
   }
