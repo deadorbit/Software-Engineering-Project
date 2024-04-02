@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:software_engineering_project/pages/auth/profile_page.dart';
 
 import '../pages/browsing_page.dart';
 import '../pages/favorite_page.dart';
@@ -23,10 +24,10 @@ class NavBarState extends State<NavBar> {
   List<Widget> _buildScreens() {
     return [
       FavoritePage(),
-      BrowsingPage(),
-      NewsPage(),
       HistoryPage(),
+      NewsPage(),
       LearnPage(),
+      ProfilePage()
     ];
   }
 
@@ -62,13 +63,13 @@ class NavBarState extends State<NavBar> {
                 Icons.favorite,
                 color: Colors.black,
               ),
-              label: 'Fav'),
+              label: 'Favorites'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.search,
+                Icons.history,
                 color: Colors.black,
               ),
-              label: 'Search'),
+              label: 'Trades'),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.newspaper,
@@ -77,16 +78,16 @@ class NavBarState extends State<NavBar> {
               label: 'News'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.history,
-                color: Colors.black,
-              ),
-              label: 'History'),
-          BottomNavigationBarItem(
-              icon: Icon(
                 Icons.school,
                 color: Colors.black,
               ),
               label: 'Learn'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
+                color: Colors.black,
+              ),
+              label: 'Settings'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
