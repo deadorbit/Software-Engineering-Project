@@ -288,9 +288,6 @@ class _FavoritePageState extends State<FavoritePage> {
                                     }),
                                     navigatorKey: navigatorKey,
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
                                 ],
                               );
                             },

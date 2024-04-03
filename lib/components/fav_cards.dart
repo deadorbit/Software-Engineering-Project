@@ -76,69 +76,64 @@ class _MyFavCardState extends State<MyFavCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0), // Add horizontal margin
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: Color.fromARGB(255, 204, 136, 0),
-          width: 2.0,
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      elevation: 5.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      child: Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Row(
+          textDirection: TextDirection.ltr,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(widget.stockCode,
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('\$${price}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ),
+            ),
+            IconButton(
+              hoverColor: Colors.blue,
+              onPressed: () {
+                openChart();
+              },
+              icon: Icon(Icons.add_chart),
+              iconSize: 30,
+              color: Color.fromARGB(255, 9, 158, 148),
+            ),
+            IconButton(
+              hoverColor: Colors.yellow,
+              onPressed: () {
+                trade(); // Fixed typo from "tarde" to "trade"
+              },
+              icon: Icon(Icons.account_balance_wallet),
+              iconSize: 30,
+              color: Color.fromARGB(255, 203, 133, 2),
+            ),
+            IconButton(
+              onPressed: () {
+                unFav();
+              },
+              hoverColor: Color.fromARGB(255, 105, 9, 2),
+              icon: const Icon(Icons.heart_broken),
+              iconSize: 30,
+              color: Color.fromARGB(255, 222, 18, 18),
+            ),
+          ],
         ),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Column(
-        children: [
-          Row(
-            textDirection: TextDirection.ltr,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(widget.stockCode,
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('\$${price}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ],
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  openChart();
-                },
-                icon: Icon(Icons.add_chart),
-                iconSize: 30,
-                color: Color.fromARGB(255, 53, 239, 227),
-              ),
-              IconButton(
-                onPressed: () {
-                  trade(); // Fixed typo from "tarde" to "trade"
-                },
-                icon: Icon(Icons.account_balance_wallet),
-                iconSize: 30,
-                color: Color.fromARGB(255, 251, 255, 0),
-              ),
-              IconButton(
-                onPressed: () {
-                  unFav();
-                },
-                icon: Icon(Icons.heart_broken),
-                iconSize: 30,
-                color: Color.fromARGB(255, 222, 18, 18),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:software_engineering_project/pages/auth/profile_page.dart';
+import 'package:software_engineering_project/pages/portfolio.dart';
 
 import '../pages/browsing_page.dart';
 import '../pages/favorite_page.dart';
@@ -27,7 +28,6 @@ class NavBarState extends State<NavBar> {
       HistoryPage(),
       NewsPage(),
       LearnPage(),
-      ProfilePage()
     ];
   }
 
