@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:software_engineering_project/pages/auth/profile_page.dart';
+import 'package:software_engineering_project/pages/portfolio.dart';
+import 'package:software_engineering_project/pages/settings_page.dart';
 import 'package:software_engineering_project/pages/trading_page.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
 import 'pages/auth/auth_page.dart';
@@ -10,6 +13,9 @@ import 'pages/browsing_page.dart';
 import 'pages/favorite_page.dart';
 import 'pages/history_page.dart';
 import 'firebase_options.dart';
+
+//notifications
+import 'package:flutter/foundation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +42,8 @@ class MyApp extends StatelessWidget {
         '/browsing': (context) => const BrowsingPage(),
         '/history': (context) => const HistoryPage(),
         '/nav': (context) => const NavBar(),
+        '/settings': (context) => const SettingsPage(),
+        '/portfolio': (context) => const PortfolioPage(),
         '/trade': (context) {
           final args = ModalRoute.of(context)!.settings.arguments
               as Map<String, dynamic>;
