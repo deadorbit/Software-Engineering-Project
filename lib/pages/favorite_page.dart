@@ -129,7 +129,7 @@ class _FavoritePageState extends State<FavoritePage> {
     _favs.clear();
 
     if (query.length == 1) {
-      threshold = .8;
+      threshold = .99;
     } else if (query.length < 4) {
       threshold = .2;
     } else {
@@ -287,9 +287,6 @@ class _FavoritePageState extends State<FavoritePage> {
                                       onOpenStock(_stocks[index].code);
                                     }),
                                     navigatorKey: navigatorKey,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
                                   ),
                                 ],
                               );

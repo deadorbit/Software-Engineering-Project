@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         '/browsing': (context) => const BrowsingPage(),
         '/history': (context) => const HistoryPage(),
         '/nav': (context) => const NavBar(),
-        '/settings': (context) => const SettingsPage(),
+        '/profile': (context) => ProfilePage(),
         '/portfolio': (context) => const PortfolioPage(),
         '/trade': (context) {
           final args = ModalRoute.of(context)!.settings.arguments

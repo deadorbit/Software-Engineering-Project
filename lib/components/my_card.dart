@@ -32,7 +32,9 @@ class _MyCardState extends State<MyCard> {
     }
     setState(() {
       // _isFavorited = true;
-      widget.addToFavourites;
+      if (widget.isFav == false) {
+        widget.addToFavourites;
+      }
     });
   }
 
