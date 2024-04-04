@@ -7,6 +7,8 @@ import 'package:software_engineering_project/components/auth/forgot_password.dar
 import 'package:software_engineering_project/pages/auth/landing_page.dart';
 import 'package:software_engineering_project/components/auth/error_dialog.dart';
 
+import '../../pages/auth/landing_page.dart';
+
 class LoginForm extends StatefulWidget {
   final GlobalKey<FormState> formKey; // Pass the form key from the parent page
 

@@ -10,7 +10,6 @@ class PasswordField extends StatefulWidget {
 }
 
 class _PasswordFieldState extends State<PasswordField> {
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -21,17 +20,18 @@ class _PasswordFieldState extends State<PasswordField> {
         prefixIcon: const Icon(Icons.lock),
         suffixIcon: _buildRequirementsIcon(), // Always display the icon
       ),
-      keyboardType: TextInputType.visiblePassword, // Avoid unintentional filtering
+      keyboardType:
+          TextInputType.visiblePassword, // Avoid unintentional filtering
       validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a password';
-              } else if (!RegExp(
-                      r"^^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-])[a-zA-Z0-9!@#$%^&*()-]{8,32}$")
-                  .hasMatch(value)) {
-                return 'Please enter a valid password.';
-              }
-              return null; // Input is valid
-            },
+        if (value == null || value.isEmpty) {
+          return 'Please enter a password';
+        } else if (!RegExp(
+                r"^^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-])[a-zA-Z0-9!@#$%^&*()-]{8,32}$")
+            .hasMatch(value)) {
+          return 'Please enter a valid password.';
+        }
+        return null; // Input is valid
+      },
     );
   }
 
@@ -48,7 +48,8 @@ class _PasswordFieldState extends State<PasswordField> {
   }
 }
 
-class RequirementsPopup extends StatelessWidget {//Temporary
+class RequirementsPopup extends StatelessWidget {
+  //Temporary
   const RequirementsPopup({super.key});
 
   @override
