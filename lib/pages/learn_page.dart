@@ -2047,6 +2047,458 @@ class _LearnPageState extends State<LearnPage> {
                         """,
                   child: Text("\nTips for Good Traders - Reconstruction - Part 2"),
                 ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers following business news
+                        \nNew business figures are published every day. A large majority of investors and traders focus on these announcements to try to take advantage of them. Permanent business news (on companies, states, etc.) has a strong influence on their trading, as it does for investors using technical analysis and fundamental analysis. This often leads to bad choices!
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDFBN"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers of business news on technical analysis
+                        \nFollowing business news has become a hobby for some traders and short-term investors. Most specialized media contribute to this addiction for news by publishing the week’s important events every week and then repeating the importance of such and such upcoming event, every day. As a result, traders focus their attention on these events and forget that there are thousands of trading opportunities every day (announcement or not).
+                        \nMy objective today is not to evoke the dangers of trading on economic announcements but to discuss their psychological effects on investors.
+                        \nAs you all know, the financial markets work on rumour. There is a saying that all traders know, "Buy the rumour and sell the news". This sentence alone summarizes the conditioning of individuals just before the publication of an announcement. Instead of being open to all possible scenarios, traders tend to look up or down.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDBNTA - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers of business news on technical analysis
+                        \nWhen an economic announcement is made, anything is possible. Refusing to consider another scenario than the one anticipated is to put oneself in danger when trading. If at the time of the announcement the movement starts in the wrong direction, the trader will insist on trading in the direction he already has in mind. He tries to interpret the slightest signal as a reversal and in some cases this leads to heavy losses.
+                        \nIf you want to trade based on business announcements, no problem (as long as you know the risks - increased volatility, etc.) but keep an open mind to all scenarios.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDBNTA - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers of business news on technical analysis
+                        \nWhen I say keep an open mind, I mean before the news is published and also after. This is another mistake that many traders make in interpreting the figure that has just been released. On the one hand, novice traders are unable to properly analyse economic data. It is not only the figure itself that counts, consensus must be taken into account (see beware of consensus) but also the previous figure and the indicator’s trend. Moreover, we must be able to understand the economic logic behind this economic data and its real impact.
+                        \nFor more seasoned traders, this is also a mistake. To want to interpret the figure is to limit oneself to seeing only one meaning, either the rise or the fall. In addition, with the development of high frequency trading and trading robots, it is sometimes impossible to understand certain price movements. In some cases, there is no logic, the price should go in one direction but it still goes in the other direction. For this reason, the figure itself must be disregarded.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDBNTA - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers of business news on technical analysis
+                        \nIf you want to trade on business announcements, just analyse the trading signals on your charts.
+                        \nIn the long term, there are also dangers in business news. You will set yourself a direction to trade in, not on the actual price trend, but according to the economic information you have heard. This amounts to basing yourself on your market sentiment to fix only one way to trade. This is obviously a mistake! Your positions should be based on price chart analysis, not intuition.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDBNTA - Part 4"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers of business news on fundamental analysis
+                        \nIf your objective is to hold your position for several months/years (which is mainly the case for equity investors), business news can push you to make mistakes.
+                        \nA large majority of investors have high expectations about business publications (publication of results, general meetings and announcements of all kinds concerning the life of the company, etc.). They expect this to create a sharp acceleration in the price towards their long-term goal.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDBNFA - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers of business news on fundamental analysis
+                        \nAnnouncements inevitably have a short-term impact on asset prices, but announcements do not reverse the long-term trend. You should not confuse the short and long term.
+                        \nA long-term trend is created on fundamentals and before you have time to see it coming.
+                        \nLet's say you bought a security that you found undervalued. A few months later, this company announces bad results. In the short term, a correction may occur but if the company is really undervalued, some investors will seize this opportunity to open a position. Poor one-off results do not call into question the fact that the company is still undervalued, nor do they call into question the fact that these fundamentals remain solid.
+                        
+                        """,
+                  child: Text("\nTips for Good Traders - TDBNFA - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers of business news on fundamental analysis
+                        \nFollowing business news too closely creates a perverse effect among individuals. It gives them the impression that they are not active enough on their stock market portfolio to suffer from the business publications. All this generates impatience and leads them to ask questions about their choice of assets and to change them.
+                        \nA bad business figure should not jeopardize your investments. It is just a waste of time for the progress of your stock market performance, but it does not call into question the fact that in the long run (if you have chosen the right assets), you will come out a winner.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDBNFA - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe dangers of business news on fundamental analysis
+                        \nThis perverse effect can also be found among investors who follow their shareholding investment's price changes too closely. If a stock price rises 10% in the short term, many will be tempted to cut and take their gains quickly. However, at the beginning, their price objective was much higher but the simple fact of following the asset’s news publications too closely, leads them to make bad decisions.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TDBNFA - Part 4"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nDon't copy other traders!
+                        \nNovice traders often try to copy traders they admire or think are performing well. This is an easy way to try to generate gains quickly in trading but eventually, it always ends in the loss of capital.
+                        \nTo copy a trader, you can either go to a copytrading platform or consult the various analyses that are published free of charge on the net (as is the case for example on Centralcharts).
+
+                        """,
+                  child: Text("\nTips for Good Traders - DCOT"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCopytrading: Everyone wins but you
+                        \nKnowing that all novice traders are attracted to the practice of copytrading, a lot of brokers have opened their own platform. This is the case, for example, with the broker Etoro (with Copytrader) and Avatrade (with Zulutrade). You only have to look at the number of registered traders to see that it is a hit with novice traders.
+                        \nWhat attracts these novices is obviously the performance. The so-called "best traders" are put forward, with performances of several hundred percent over the year. For a trader's profile to appear in the list of traders to follow they need to have achieved at least several dozen percent increase.
+
+                        """,
+                  child: Text("\nTips for Good Traders - CEWBY - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCopytrading: Everyone wins but you
+                        \nDon't fall into that trap! Don't succumb to greed! These unrealistic performances always hide non-existent or very badly constructed risk management. So yes, this can help you to win on some trades but in the long run, everyone who copies these traders ends up with a zero trading account.
+                        \nWhen I see that the trader most highlighted at Etoro (and validated by the site) has a drawdown of 50% daily and 72% weekly, it sends shivers down my spine! The trader certainly makes 600% in the year but if you get there at the wrong time, you can lose 50% of your capital in one day. If there are two negative days in succession, then you won't have much left.
+
+                        """,
+                  child: Text("\nTips for Good Traders - CEWBY - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nCopytrading: Everyone wins but you
+                        \nThe problem with copytrading comes from the principle itself. If a trader wants to attract followers to his trading account, he must necessarily take ill-considered risks to generate maximum performance. Otherwise, novice traders would never be interested in him. To keep his followers, the trader must subsequently continue to take risks to maintain his performance and he will therefore use enormous leverage (leverage = risk! the greater the leverage, the greater the risk!). On some copytrading platforms, some traders simply don’t put any stop loss on their trades. This way, the result of these trades is not taken into consideration in the account’s performance. A good way to boost its performance!
+                        \nAt the end of the day, the trader ends up razing his trading account by taking too many risks. The big loser in this tale is you. The broker will have collected commissions from him on each trade on his platform and the trade you have followed will have filled his pockets by having a maximum number of followers (the broker will pay him part of the commissions received).
+
+                        """,
+                  child: Text("\nTips for Good Traders - CEWBY - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nDo not follow analysts blindly
+                        \nTrading and analysis are two different activities. Of course, one cannot be done without the other, but a good analyst is not necessarily a good trader and vice versa.
+                        \nA good analyst is a person who can determine good entry levels, find key thresholds and knows how to determine price objectives.
+                        \nA good trader is a person who earns more than he loses in trading. In other words, a person who applies good risk management,allowing him to minimize the amount of his losses on losing trades. A good trader will also exploit these winning trades well to generate maximum profits.
+
+                        """,
+                  child: Text("\nTips for Good Traders - DNFAB - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nDo not follow analysts blindly
+                        \nWhen you consult analysis on the internet, the analyst usually determines an entry level and possibly a price objective and a stop loss. But be careful, the levels they indicate are not necessarily those on which he will exit a position. During his trade, a trader may decide to take his profits early (seeing a weakness in the movement) and move his stop loss to reduce his risk and then quickly protect his gains. The analyst does not indicate all this.
+                        \nResult, if you followed his analysis and carried out the trade, you may have a totally different result from his in terms of performance. You may even lose when he wins. This is often what happens because it is rare that the scenario unfolds as expected and it is therefore management during the trade that makes the difference between a winning and losing trader.
+
+                        """,
+                  child: Text("\nTips for Good Traders - DNFAB - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nDo not follow analysts blindly
+                        \nAnalysis you find on the net should only be used to identify key levels, that's all! Novice traders often believe that copying the trading ideas of good analysts will let them be winners at trading. That is totally false. The only thing that will make you money is managing your risk well and covering your losses with your winning trades. And management during the trade can’t be copied, each trader has his own way of working (through his experience, his trading strategy, his investor profile, etc.).
+
+                        """,
+                  child: Text("\nTips for Good Traders - DNFAB - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nBeware of consensus!
+                        \nIf you invest in the stock market, you have no doubt at some time consulted the consensus to find out what the "professionals of the sector" opinions are on an asset. Several players give their opinions on the financial markets:
+                        \n- The banks' consensus: These financial institutions pay analysts to issue an opinion on the various securities. These are the indications: "Sell, Underperform, Hold, Outperform, or Buy".
+
+                        """,
+                  child: Text("\nTips for Good Traders - BC - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nBeware of consensus!
+                        \n- The consensus of the specialized media: These are journalists who publish recommendations in newspapers or make television programs. 
+                        \nAll these opinions form a consensus, a kind of general opinion on each company, on each sector of activity, on each market. This allows the market temperature to be taken before investing on the stock market. It is a widely used tool by many investors. When I talk about investors, I am talking about individuals, professionals in the sector do not rely on consensus.
+
+                        """,
+                  child: Text("\nTips for Good Traders - BC - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe banks' consensus: A great farce!
+                        \nIt should be noted that companies pay to be rated by banks' financial analysts. Analysts are then said to be "sell side" (on the seller's side). Financial analysts generally update their recommendation after the results of published or if a significant event has occurred in the company’s life.
+                        \nThe same applies to rating agencies. It should not be assumed that these structures are independent, it is the one who pays (the company) that is in control.
+                        \nThe conflict of interest between the analyst and the financial institution is then quickly understood.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TBCGF - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe banks' consensus: A great farce!
+                        \nOn the one hand, analysts must be as impartial as possible, but on the other, they must satisfy their clients (the companies) so that they do not move to their competitors. It's a rather complex balancing act. Nor can the bank make a recommendation which is in total conflict with reality. The two parties must somehow come to an agreement.
+                        \nIf the recommendation is deemed good by the company, it's all good for the bank. It will continue to pay for future analyses and that encourages customer loyalty within the bank. Everyone wins.
+                        \nA company may even refuse to publish a recommendation, but must show a clean bill of health to its shareholders. If a big company doesn't have any recommendations from a bank, it's suspicious! The company is therefore obliged to accept its rating or recommendation even if it had hoped for better.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TBCGF - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe banks' consensus: A great farce!
+                        \nA friend of mine has a Bloomberg subscription at work. When entering the name of a company, it is possible to consult the various recommendations published by various banks’ financial analysts in their own name. These analyses are not intended for the general public, they are said to be “buy side” (on the side of the buyer). In this case, the analysts don’t work for a company but for the bank itself. These analyses are used by the institution's portfolio managers and traders.
+                        \nAnd the surprise! We note that the analyses have nothing to do with the recommendations intended for the general public! In many cases, they are even completely opposite to the "official consensus". These are the analyses used by the pros.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TBCGF - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe consensus of the specialized media: The sheep
+                        \nIf you follow the financial magazines a little, you will probably one day come across an analysis that tells you that you cannot miss this or that asset "Buy without hesitation". The journalist's main argument for buying is often that everyone is buying it. You'd be stupid not to do it too.
+                        \nWhen a newspaper or any media tells you to buy or sell, it's already too late! The price has often already gone too far. For a newspaper to make the headlines on an asset, it is because it has already exploded upwards, the remaining upside potential is then very often limited. You missed the train and shouldn’t try to catch it on the move. Before the 2008 crisis, all the newspapers were headlining that there was still time to buy. That the market was bullish and that it was not about to stop. For so-called "professionals of the sector", I wonder about offering them a possible retraining!
+
+                        """,
+                  child: Text("\nTips for Good Traders - TCSMTS - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe consensus of the specialized media: The sheep
+                        \nIn the financial world, it is often said that when individuals start to buy an asset, it is the moment when professionals decide to sell! It is for this reason that in many cases the opposite scenario to that announced by the media occurs.
+                        \nWe can cite an obvious example with the Wall Street Journal which, on 6 occasions, showed headlines entitled "Buy gold". In the following 6 months, the price lost at least 10% of its value each time.
+                        \nBasically, when the media tells you to buy, it's that the asset is already largely overvalued, that the trend phenomenon is coming to an end.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TCSMTS - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhy is consensus distorted?
+                        \nNo one wants to risk going against consensus
+                        \nThe reason is simple and can be summed up with a diction "Better to be wrong with others than be right alone". If the media misses the share of the moment, it is considered incompetent by the general public. If it goes against the consensus and has the misfortune to make a mistake, it finds himself discredited. The media therefore prefers to adopt sheep-like behaviour which limits risk. If the recommendation is bad, the media can always say that no one had seen it coming and that everyone was advising the same thing. Their reputation is safe.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WICD - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhy is consensus distorted?
+                        \nTo be careful is to discredit oneself
+                        \nIf you are cautious about the financial markets, you bore the general public. Individuals do not expect "professionals" to say that things will not change in the medium/long term, that they have no opinion on the issue. A bank or media analyst has an obligation to commit to a direction. If you remain neutral, you discredit yourself with the general public, you lose all credibility. An analyst is not allowed to be too prudent.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WICD - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhy is consensus distorted?
+                        \nIf an analyst has nothing to say, individuals will use other, more committed analysts, whether they are right or wrong. If the stock or market has already risen significantly, individuals prefer to listen to analysts who are committed to the short term rather than an analyst who is cautious about the medium/long term.
+                        \nAn analyst must always have an opinion.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WICD - Part 3"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhy is consensus distorted?
+                        \nAnalysts must explain the irrational
+                        \nThe purpose of a financial analyst is normally to determine the value of a security from a fundamental perspective. If the price is below this level, they issue a buy recommendation, if it is below, they recommend selling. Therefore, the rationality of the asset’s price must be determined.
+                        \nIn reality, that is not how it happens. Analysts are now trying to say whether investor irrationality is about to stop or not. Even if they feel that the price is already overvalued, they will advise the purchase in the face of pressure from their customers (the evaluated companies). Analysts invent arguments in favour of the movement continuing rather than recommending caution.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WICD - Part 4"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhy is consensus distorted?
+                        \nA question of credibility
+                        \nIf analysts go against the consensus, their opinion is not taken into account by the general public. Only those who have succeeded in building a solid reputation in the past (having been the only one to be right, before the others) succeed in being listened to. For the others (i.e. the majority), they have no credibility.
+                        \nHave an opinion on everything
+                        \nThe purpose of the media is to sell papers, and to sell them you need to have an opinion about everything, even if it means writing the opposite later. This practice is found in all media, including those that are not specialized in financial markets.
+
+                        """,
+                  child: Text("\nTips for Good Traders - WICD - Part 5"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nWhy is consensus distorted?
+                        \nFinancial analyst is a profession. Individuals therefore feel that they must always be able to decide on a value, otherwise it appears that they do not know their trade.
+                        \nYou can't say to the general public "I don't know" or "I don't have an opinion on this".
+
+                        """,
+                  child: Text("\nTips for Good Traders - WICD - Part 6"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nTo become a trader is to be an entrepreneur
+                        \nThere are many similarities between running a business and trading. In both cases, certain rules must be respected to put all the chances on your side and to open the way towards your success.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TBTAE"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nA demo account: Market research to test trading
+                        \nBefore creating your company, it is essential to carry out a market study. This study lets you know if your project is viable by studying the characteristics of your sector of activity. This is a phase of information gathering and learning. The objective of the market research is to help you establish your market positioning and give you an idea of your company's growth potential in the coming years.
+
+                        """,
+                  child: Text("\nTips for Good Traders - ADAMRTT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nA demo account: Market research to test trading
+                        \nWith trading, there is a tool that lets you carry out your market research, it is a demo account. It lets you know if your trading strategy is viable. Are you able to generate profit in the medium/long term? To find out, you need to test your trading strategy for at least several weeks. If the test is conclusive, you can then move into real trading.
+
+                        """,
+                  child: Text("\nTips for Good Traders - ADAMRTT - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nYour capital as a working tool
+                        \nTo start your own business, you need to invest money. You use this money to develop your business. It's your work tool. With it you can pay your expenses, buy equipment, advertise, recruit staff, develop new products/services, etc. If your business runs out of money, it goes bankrupt. You then lose the savings you invested in your business.
+                        \nWith trading, money is also your working tool. This is what lets you do your job. You must therefore seek to protect it in order to be able to continue trading. This is done through learning risk management. If you raze your trading account, you go bankrupt, you lose your savings.
+
+                        """,
+                  child: Text("\nTips for Good Traders - YCWT - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nYour capital as a working tool
+                        \nThe more money you have invested, the greater your risk. Just like a business, you should always consider the possibility that your business may not work, that your business may go bankrupt. So you have to take measured risks and invest only the money you're willing to lose.
+
+                        """,
+                  child: Text("\nTips for Good Traders - YCWT - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe importance of having a strategy
+                        \nTo develop your business, you need to define a business strategy. This is the method that you must implement to allow your company to grow. It ranges from positioning your products/services in terms of price/quality to your communication strategy to finding new customers. If your company does not have a strategy, it is doomed to go bankrupt.
+                        \nIn trading, this business strategy corresponds to your trading strategy. It defines the conditions that make you open a position in the market (buy/sell signal), the size of your positions, when you should take your profits and how you manage your stop loss. Without a trading strategy, you cannot win on the financial markets. This is the only way to generate medium/long term profits.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIHS - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe importance of having a strategy
+                        \nIf your strategy does not work, you need to be able to question it. In this case, trading offers you the advantage of being able to conduct a new market study via the demo account.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TIHS - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe search for trading ideas or how to find good customers
+                        \nThe search for new customers is what enables your company to generate growth. You have to spend most of your time finding them. The objective is to find good customers, i.e. customers who earn you the most money while spending the least amount of time and money.
+                        \nIn trading, this corresponds to the research phase of trading ideas. You need to scan the market for the most interesting trading opportunities, i.e. those that can generate the most money for you (the price target) while having the lowest possible risk (the distance of the stop loss from your entry price). Not all trading ideas are equal. We must select the most relevant, those with the greatest potential.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TSFTIHFGC - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe search for trading ideas or how to find good customers
+                        \nIn some cases, you have to agree not to open a position if you can't come up with trading ideas with a good risk/return ratio. It's like in the corporate world, it's better to avoid working with certain customers (who are bad payers, who take too much time, etc.) to focus on customers that really generate growth for your business.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TSFTIHFGC - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nPerformance report: accounting for your trading activity
+                        \nIn a company, all your purchases/sales must be recorded in your accounts. This lets you know what the profit (or loss) generated by your activity is. The preparation of the company’s income statement and balance sheet also enables you to analyse your company in more depth by studying different ratios (interim management balances - IMG). This is called financial analysis. The results of this study lets you develop your strategy to increase your company's growth rate.
+
+                        """,
+                  child: Text("\nTips for Good Traders - PRAYTA - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nPerformance report: accounting for your trading activity
+                        \nIn the trading environment, the performance ratio determines the amount of your gains/losses over a given period. This performance ratio is similar to a company’s income statement. It summarizes all the transactions you have made on your trading account. You can then analyse your trading strategy by studying different figures and ratios (win/lose trades, drawdown, assets generating the most gain/loss, etc.). This enables you to evolve your trading strategy to make it more efficient.
+
+                        """,
+                  child: Text("\nTips for Good Traders - PRAYTA - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe cost burden
+                        \nIn the business world, it is not enough to earn money to make a living from your activity. Indeed, your company must pay social charges, VAT, corporate property tax and Corporation tax, etc. If you pay yourself a salary, you may also have to pay tax on your income. These are all disbursements that cut into your business’s profits.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TCB - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nThe cost burden
+                        \nIt’s the same with trading. If you generate gains from your trading activity, you are required to report these gains to the tax authorities and pay the corresponding taxes. The amount to be declared is entered on a tax form that your broker is obliged to send you at the end of each calendar year. If your objective is to make a living from trading or to ensure additional income with this activity, trading taxation is a point not to be neglected. It is the after-tax amount that is important.
+
+                        """,
+                  child: Text("\nTips for Good Traders - TCB - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nConsider all scenarios
+                        \nWhen you start a business, you must consider all possible scenarios, including going bankrupt. Despite the best preparation for your company’s creation, there is always an uncertainty factor. This may be due to a management error on your part, poor positioning of your products/services, or an external factor that you do not control. You should therefore consider, at the outset, that sales of your products/services might not be as good as expected or that your project may fail.
+
+                        """,
+                  child: Text("\nTips for Good Traders - CAS - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nConsider all scenarios
+                        \nIt’s the same with trading. You can select the best trades possible, in the end, it is always the market that decides. It's all a matter of probability. Your trading scenario may or may not come to fruition. That's why you need to manage your risk well on each of your trades. The loss of one or more trades must not endanger your account.
+
+                        """,
+                  child: Text("\nTips for Good Traders - CAS - Part 2"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nBecoming a trader or business manager: it’s the same battle
+                        \nMany traders fail in the financial markets because they do not compare themselves to business leaders. Yet the mechanisms are the same. In both cases, there is risk-taking that may or may not lead to profit. You have to know how to question yourself and not bury your head in the sand when everything goes wrong. Success in both cases depends on good preparation and above all a lot of work.
+
+                        """,
+                  child: Text("\nTips for Good Traders - BTBMSB - Part 1"),
+                ),
+                DropdownMenuItem<String>(
+                  value: """
+
+                        \nBecoming a trader or business manager: it’s the same battle
+                        \nIn starting a business, people understand that you have to be fully invested to succeed. Unfortunately, the world of trading does not have this image. Novice traders believe in easy money. There is no such thing. If you want to become a trader, the right question to ask yourself is the following: Do you have the motivation to become a business leader in the trading world?
+
+                        """,
+                  child: Text("\nTips for Good Traders - BTBMSB - Part 1"),
+                ),
               ],
               onChanged: (_value) => {
                 print(_value.toString()),
