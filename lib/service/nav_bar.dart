@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:software_engineering_project/pages/auth/profile_page.dart';
 
 import '../pages/browsing_page.dart';
 import '../pages/favorite_page.dart';
 import '../pages/history_page.dart';
 import '../pages/learn_page.dart';
 import '../pages/news_page.dart';
+import '../pages/profile_page.dart';
 import '../pages/trading_page.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
