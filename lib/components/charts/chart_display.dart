@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:software_engineering_project/components/charts/chart.dart';
 
 class ChartDisplay extends StatelessWidget {
@@ -28,8 +29,8 @@ class ChartDisplay extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.only(
-                left: 10.0,
-                right: 10.0,
+                left: 25.0,
+                right: 25.0,
                 bottom: 10.0,
               ),
               child: Center(
@@ -37,7 +38,30 @@ class ChartDisplay extends StatelessWidget {
                   children: [
                     AppBar(
                       titleSpacing: 0,
-                      title: Text('Stock Prices ($stockTicker)'),
+                      title: Text(
+                        'Stock Prices ($stockTicker)',
+                        style: GoogleFonts.bodoniModa(
+                          color: const Color.fromARGB(255, 59, 59, 61),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      height: 2, // Adjust height as needed
+                      thickness: 2, // Adjust thickness as needed
+                      color: Colors.black,
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      child: Text(
+                        "Closing Prices (Daily)",
+                        style: GoogleFonts.bodoniModa(
+                          color: const Color.fromARGB(255, 59, 59, 61),
+                          fontSize: 15,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
                     ),
                     Expanded(
                       child: Chart(stockTicker: stockTicker),
