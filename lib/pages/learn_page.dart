@@ -11,7 +11,7 @@ class LearnPage extends StatefulWidget {
 class _LearnPageState extends State<LearnPage> {
   String value = "";
   double $precent = 0.00;
-  String $progress = "Incomplete";
+  double $userProgress = 0.00;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,11 @@ class _LearnPageState extends State<LearnPage> {
           child: Column(children: [
             LinearPercentIndicator(
               lineHeight: 40,
+              
               percent: $precent,
               progressColor: Colors.green,
               backgroundColor: Colors.red,
-              center: Text($progress),
+              center: Text($userProgress.toStringAsFixed(2) + "%",),
             ),
             DropdownButton<String>(
               items: const [
@@ -2536,11 +2537,11 @@ class _LearnPageState extends State<LearnPage> {
                 else
                   {
                     setState(() {
-                      $precent += 0.01282051;
+                      $precent += 0.00409836;
+                      $userProgress = $precent * 100;
                       value = "";
                       if ($precent >= 1.0) {
                         $precent = 1.0;
-                        $progress = "Completed!!!";
                       }
                     }),
                   }
