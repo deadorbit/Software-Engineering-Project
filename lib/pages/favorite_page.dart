@@ -2,6 +2,9 @@ import 'dart:convert';
 // import 'dart:ffi';
 // import 'package:http/http.dart' as http;
 
+//import for notifications
+import 'package:awesome_notifications/awesome_notifications.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -28,6 +31,8 @@ class _FavoritePageState extends State<FavoritePage> {
   List _prices = [];
   List<Stock> _stocks = [];
 
+  //asking for notification permission here because it's the first page the user will land on
+
   //initializing lists and variables for browsing part
   List _browsingStocks = [];
   final List<String> _matches = [];
@@ -39,6 +44,39 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
     super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+              title: const Text('Allow Notifications'),
+              content:
+                  const Text('Our app would like to send you notifications'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Don\'t Allow',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                        ))),
+                TextButton(
+                    onPressed: () => AwesomeNotifications()
+                        .requestPermissionToSendNotifications()
+                        .then((_) => Navigator.pop(context)),
+                    child: const Text('Allow',
+                        style: TextStyle(
+                          color: Colors.teal,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        )))
+              ]),
+        );
+      }
+    });
+
     readJson();
     final user = FirebaseAuth.instance.currentUser;
 
@@ -129,7 +167,7 @@ class _FavoritePageState extends State<FavoritePage> {
     _favs.clear();
 
     if (query.length == 1) {
-      threshold = .8;
+      threshold = .99;
     } else if (query.length < 4) {
       threshold = .2;
     } else {
@@ -287,9 +325,6 @@ class _FavoritePageState extends State<FavoritePage> {
                                       onOpenStock(_stocks[index].code);
                                     }),
                                     navigatorKey: navigatorKey,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
                                   ),
                                 ],
                               );

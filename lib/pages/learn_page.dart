@@ -9,7 +9,6 @@ class LearnPage extends StatefulWidget {
 }
 
 class _LearnPageState extends State<LearnPage> {
-
   String value = "";
   double $precent = 0.00;
   String $progress = "Incomplete";
@@ -18,15 +17,14 @@ class _LearnPageState extends State<LearnPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.png'),
-            fit: BoxFit.cover,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 50.0),
-        child: Column(
-          children: [
+          padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 50.0),
+          child: Column(children: [
             LinearPercentIndicator(
               lineHeight: 40,
               percent: $precent,
@@ -46,7 +44,7 @@ class _LearnPageState extends State<LearnPage> {
                   child: Text("\nTrading for Dummies - Definition of Spread"),
                 ),
                 DropdownMenuItem<String>(
-                  value: """ 
+                  value: """
 
                         \nSpreads in practice
                         \nThe size of the spread is generally expressed in points, except in Forex where we speak in terms of pips.
@@ -79,7 +77,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nOn the financial markets, brokers do not use the spread to remunerate themselves but charge their clients transaction fees (usually in % of the traded volume).
 
                         """,
-                  child: Text("\nTrading for Dummies - A Means of Remuneration"),
+                  child:
+                      Text("\nTrading for Dummies - A Means of Remuneration"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -154,7 +153,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nBecoming a trader can't be improvised. It takes a lot of time, hard work and money to lose. The cycle to becoming a winner in your trading takes several years. Winning on one or more trades is something everyone can do, but winning in the long run is the real challenge. A series of winning trades does not make a good trader, and even less so with exceptional trading performance over a very short period. Many novice traders have trouble understanding what distinguishes a real trader from a simple Sunday punter. There are three pillars to being a winner in trading, to being a real trader.
 
                         """,
-                  child: Text("\nTrading for Dummies - The Three Pillars of Trading Successfully"),
+                  child: Text(
+                      "\nTrading for Dummies - The Three Pillars of Trading Successfully"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -203,7 +203,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nThis component is very difficult to tame for the simple reason that it cannot be learned. Psychology in trading is managing your emotions. These emotions depend on your personality and especially on your relationship with money. On a demo account, you may feel some emotions but they are usually not very high. It is risking your money that will exacerbate them. For that, there is only one solution, the real account, the baptism of fire! You may have done all the necessary preparation, but you will never be ready for real trading. It is impossible to know how you will react with your money at stake. Money gives rise to many emotions: greed, fear, frustration, anger, denial and so on.
 
                         """,
-                  child: Text("\nTrading for Dummies - Pillar 3: Psych - Part 1"),
+                  child:
+                      Text("\nTrading for Dummies - Pillar 3: Psych - Part 1"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -212,7 +213,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nTrading is one of the most effective ways to get to know yourself. It reveals your true nature, your biggest flaws. Strict money management is your best weapon to protect yourself against your emotions. Despite everything, at first, they often take over. Emotions are indeed devastating for both a losing trader and a winning trader. After a series of winning trades, you feel your wings grow, you tell yourself you are the strongest and you lower your guard. Excess confidence is a fearsome factor in trading. It can make you forget your trading strategy (to do more trades and earn even more) or risk management (by increasing position sizes, again to earn more). On the other hand, after a series of losing trades, you lose your means, you get angry, you curse yourself for having lost your hard earned money. Your emotions will then make you take more risk in order to make up for your loss.
   
                         """,
-                  child: Text("\nTrading for Dummies - Pillar 3: Psych - Part 2"),
+                  child:
+                      Text("\nTrading for Dummies - Pillar 3: Psych - Part 2"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -221,7 +223,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nWhether you are winning or losing, from the moment you increase your risk, it is already too late! You will end up razing your trading account sooner or later. It is very difficult to become rigorous again and to apply a strict money management after having increased your risk (even if you tell yourself that it is temporary). Despite all the warnings I can give you, you will sooner or later go through this step. That's the price of training. I don't know a trader who hasn't razed a trading account. When this happens to you, do not, on any account, replenish your trading account. Move on to other things for several weeks. It takes time to digest the fact that you just threw your money out of the window. If you trade again too quickly, your emotions will still be too high and you will make the same mistake. Unfortunately, this is what far too many beginner traders do. Yet that's what it all comes down to. Come back rested, only time makes us learn from our mistakes.
 
                         """,
-                  child: Text("\nTrading for Dummies - Pillar 3: Psych - Part 3"),
+                  child:
+                      Text("\nTrading for Dummies - Pillar 3: Psych - Part 3"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -230,7 +233,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nA few weeks later, you can put money back into your account. But be careful, it's very dangerous to invest more than 10% of your savings. To invest more, you must already be sure that you can earn over the medium/long term. In trading, your goal should not be to win but to last. If you last, you'll end up being a good trader.
 
                         """,
-                  child: Text("\nTrading for Dummies - Pillar 3: Psych - Part 4"),
+                  child:
+                      Text("\nTrading for Dummies - Pillar 3: Psych - Part 4"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -238,7 +242,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nThe temporality of a financial investment corresponds to the investment horizon. It can be short, medium or long term. Temporality is a function of your performance objectives and your investor profile. Each temporality has advantages and disadvantages.
 
                         """,
-                  child: Text("\nTrading for Dummies - Definition of Temporality"),
+                  child:
+                      Text("\nTrading for Dummies - Definition of Temporality"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -280,7 +285,8 @@ class _LearnPageState extends State<LearnPage> {
                         \n - Possibility of having your portfolio managed (UCITS) 
 
                         """,
-                  child: Text("\nTrading for Dummies - Trading: Long Term - Part 1"),
+                  child: Text(
+                      "\nTrading for Dummies - Trading: Long Term - Part 1"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -291,7 +297,8 @@ class _LearnPageState extends State<LearnPage> {
                         \n - Can have a significant negative impact on your assets in the event of poor investment timing.
 
                         """,
-                  child: Text("\nTrading for Dummies - Trading: Long Term - Part 2"),
+                  child: Text(
+                      "\nTrading for Dummies - Trading: Long Term - Part 2"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -500,7 +507,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nColour of the candlesticks: If you see a larger number of green candlesticks (bullish) on your chart, it means that the asset is in a bullish trend and conversely if there is a larger number of red candlesticks (bearish), the asset is in a bearish trend.
 
                         """,
-                  child: Text("\nTrading for Dummies - Characteristics of Trends"),
+                  child:
+                      Text("\nTrading for Dummies - Characteristics of Trends"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -510,7 +518,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nIndeed, an asset may have a short-term trend opposite to its medium-term trend. You need to know that it is always the trend on the longest time unit that takes over. Of course, there can be trend reversals and that's why you need to set key reversal levels on the unit of time above your trade.
 
                         """,
-                  child: Text("\nTrading for Dummies - Identifying Trends - Part 1"),
+                  child: Text(
+                      "\nTrading for Dummies - Identifying Trends - Part 1"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -519,7 +528,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nAnalysing the unit of time longer than that of your trade allows you to set yourself a single direction to deal with (long, short or neutral). For example, if your main direction is long (bullish trend), you should ignore the sales signals on your signal chart (time unit of your trade).
 
                         """,
-                  child: Text("\nTrading for Dummies - Identifying Trends - Part 2"),
+                  child: Text(
+                      "\nTrading for Dummies - Identifying Trends - Part 2"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -770,7 +780,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nI took the example of chart patterns, but I could also have taken the example of a technical indicator with divergences.Differences generally work rather well on large time units but opening any position must be confirmed by a buy/sell signal on your price chart.
                         
                         """,
-                  child: Text("\nTrading for Dummies - Taking a Position - Part 1"),
+                  child: Text(
+                      "\nTrading for Dummies - Taking a Position - Part 1"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -778,7 +789,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nTo secure your entries and reduce your number of losing trades, you must therefore accept losing part of the movement, usually the beginning of the wave.It is precisely this first impulse that allows you to validate your bullish/bearish scenario and thus allows you to open a position under appropriate conditions.If your analysis is good, then the chances of the movement continuing are greater.
                         
                         """,
-                  child: Text("\nTrading for Dummies - Taking a Position - Part 2"),
+                  child: Text(
+                      "\nTrading for Dummies - Taking a Position - Part 2"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -788,7 +800,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nExit on exhaustion of movement: The signs of exhaustion in the movement are diverse but they are often seen by analysing the Japanese candlesticks (formation of reversed dojis, smaller and smaller candlesticks, etc.(See: Detect a trend reversal in trading), chart patterns and also technical indicators (especially those there because of divergences). 
                         
                         """,
-                  child: Text("\nTrading for Dummies - Exiting a Position - Part 1"),
+                  child: Text(
+                      "\nTrading for Dummies - Exiting a Position - Part 1"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -796,7 +809,8 @@ class _LearnPageState extends State<LearnPage> {
                         \nWhichever method you choose, you will not exit your trade at the high/low end.Even if you watch out for the movement to be exhausted, you have to wait for confirmation to cut your trade and therefore lose part of the movement.When exiting by objective, the movement may continue afterwards (it is important to set realistic price objectives that have a higher probability of being achieved).
 
                         """,
-                  child: Text("\nTrading for Dummies - Exiting a Position - Part 2"),
+                  child: Text(
+                      "\nTrading for Dummies - Exiting a Position - Part 2"),
                 ),
                 DropdownMenuItem<String>(
                   value: """
@@ -2513,27 +2527,28 @@ class _LearnPageState extends State<LearnPage> {
             ),
             ElevatedButton.icon(
               onPressed: () => {
-                if ($precent == 1.0){
-                  setState(() {
-                    value = "";
-                  }),
-                } else {
-                  setState(() {
-                    $precent += 0.01282051;
-                    value = "";
-                    if ($precent >= 1.0){
-                      $precent = 1.0;
-                      $progress = "Completed!!!";
-                    }
-                  }),
-                }
-              }, 
-              icon: const Icon(Icons.bookmark), 
+                if ($precent == 1.0)
+                  {
+                    setState(() {
+                      value = "";
+                    }),
+                  }
+                else
+                  {
+                    setState(() {
+                      $precent += 0.01282051;
+                      value = "";
+                      if ($precent >= 1.0) {
+                        $precent = 1.0;
+                        $progress = "Completed!!!";
+                      }
+                    }),
+                  }
+              },
+              icon: const Icon(Icons.bookmark),
               label: const Text("All Done"),
             ),
-          ]
-        )
-      ),
-    );  
+          ])),
+    );
   }
 }
