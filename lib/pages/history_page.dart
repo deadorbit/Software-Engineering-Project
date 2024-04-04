@@ -1,10 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../components/fav_cards.dart';
 import '../components/transactionCard.dart';
-import '../models/stock_model.dart';
 import '../models/transaction_model.dart';
 import '../service/controller.dart';
 import "package:firebase_auth/firebase_auth.dart";

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:software_engineering_project/pages/portfolio.dart';
+import 'package:software_engineering_project/pages/settings_page.dart';
 
 import '../pages/browsing_page.dart';
 import '../pages/favorite_page.dart';
 import '../pages/history_page.dart';
 import '../pages/learn_page.dart';
 import '../pages/news_page.dart';
+import '../pages/settings_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/trading_page.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
@@ -27,7 +30,7 @@ class NavBarState extends State<NavBar> {
       HistoryPage(),
       NewsPage(),
       LearnPage(),
-      ProfilePage()
+      SettingsPage()
     ];
   }
 
