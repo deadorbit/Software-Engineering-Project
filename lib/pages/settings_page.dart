@@ -8,6 +8,8 @@ import 'package:software_engineering_project/service/nav_bar.dart';
 
 import '../service/controller.dart';
 import 'auth/landing_page.dart';
+import '../notifications.dart';
+import '../utilities.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({

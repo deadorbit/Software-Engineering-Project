@@ -1,5 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../models/stock_data.dart';
 
 class APIManipulation {
   // Constructor (can be omitted if not needed)
@@ -9,10 +13,8 @@ class APIManipulation {
     try {
       var resp = await http
           .get(Uri.parse('http://10.0.2.2:8000/stock/$stockCode/time/1d'));
-      print(resp.body);
 
       if (resp.statusCode == 200) {
-        print("yes");
         var jsonData = jsonDecode(resp.body) as List; // Cast directly to List
         return jsonData
             .map<Map<String, dynamic>>((e) => e as Map<String, dynamic>)
@@ -33,31 +35,29 @@ class APIManipulation {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getOneMonthJson(String stockCode) async {
+  Future<List> getOneMonthJson(String stockCode) async {
     try {
       var resp = await http
-          .get(Uri.parse('http://10.0.2.2:8000/stock/$stockCode/time/1mo'));
-      print(resp.body);
+          .get(Uri.parse('http://10.0.2.2:5000/stock/$stockCode/time/1mo'));
+      //print(resp.body);
 
       if (resp.statusCode == 200) {
-        print("yes");
-        var jsonData = jsonDecode(resp.body) as List; // Cast directly to List
-        return jsonData
-            .map<Map<String, dynamic>>((e) => e as Map<String, dynamic>)
-            .toList();
+        debugPrint(resp.body);
+        final jsonData = jsonDecode(resp.body) as List<dynamic>;
+        return jsonData;
       } else {
         print('Server error: ${resp.statusCode}');
-        return [{}];
+        return [];
       }
     } on http.ClientException catch (e) {
       print('HTTP error: $e');
-      return [{}];
+      return [];
     } on FormatException catch (e) {
       print('JSON Format error: $e');
-      return [{}];
+      return [];
     } catch (e) {
       print('Unknown error: $e');
-      return [{}];
+      return [];
     }
   }
 }
