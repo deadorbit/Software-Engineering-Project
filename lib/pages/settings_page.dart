@@ -70,21 +70,35 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () => signUserOut(context),
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
-      body: Center(
-        // Wrap the button with a Center widget
-        child: ElevatedButton(
-          onPressed: goToPort,
-          child: Text("Go"),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () => signUserOut(context),
+              icon: const Icon(Icons.logout),
+            ),
+          ],
         ),
-      ),
-    );
+        body: Column(
+          children: [
+            const ElevatedButton(
+              onPressed: createReminderNotification,
+              child: Text('Press Me'),
+            ),
+            ElevatedButton(
+                child: const Text('schedule notifications'),
+                onPressed: () async {
+                  NotificationWeekAndTime? pickedSchedule =
+                      await pickSchedule(context);
+
+                  if (pickedSchedule != null) {
+                    createScheduledNotification(pickedSchedule);
+                  }
+                }),
+            const ElevatedButton(
+                onPressed: cancelScheduledNotifications,
+                child: Text('Cancel Notifications')),
+            ElevatedButton(onPressed: goToPort, child: Text("Go to Portfolio")),
+          ],
+        ));
   }
 }
