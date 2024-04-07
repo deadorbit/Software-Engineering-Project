@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:software_engineering_project/models/profit_helper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'package:intl/intl.dart';
 import '../models/profit_at_time.dart';
 import '../service/controller.dart';
 
 class PortfolioPage extends StatefulWidget {
   final String userId;
   final Map<String, double> dataMap;
+  final List<ProfitInTime> chartData;
 
   const PortfolioPage({
     super.key,
     required this.userId,
     required this.dataMap,
+    required this.chartData,
   });
 
   @override
@@ -29,13 +31,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
   String worstStock = "";
   double worstPercentage = 0.0;
   Map<String, double> adjustedDataMap = {};
-  final List<ProfitInTime> chartData = [
-    ProfitInTime(DateTime(2010), 35),
-    ProfitInTime(DateTime(2011), 28),
-    ProfitInTime(DateTime(2012), 34),
-    ProfitInTime(DateTime(2013), 32),
-    ProfitInTime(DateTime(2014), 40)
-  ];
 
   @override
   void initState() {
@@ -120,7 +115,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             children: [
               Expanded(
                 // Makes the chart flexible
-                flex: 3, // Adjust the flex factor as needed to allocate space
+                flex: 2, // Adjust the flex factor as needed to allocate space
                 child: PieChart(
                   dataMap: adjustedDataMap,
                   chartValuesOptions: ChartValuesOptions(
@@ -305,20 +300,38 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
               Expanded(
-                flex: 2,
-                child: Container(
-                    child: SfCartesianChart(
-                        primaryXAxis: DateTimeAxis(),
-                        series: <CartesianSeries>[
-                      // Renders line chart
-                      LineSeries<ProfitInTime, DateTime>(
-                          dataSource: chartData,
+                  flex: 2,
+                  child: Container(
+                      child: SfCartesianChart(
+                          // Chart Title
+                          primaryXAxis: DateTimeAxis(
+                            dateFormat: DateFormat(
+                                'MM/dd'), // Format the date as you want
+                            // X Axis Title
+                          ),
+                          primaryYAxis: NumericAxis(
+                            //numberFormat: NumberFormat
+                            //.percentPattern(), // Format the number with a percentage sign
+                            title:
+                                AxisTitle(text: 'Profit (%)'), // Y Axis Title
+                          ),
+                          series: <CartesianSeries>[
+                        // Renders line chart
+                        LineSeries<ProfitInTime, DateTime>(
+                          dataSource: widget.chartData,
                           xValueMapper: (ProfitInTime profit, _) => profit.day,
                           yValueMapper: (ProfitInTime profit, _) =>
-                              profit.profit)
-                    ])),
-              )
+                              profit.profit,
+                          //dataLabelSettings: DataLabelSettings(
+                          //isVisible: true), // Show data labels
+                          //name:
+                          //'Profit' // Name of the series, shows in legend
+                        )
+                      ])))
             ],
           ),
         ));

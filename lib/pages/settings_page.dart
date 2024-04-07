@@ -3,6 +3,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:software_engineering_project/models/profit_at_time.dart';
 import 'package:software_engineering_project/pages/portfolio.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
 
@@ -24,14 +25,19 @@ class _SettingsPageState extends State<SettingsPage> {
   final databaseController = DataBase_Controller();
   String userId = '';
   Map<String, double> dataMap = {};
+  List<ProfitInTime> chartData = [];
 
   void goToPort() async {
-    await data(); // Ensure data is fetched before navigating
+    await data();
+
+    await getListforProfits();
+
     if (navigatorKey.currentState != null) {
       navigatorKey.currentState!.push(MaterialPageRoute(
         builder: (context) => PortfolioPage(
           userId: userId,
           dataMap: dataMap,
+          chartData: chartData,
         ),
       ));
     }
@@ -42,6 +48,12 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       // This will trigger a rebuild with the updated dataMap
     });
+  }
+
+  Future<void> getListforProfits() async {
+    chartData = await databaseController.getProfits(userId);
+
+    setState(() {});
   }
 
   @override

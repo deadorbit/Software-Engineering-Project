@@ -49,6 +49,7 @@ class _HistoryPageState extends State<HistoryPage> {
   final databaseController = DataBase_Controller();
   String result = "Loading..."; // Initial state of the result
   List<Trans> _transactions = [];
+
   void getTransactions() async {
     if (userId.isNotEmpty) {
       var updatedTransactions =
@@ -65,7 +66,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Transaction"),
+        title: const Text("Transactions"),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -90,6 +91,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   return Column(
                     children: [
                       TransactionCard(
+                        key: ValueKey(_transactions[index].ID),
                         onClose: onClose,
                         open: _transactions[index].open,
                         profitClosed: _transactions[index].profit,

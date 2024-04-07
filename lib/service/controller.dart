@@ -5,7 +5,9 @@ import 'package:software_engineering_project/models/profit_helper.dart';
 import 'package:software_engineering_project/models/transaction_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../models/profit_at_time.dart';
 import '../models/stock_model.dart';
+import 'package:intl/intl.dart';
 
 class DataBase_Controller {
   DataBase_Controller();
@@ -421,6 +423,49 @@ class DataBase_Controller {
     } catch (e) {
       print(e);
       return profit; // Return the potentially cleared or empty list if an error occurs
+    }
+  }
+
+  Future<List<ProfitInTime>> getProfits(String customUserId) async {
+    List<ProfitInTime> profits = [];
+    try {
+      // Clear the list each time to prevent duplication
+
+      // Query the 'Users' collection to find the document with the matching custom ID
+      QuerySnapshot userQuerySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('userId', isEqualTo: customUserId)
+          .get();
+
+      // Check if a document with the custom ID exists
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        // Assuming the custom ID is unique and only one document should match
+        var userId = userQuerySnapshot.docs.first.id;
+
+        // Query the 'Transactions' sub-collection
+        QuerySnapshot stocksQuerySnapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(userId)
+            .collection("Profits")
+            .orderBy("day", descending: false)
+            .get();
+
+        // Populate the transactions list with the latest data
+        for (var doc in stocksQuerySnapshot.docs) {
+          Timestamp timestamp =
+              doc["day"] as Timestamp; // Cast the Firestore Timestamp
+          DateTime day = timestamp.toDate(); // Convert to DateTime
+          double profit = doc["profit"]; // Assuming this is already a double
+
+          profits.add(ProfitInTime(day, profit)); // Add to your list
+        }
+        return profits;
+      } else {
+        return profits;
+      }
+    } catch (e) {
+      print(e);
+      return profits; // Return the potentially cleared or empty list if an error occurs
     }
   }
 

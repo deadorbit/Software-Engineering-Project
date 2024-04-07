@@ -84,6 +84,7 @@ class MyApp extends StatelessWidget {
           return PortfolioPage(
             userId: args['userId'],
             dataMap: args['dataMap'],
+            chartData: args['chartData'],
           );
         },
         '/trade': (context) {
