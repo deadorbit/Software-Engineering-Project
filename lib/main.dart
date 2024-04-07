@@ -42,8 +42,14 @@ class MyApp extends StatelessWidget {
         '/browsing': (context) => const BrowsingPage(),
         '/history': (context) => const HistoryPage(),
         '/nav': (context) => const NavBar(),
-        '/profile': (context) => ProfilePage(),
-        '/portfolio': (context) => const PortfolioPage(),
+        '/portfolio': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return PortfolioPage(
+            userId: args['userId'],
+            dataMap: args['dataMap'],
+          );
+        },
         '/trade': (context) {
           final args = ModalRoute.of(context)!.settings.arguments
               as Map<String, dynamic>;
