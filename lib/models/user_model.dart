@@ -2,8 +2,8 @@ class UserModel {
   final String uid;
   String? name;
   String? email;
-  int? balance;
-  int? totalProfit;
+  double? balance;
+  double? totalProfit;
 
   UserModel.fromUid({required this.uid});
 
@@ -21,9 +21,9 @@ class UserModel {
 
   String getName() => name ?? "";
 
-  int getBalance() => balance ?? 0;
+  double getBalance() => balance ?? 0;
 
-  int getTotalProfit() => totalProfit ?? 0;
+  double getTotalProfit() => totalProfit ?? 0;
 
   //Convert this to json format (probably to send to firestore)
   Map<String, dynamic> toJson() => {
@@ -38,8 +38,8 @@ class UserModel {
         uid: json['userId'] as String,
         name: json['name'] as String,
         email: json['email'] as String,
-        balance: json['balance'] as int,
-        totalProfit: json['totalProfit'] as int,
+        balance: json['balance'] as double,
+        totalProfit: json['totalProfit'] as double,
       );
 
   //Save user model to firestore

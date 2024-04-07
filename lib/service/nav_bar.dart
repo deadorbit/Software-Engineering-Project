@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:software_engineering_project/pages/portfolio.dart';
 import 'package:software_engineering_project/pages/settings_page.dart';
 
-import '../pages/browsing_page.dart';
 import '../pages/favorite_page.dart';
 import '../pages/history_page.dart';
 import '../pages/learn_page.dart';
