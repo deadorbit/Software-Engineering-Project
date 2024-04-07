@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:software_engineering_project/models/profit_helper.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../models/profit_at_time.dart';
 import '../service/controller.dart';
 
 class PortfolioPage extends StatefulWidget {
@@ -26,13 +28,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
   double bestPercentage = 0.0;
   String worstStock = "";
   double worstPercentage = 0.0;
-
-  Map<String, double> trying = {
-    "Flutter": 5,
-    "React": 3,
-    "Xamarin": 2,
-    "Ionic": 2,
-  };
+  Map<String, double> adjustedDataMap = {};
+  final List<ProfitInTime> chartData = [
+    ProfitInTime(DateTime(2010), 35),
+    ProfitInTime(DateTime(2011), 28),
+    ProfitInTime(DateTime(2012), 34),
+    ProfitInTime(DateTime(2013), 32),
+    ProfitInTime(DateTime(2014), 40)
+  ];
 
   @override
   void initState() {
@@ -40,6 +43,32 @@ class _PortfolioPageState extends State<PortfolioPage> {
     getAllTimeProfit();
     getUnrealisedProfit();
     getStockInfo();
+    adjustedDataMap = adjustDataMap(widget.dataMap);
+  }
+
+  Map<String, double> adjustDataMap(Map<String, double> originalDataMap) {
+    final double totalValue =
+        originalDataMap.values.fold(0, (sum, e) => sum + e);
+    final Map<String, double> adjustedDataMap = {};
+    double othersValue = 0.0;
+
+    originalDataMap.forEach((key, value) {
+      final double percentage = (value / totalValue) * 100;
+      if (percentage < 5) {
+        // Aggregate into "Others"
+        othersValue += value;
+      } else {
+        // Keep as is
+        adjustedDataMap[key] = value;
+      }
+    });
+
+    if (othersValue > 0) {
+      // Add the "Others" category if necessary
+      adjustedDataMap['Others'] = othersValue;
+    }
+
+    return adjustedDataMap;
   }
 
   void getAllTimeProfit() async {
@@ -89,14 +118,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              PieChart(
-                dataMap: widget.dataMap,
-                chartValuesOptions: ChartValuesOptions(
-                  showChartValueBackground: true,
-                  showChartValues: true,
-                  showChartValuesInPercentage: true,
-                  showChartValuesOutside: false,
-                  decimalPlaces: 1,
+              Expanded(
+                // Makes the chart flexible
+                flex: 3, // Adjust the flex factor as needed to allocate space
+                child: PieChart(
+                  dataMap: adjustedDataMap,
+                  chartValuesOptions: ChartValuesOptions(
+                    showChartValueBackground: true,
+                    showChartValues: true,
+                    showChartValuesInPercentage: true,
+                    showChartValuesOutside: false,
+                    decimalPlaces: 1,
+                  ),
                 ),
               ),
               Row(
@@ -271,6 +304,20 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     ),
                   ),
                 ],
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                    child: SfCartesianChart(
+                        primaryXAxis: DateTimeAxis(),
+                        series: <CartesianSeries>[
+                      // Renders line chart
+                      LineSeries<ProfitInTime, DateTime>(
+                          dataSource: chartData,
+                          xValueMapper: (ProfitInTime profit, _) => profit.day,
+                          yValueMapper: (ProfitInTime profit, _) =>
+                              profit.profit)
+                    ])),
               )
             ],
           ),
