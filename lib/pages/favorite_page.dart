@@ -144,6 +144,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   void fuzzySearch(List stocks, String query) {
     if (query.isEmpty) {
+      _isBrowsing = false;
       _matches.clear();
       _matchedCodes.clear();
       _favs.clear();
@@ -272,6 +273,9 @@ class _FavoritePageState extends State<FavoritePage> {
           ),
           child: Column(
             children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+              ),
               Container(
                 padding: const EdgeInsets.all(30),
                 child: TextField(
