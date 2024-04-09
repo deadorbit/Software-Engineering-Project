@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:software_engineering_project/pages/auth/profile_page.dart';
 import 'package:software_engineering_project/pages/portfolio.dart';
+import 'package:software_engineering_project/pages/settings_page.dart';
 import 'package:software_engineering_project/pages/trading_page.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
 import 'pages/auth/auth_page.dart';
@@ -77,8 +78,15 @@ class MyApp extends StatelessWidget {
         '/browsing': (context) => const BrowsingPage(),
         '/history': (context) => const HistoryPage(),
         '/nav': (context) => const NavBar(),
-        '/profile': (context) => ProfilePage(),
-        '/portfolio': (context) => const PortfolioPage(),
+        '/portfolio': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return PortfolioPage(
+            userId: args['userId'],
+            dataMap: args['dataMap'],
+            chartData: args['chartData'],
+          );
+        },
         '/trade': (context) {
           final args = ModalRoute.of(context)!.settings.arguments
               as Map<String, dynamic>;
