@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:software_engineering_project/components/charts/chart.dart';
 
@@ -63,8 +65,38 @@ class ChartDisplay extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(
+                    Flexible(
+                      flex: 1,
                       child: Chart(stockTicker: stockTicker),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      shape: const ContinuousRectangleBorder(),
+                                      elevation: 2.0),
+                                  child: const Text('Week'))),
+                          Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      shape: const ContinuousRectangleBorder(),
+                                      elevation: 0,
+                                      backgroundColor: Colors.deepPurple[100]),
+                                  child: const Text('Month'))),
+                          Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      shape: const ContinuousRectangleBorder(),
+                                      elevation: 2.0),
+                                  child: const Text('Year'))),
+                        ],
+                      ),
                     ),
                   ],
                 ),

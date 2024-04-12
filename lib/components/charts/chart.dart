@@ -12,42 +12,32 @@ class StockDataPoint {
   StockDataPoint(this.date, this.closePrice);
 }
 
-String intToDateString(int dayOfYear) {
-  // Months and their corresponding days
-  const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+String intToBusinessDateString(int businessDays) {
+  int counter = 0;
+  DateTime date = DateTime.now();
 
-  int month = 0;
-  int day = dayOfYear;
-
-  // Find the month
-  while (day > monthDays[month] && month < 11) {
-    day -= monthDays[month];
-    month++;
+  while (counter < businessDays) {
+    date = date.subtract(const Duration(days: 1));
+    if (date.weekday != DateTime.saturday && date.weekday != DateTime.sunday) {
+      counter++;
+    }
   }
 
-  // Adjusting for 0-based indexing
-  month++;
-
-  // Format the output
-  return "${month.toString().padLeft(2, '0')}/${day.toString().padLeft(2, '0')}";
+  // Format the output (using date)
+  return "${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')}";
 }
 
 List<StockDataPoint> assignDates(List<double> closePrices) {
   final List<StockDataPoint> dataPoints = [];
-  DateTime currentDate = DateTime.now();
-  DateTime startOfYear = DateTime(currentDate.year);
-  int currentDay = currentDate.difference(startOfYear).inDays + 1;
+  int businessDays = 0;
 
   for (int i = 0; i < closePrices.length; i++) {
-    currentDay--; // Decrement for the previous day
-    dataPoints.add(StockDataPoint(currentDay, closePrices[i]));
+    businessDays++;
 
-    if (currentDay == 0) {
-      currentDay = 365;
-    }
+    dataPoints.add(StockDataPoint(businessDays, closePrices[i]));
   }
 
-  return dataPoints.reversed.toList(); // Reverse the list for correct order
+  return dataPoints.reversed.toList(); // Reverse the order
 }
 
 List<FlSpot> stockDataPointToFLSpot(List<StockDataPoint> stockDataPoints) {
@@ -126,6 +116,15 @@ class _ChartState extends State<Chart> {
     //print(stockPrices.length);
   }
 
+  List<LineTooltipItem> getCustomTooltipItems(FlSpot touchedSpot) {
+    return [
+      LineTooltipItem(
+        'Closing: ${touchedSpot.y.toStringAsFixed(2)} Date: ${intToBusinessDateString(touchedSpot.x.toInt())}',
+        const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_isLoading) {
@@ -134,6 +133,17 @@ class _ChartState extends State<Chart> {
           height: 300.0,
           child: LineChart(
             LineChartData(
+              lineTouchData: LineTouchData(
+                touchCallback:
+                    (FlTouchEvent event, LineTouchResponse? touchResponse) {
+                  // ...
+                },
+                touchTooltipData: LineTouchTooltipData(
+                  tooltipBgColor: Colors.blueGrey,
+                  getTooltipItems: (spots) =>
+                      getCustomTooltipItems(spots.first),
+                ),
+              ),
               gridData: const FlGridData(
                 drawVerticalLine: false,
               ),
@@ -171,15 +181,19 @@ class _ChartState extends State<Chart> {
                   sideTitles: SideTitles(
                     showTitles: true,
 
-                    reservedSize: 22,
+                    reservedSize: 30,
                     //interval: 10.0,
-                    getTitlesWidget: (value, titleConfig) => Text(
-                      value.isNaN
-                          ? 'N/A'
-                          : intToDateString(
-                              value.toInt()), // Your original logic */
-                      style: const TextStyle(color: Colors.black, fontSize: 12),
-                    ),
+                    getTitlesWidget: (value, titleConfig) => value ==
+                            _stockPrices.elementAt(0).x
+                        ? const Text('')
+                        : Text(
+                            value.isNaN
+                                ? 'N/A'
+                                : intToBusinessDateString(
+                                    value.toInt()), // Your original logic */
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 12),
+                          ),
                   ),
                 ),
                 leftTitles: const AxisTitles(
