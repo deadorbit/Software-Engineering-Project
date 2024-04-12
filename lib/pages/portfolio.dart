@@ -109,7 +109,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
           backgroundColor: Colors.white,
         ),
         body: Container(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(10),
           alignment: Alignment.center,
           child: Column(
             children: [
@@ -139,7 +139,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: SizedBox(
-                          width: 125, // Set your desired width
+                          width: 130, // Set your desired width
                           height: 50,
                           child: Column(
                             children: [
@@ -171,7 +171,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: SizedBox(
-                          width: 125, // Set your desired width
+                          width: 130, // Set your desired width
                           height: 50,
                           child: Center(
                               child: Column(
@@ -209,7 +209,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: SizedBox(
-                          width: 125, // Set your desired width
+                          width: 130, // Set your desired width
                           height: 50,
                           child: Center(
                               child: Column(
@@ -217,31 +217,36 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               Text("Best Performer"),
                               Center(
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      bestStock,
-                                      style: TextStyle(
-                                        fontSize: 20, // Size of the text
-                                        fontWeight:
-                                            FontWeight.bold, // Make text bold
-                                        color: Colors.black,
+                                    Center(
+                                      child: Text(
+                                        bestStock,
+                                        style: TextStyle(
+                                          fontSize: 20, // Size of the text
+                                          fontWeight:
+                                              FontWeight.bold, // Make text bold
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
-                                    Text(
-                                        bestPercentage > 0
-                                            ? " ↑${bestPercentage.toStringAsFixed(2)}%"
-                                            : bestPercentage < 0
-                                                ? " ↓${bestPercentage.toStringAsFixed(2)}%"
-                                                : " ${bestPercentage.toStringAsFixed(2)}%",
-                                        style: TextStyle(
-                                            fontSize: 15, // Size of the text
-                                            fontWeight: FontWeight
-                                                .bold, // Make text bold
-                                            color: bestPercentage > 0
-                                                ? Colors.blue
-                                                : aTProfit < 0
-                                                    ? Colors.red
-                                                    : Colors.grey)),
+                                    Center(
+                                      child: Text(
+                                          bestPercentage > 0
+                                              ? " ↑${bestPercentage.toStringAsFixed(2)}%"
+                                              : bestPercentage < 0
+                                                  ? " ↓${bestPercentage.toStringAsFixed(2)}%"
+                                                  : " ${bestPercentage.toStringAsFixed(2)}%",
+                                          style: TextStyle(
+                                              fontSize: 15, // Size of the text
+                                              fontWeight: FontWeight
+                                                  .bold, // Make text bold
+                                              color: bestPercentage > 0
+                                                  ? Colors.blue
+                                                  : aTProfit < 0
+                                                      ? Colors.red
+                                                      : Colors.grey)),
+                                    ),
                                   ],
                                 ),
                               )
@@ -258,7 +263,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: SizedBox(
-                          width: 125, // Set your desired width
+                          width: 130, // Set your desired width
                           height: 50,
                           child: Center(
                               child: Column(
@@ -266,6 +271,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               Text("Worst Performer"),
                               Center(
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       worstStock,
@@ -336,20 +342,4 @@ class _PortfolioPageState extends State<PortfolioPage> {
           ),
         ));
   }
-}
-
-Widget createCard(String text) {
-  return Card(
-    margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-    elevation: 5.0,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-    child: Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: SizedBox(
-        width: 120, // Set your desired width
-        height: 50, // Set your desired height (optional)
-        child: Center(child: Text(text)), // Centered text inside the SizedBox
-      ),
-    ),
-  );
 }
