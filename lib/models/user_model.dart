@@ -5,6 +5,7 @@ class UserModel {
   double? balance;
   double? totalProfit;
 
+
   UserModel.fromUid({required this.uid});
 
   UserModel({
