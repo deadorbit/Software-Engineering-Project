@@ -52,6 +52,7 @@ dependencies:
   fl_chart: ^0.66.2
   modal_bottom_sheet: ^3.0.0
   percent_indicator: ^4.2.3
+  palette_generator: ^0.3.3+3
 
 dev_dependencies:
   flutter_test:

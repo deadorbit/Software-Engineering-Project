@@ -15,7 +15,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class NavBar extends StatefulWidget {
-  const NavBar({Key? key}) : super(key: key);
+  const NavBar({super.key});
 
   @override
   NavBarState createState() => NavBarState();

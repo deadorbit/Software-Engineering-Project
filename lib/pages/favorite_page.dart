@@ -8,7 +8,6 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:software_engineering_project/components/charts/chart_display.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
 import '../components/fav_cards.dart';
@@ -47,7 +46,6 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
     super.initState();
-    _checkNotificationPermission();
 
     readJson();
     final user = FirebaseAuth.instance.currentUser;
@@ -59,60 +57,6 @@ class _FavoritePageState extends State<FavoritePage> {
     }
 
     getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
-  }
-
-  Future<void> _checkNotificationPermission() async {
-    SharedPreferences notificationPreferences =
-        await SharedPreferences.getInstance();
-    bool notificationsAllowed =
-        notificationPreferences.getBool('notifications_allowed') ?? false;
-    setState(() {
-      _notificationsAllowed = notificationsAllowed;
-    });
-
-    if (!_notificationsAllowed) {
-      _showNotificationPermissionDialog();
-    }
-  }
-
-  Future<void> _toggleNotificationPermission(bool allow) async {
-    SharedPreferences notificationPreferences =
-        await SharedPreferences.getInstance();
-    await notificationPreferences.setBool('notifications_allowed', allow);
-
-    setState(() {
-      _notificationsAllowed = allow;
-    });
-  }
-
-  void _showNotificationPermissionDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-          title: const Text('Allow Notifications'),
-          content: const Text('Our app would like to send you notifications'),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Don\'t Allow',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 18,
-                    ))),
-            TextButton(
-                onPressed: () => AwesomeNotifications()
-                    .requestPermissionToSendNotifications()
-                    .then((_) => Navigator.pop(context)),
-                child: const Text('Allow',
-                    style: TextStyle(
-                      color: Colors.teal,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    )))
-          ]),
-    );
   }
 
   //functions for browsing

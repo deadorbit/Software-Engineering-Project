@@ -1,78 +1,112 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import '../notifications.dart';
-import '../utilities.dart';
+import 'package:software_engineering_project/service/notification_service.dart';
+
+import '../components/notification_button.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  const SettingsPage({
+    super.key,
+  });
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  int interval = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    print("in init state about to get interval");
+    _getInterval();
+    _getSchedules();
+
+    Future<List<NotificationModel>> schedule = getSchedule();
+    print("schedule");
+    print(schedule);
+  }
+
+  Future<List<NotificationModel>> getSchedule() async {
+    return await AwesomeNotifications().listScheduledNotifications();
+  }
+
+  Future<void> _getSchedules() async {
+    List list =
+        await AwesomeNotifications().getAllActiveNotificationIdsOnStatusBar();
+
+    print(list);
+  }
+
   void goToPortof() {
     Navigator.pushNamed(context, '/portfolio');
   }
 
-  void popUpDialog() {
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-            title: const Text('Allow Notifications'),
-            content: const Text('Our app would like to send you notifications'),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Don\'t Allow',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 18,
-                      ))),
-              TextButton(
-                  onPressed: () => AwesomeNotifications()
-                      .requestPermissionToSendNotifications()
-                      .then((_) => Navigator.pop(context)),
-                  child: const Text('Allow',
-                      style: TextStyle(
-                        color: Colors.teal,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      )))
-            ]),
-      );
-    });
+//im getting the interval on when I should schedule the notifications. Let's see how to implement it
+  int _getInterval() {
+    final time = DateTime.now();
+
+    print(time);
+    print(time.hour);
+
+    int currentHour = time.hour;
+    interval = 0;
+
+    if (currentHour <= 10) {
+      //this is to schedule the ones in the morning.
+      int hoursApart = 10 - currentHour;
+      interval = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
+    } else if (currentHour <= 17) {
+      int hoursApart = 17 - currentHour;
+
+      interval = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
+    } else {
+      int hoursApart = currentHour - 10;
+      interval = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
+    }
+
+    //here I think I can call two different functions? Schedule notifications.
+
+    print(interval);
+
+    interval = 180;
+
+    return interval;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const ElevatedButton(
-          onPressed: createReminderNotification,
-          child: Text('Press Me'),
-        ),
+        // ElevatedButton(onPressed: _getInterval, child: Text('press')),
         ElevatedButton(
-            child: const Text('schedule notifications'),
             onPressed: () async {
-              NotificationWeekAndTime? pickedSchedule =
-                  await pickSchedule(context);
-
-              if (pickedSchedule != null) {
-                createScheduledNotification(pickedSchedule);
-              }
+              await AwesomeNotifications().cancelAllSchedules();
+            },
+            child: Text('cancel')),
+        NotificationButton(
+            text: 'Troubleshoot Notifications',
+            onPressed: () async {
+              await NotificationService.showNotification(
+                title: 'This is a tester notification',
+                body:
+                    'When you receive notifications from our app, they will look like this',
+              );
             }),
-        ElevatedButton(
-          child: Text('Allow Notifications'),
-          onPressed: popUpDialog,
-        ),
-        const ElevatedButton(
-            onPressed: cancelScheduledNotifications,
-            child: Text('Cancel Notifications')),
+        NotificationButton(
+            text: 'Scheduled Notification',
+            onPressed: () async {
+              await NotificationService.showNotification(
+                  title: 'Scheduled Notification',
+                  body: 'this notitification has been scheduled ahead of time',
+                  scheduled: true,
+                  interval: interval);
+            }),
         ElevatedButton(onPressed: goToPortof, child: Text("Go")),
       ],
     ));
