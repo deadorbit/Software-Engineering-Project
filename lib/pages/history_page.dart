@@ -48,6 +48,10 @@ class _HistoryPageState extends State<HistoryPage> {
 
   void onClose() {
     getTransactions();
+    setState(() {
+      getbalace();
+      getUnrealiz();
+    });
   }
 
   void getbalace() async {

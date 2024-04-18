@@ -45,6 +45,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> data() async {
     dataMap = await databaseController.getDataForChart(userId);
+    if (dataMap.isEmpty) {
+      dataMap["buy some stuff man"] = 0;
+    }
     setState(() {
       // This will trigger a rebuild with the updated dataMap
     });
