@@ -482,4 +482,47 @@ class DataBase_Controller {
       return 0;
     }
   }
+
+  Future<double> getProgess(String customUserId) async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+
+      QuerySnapshot userQuerySnapshot =
+          await users.where('userId', isEqualTo: customUserId).get();
+
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        var userDocument = userQuerySnapshot.docs.first;
+        double learnProgress = userDocument.get('learnProgress');
+        return learnProgress;
+      } else {
+        print("No user with the id");
+        return 0;
+      }
+    } catch (error) {
+      print("Failed to retrieve user balance: $error");
+      return 0;
+    }
+  }
+
+  Future<void> setProgress(String customUserId, double value) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
+    QuerySnapshot userQuerySnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('userId', isEqualTo: customUserId)
+        .get();
+
+    if (userQuerySnapshot.docs.isNotEmpty) {
+      // Assuming the custom ID is unique and only one document should match
+      var userId = userQuerySnapshot.docs.first.id;
+      return users
+          .doc(userId)
+          .update({'learnProgress': value})
+          .then((value) => print("Learn Progress Updated"))
+          .catchError((error) => print("Failed to update learn progress: $error"));
+    } else {
+      print("no user with the id");
+    }
+  }
 }

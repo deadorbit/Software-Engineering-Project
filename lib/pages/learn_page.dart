@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:software_engineering_project/service/controller.dart';
 
 class LearnPage extends StatefulWidget {
   const LearnPage({super.key});
@@ -10,11 +11,63 @@ class LearnPage extends StatefulWidget {
 }
 
 class _LearnPageState extends State<LearnPage> {
+  final database_controller = DataBase_Controller();
+  String userId = " ";
   String value = "";
   double $precent = 0.00;
   double $userProgress = 0.00;
   bool $isVisible = false;
   bool $isChaptersVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        userId = user.uid;
+        getProgess();
+      });
+    }
+  }
+
+  void setProgress() async {
+    if ($precent == 1.0) {
+      setState(() {
+        value = "";
+          $isVisible = false;
+          $isChaptersVisible = true;
+      });
+    } else {
+      setState(() {
+        $precent += 0.00409836;
+        $userProgress = $precent * 100;
+        value = "";
+        $isVisible = false;
+        $isChaptersVisible = true;
+        if ($precent >= 1.0) {
+          $precent = 1.0;
+        }
+      });
+    }
+    if (userId.isNotEmpty) {
+      await database_controller.setProgress(userId, $userProgress);
+      setState(() {
+        $precent = $userProgress / 100;
+      });
+    }
+  }
+
+  Future<void> getProgess() async {
+    if (userId.isNotEmpty) {
+      double progress = await database_controller.getProgess(userId);
+      setState(() {
+        $userProgress = progress;
+        $precent = $userProgress / 100;
+      });
+    }
+  }
   
 
   @override
@@ -30,13 +83,13 @@ class _LearnPageState extends State<LearnPage> {
           padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 50.0),
           child: Column(children: [
             LinearPercentIndicator(
-              lineHeight: 40,
-              
+              lineHeight: 42.5,
               percent: $precent,
               progressColor: Colors.green,
               backgroundColor: Colors.red,
               center: Text($userProgress.toStringAsFixed(2) + "%",),
             ),
+            const SizedBox(height: 20),
             SingleChildScrollView(
               child: Visibility(
                 visible: $isChaptersVisible,
@@ -2528,34 +2581,41 @@ class _LearnPageState extends State<LearnPage> {
                 ),
               ),
             ),
-            Text(
-              value,
+            Visibility(
+              visible: $isVisible,
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(222, 255, 255, 255),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.black,
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black,
+                    ),
+                    left: BorderSide(
+                      color: Colors.black,
+                    ),
+                    right: BorderSide(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    value,
+                  ),
+                ),
+              ),
             ),
+            const SizedBox(height: 20),
             Visibility(
               visible: $isVisible,
               child: ElevatedButton.icon(
                 onPressed: () => {
-                  if ($precent == 1.0)
-                    {
-                      setState(() {
-                        value = "";
-                        $isVisible = false;
-                        $isChaptersVisible = true;
-                      }),
-                    }
-                  else
-                    {
-                      setState(() {
-                        $precent += 0.00409836;
-                        $userProgress = $precent * 100;
-                        value = "";
-                        $isVisible = false;
-                        $isChaptersVisible = true;
-                        if ($precent >= 1.0) {
-                          $precent = 1.0;
-                        }
-                      }),
-                    }
+                  setProgress(),
                 },
                 icon: const Icon(Icons.bookmark),
                 label: const Text("All Done"),
