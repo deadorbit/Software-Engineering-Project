@@ -61,6 +61,8 @@ class _HistoryPageState extends State<HistoryPage> {
 
   void getUnrealiz() async {
     unrealized = await databaseController.getUnrealisedProfit(userId);
+    String string = unrealized.toStringAsFixed(2);
+    unrealized = double.parse(string);
     setState(() {});
   }
 
