@@ -21,8 +21,8 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
 
     print("in init state about to get interval");
-    _getInterval();
-    _getSchedules();
+    interval = _getInterval();
+    // _getSchedules();
 
     Future<List<NotificationModel>> schedule = getSchedule();
     print("schedule");
@@ -33,12 +33,12 @@ class _SettingsPageState extends State<SettingsPage> {
     return await AwesomeNotifications().listScheduledNotifications();
   }
 
-  Future<void> _getSchedules() async {
-    List list =
-        await AwesomeNotifications().getAllActiveNotificationIdsOnStatusBar();
+  // Future<void> _getSchedules() async {
+  //   List list =
+  //       await AwesomeNotifications().getAllActiveNotificationIdsOnStatusBar();
 
-    print(list);
-  }
+  //   print(list);
+  // }
 
   void goToPortof() {
     Navigator.pushNamed(context, '/portfolio');
@@ -52,28 +52,28 @@ class _SettingsPageState extends State<SettingsPage> {
     print(time.hour);
 
     int currentHour = time.hour;
-    interval = 0;
+    int interval2 = 0;
 
     if (currentHour <= 10) {
       //this is to schedule the ones in the morning.
       int hoursApart = 10 - currentHour;
-      interval = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
+      interval2 = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
     } else if (currentHour <= 17) {
       int hoursApart = 17 - currentHour;
 
-      interval = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
+      interval2 = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
     } else {
       int hoursApart = currentHour - 10;
-      interval = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
+      interval2 = (((hoursApart * 60) * 60) - (time.minute * 60)) - 300;
     }
 
     //here I think I can call two different functions? Schedule notifications.
 
     print(interval);
 
-    interval = 180;
+    interval2 = 600;
 
-    return interval;
+    return interval2;
   }
 
   @override
