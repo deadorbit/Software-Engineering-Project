@@ -17,7 +17,6 @@ class _HistoryPageState extends State<HistoryPage> {
   double balance = 0;
   double unrealized = 0;
 
-
   @override
   void initState() {
     super.initState();

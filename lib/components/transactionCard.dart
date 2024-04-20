@@ -14,7 +14,6 @@ class TransactionCard extends StatefulWidget {
   final bool open;
   final String transId;
   final VoidCallback onClose;
-  
 
   TransactionCard(
       {super.key,
@@ -70,6 +69,54 @@ class _TransactionCardState extends State<TransactionCard> {
     await databaseController.closeTransaction(
         widget.userId, profitOpen, widget.transId); // Make sure this is awaited
     widget.onClose(); // Call this after the above operations are complete
+    _showAlertDialogClose(
+        "You closed ${widget.amountStock.toStringAsFixed(2)} worth of ${widget.stockCode}\nPorfit: ${profitOpen.toStringAsFixed(2)}\$");
+  }
+
+  void _showAlertDialogClose(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Success',
+          style:
+              TextStyle(color: Color.fromARGB(255, 13, 1, 140), fontSize: 35),
+        ), // Adds a title to the AlertDialog
+        content: Text(
+          message,
+          style: TextStyle(fontSize: 17),
+        ), // The main message text
+        shape: RoundedRectangleBorder(
+            side: BorderSide(color: Color.fromARGB(255, 13, 1, 140), width: 3),
+            borderRadius: BorderRadius.circular(
+                15.0)), // Rounds the corners of the AlertDialog
+        backgroundColor: Colors.white, // Sets a custom background color
+        elevation: 24.0, // Shadow elevation for 3D effect
+        actions: <Widget>[
+          // Actions are typically buttons at the bottom of the dialog
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Closes the dialog
+            },
+            style: TextButton.styleFrom(
+              iconColor: Color.fromARGB(255, 13, 1, 140), // Text color
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    color: Color.fromARGB(255, 13, 1, 140),
+                    width: 2), // Border color and width
+                borderRadius: BorderRadius.circular(16.0), // Border radius
+              ),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 20, vertical: 10), // Button padding
+            ),
+            child: Text(
+              'OK',
+              style: TextStyle(color: Color.fromARGB(255, 13, 1, 140)),
+            ), // Text for the button
+          ),
+        ],
+      ),
+    );
   }
 
   @override
