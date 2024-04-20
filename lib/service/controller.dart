@@ -254,4 +254,47 @@ class DataBase_Controller {
       print(e);
     }
   }
+
+  Future<void> updateUserName(String customUserId, String newName) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
+    QuerySnapshot userQuerySnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('userId', isEqualTo: customUserId)
+        .get();
+
+    if (userQuerySnapshot.docs.isNotEmpty) {
+      // Assuming the custom ID is unique and only one document should match
+      var userId = userQuerySnapshot.docs.first.id;
+      return users
+          .doc(userId)
+          .update({'name': newName})
+          .then((name) => print("username Updated"))
+          .catchError((error) => print("Failed to update username: $error"));
+    } else {
+      print("no user with the id");
+    }
+  }
+
+  Future<String> getUserName(String customUserId) async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+
+      QuerySnapshot userQuerySnapshot =
+          await users.where('userId', isEqualTo: customUserId).get();
+
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        var userDocument = userQuerySnapshot.docs.first;
+        String userName = userDocument.get('name');
+        return userName;
+      } else {
+        print("No user with the id");
+        return "";
+      }
+    } catch (error) {
+      print("Failed to retrieve user name: $error");
+      return "";
+    }
+  }
 }

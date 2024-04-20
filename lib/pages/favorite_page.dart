@@ -4,12 +4,14 @@ import 'dart:convert';
 
 //import for notifications
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:software_engineering_project/components/charts/chart_display.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
+import 'package:software_engineering_project/service/notification_service.dart';
 import '../components/fav_cards.dart';
 import '../models/stock_model.dart';
 import '../service/controller.dart';
@@ -57,6 +59,86 @@ class _FavoritePageState extends State<FavoritePage> {
     }
 
     getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
+
+    _checkNotificationPermission();
+  }
+
+  //functions for notifications
+  Future<void> _checkNotificationPermission() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool notificationsAllowed = prefs.getBool('notifications_allowed') ?? false;
+    setState(() {
+      _notificationsAllowed = notificationsAllowed;
+    });
+
+    // If notifications are not allowed, show permission dialog
+    if (!_notificationsAllowed) {
+      _showNotificationPermissionDialog();
+    } else {
+      NotificationService.initializeNotification();
+    }
+  }
+
+  Future<void> _toggleNotificationPermission(bool allow) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('notifications_allowed', allow);
+    setState(() {
+      _notificationsAllowed = allow;
+    });
+  }
+
+  void _showNotificationPermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Allow Notifications"),
+          content: const Text("Our app would like to send you notifications"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                _toggleNotificationPermission(false);
+                Navigator.pop(context);
+              },
+              child: const Text('Don\'t Allow',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                  )),
+            ),
+            TextButton(
+              onPressed: () {
+                _toggleNotificationPermission(true);
+                AwesomeNotifications()
+                    .requestPermissionToSendNotifications()
+                    .then((_) {
+                  Navigator.pop(context);
+                  NotificationService.initializeNotification();
+                  _createAutomaticSchedule();
+                });
+              },
+              child: const Text('Allow',
+                  style: TextStyle(
+                    color: Colors.teal,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  )),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _createAutomaticSchedule() async {
+    // await NotificationService.initializeNotification();
+
+    await NotificationService.showNotification(
+      title: 'Scheduled Notification',
+      body: 'this notitification has been scheduled ahead of time',
+      scheduled: true,
+      interval: 80,
+    );
   }
 
   //functions for browsing

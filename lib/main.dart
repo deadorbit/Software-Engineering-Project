@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:software_engineering_project/pages/auth/profile_page.dart';
 import 'package:software_engineering_project/pages/portfolio.dart';
 import 'package:software_engineering_project/pages/trading_page.dart';
@@ -22,12 +23,38 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await NotificationService.initializeNotification();
+  // await NotificationService.initializeNotification();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _notificationsAllowed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkNotificationPermission();
+  }
+
+  Future<void> _checkNotificationPermission() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool notificationsAllowed = prefs.getBool('notifications_allowed') ?? false;
+    setState(() {
+      _notificationsAllowed = notificationsAllowed;
+    });
+
+    // If notifications are not allowed, show permission dialog
+    if (_notificationsAllowed) {
+      NotificationService.initializeNotification();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

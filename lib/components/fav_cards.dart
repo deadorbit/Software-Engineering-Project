@@ -77,18 +77,18 @@ class _MyFavCardState extends State<MyFavCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
       elevation: 5.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       child: Padding(
-        padding: EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15.0),
         child: Row(
           textDirection: TextDirection.ltr,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Text(widget.stockCode,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   )),
@@ -97,8 +97,8 @@ class _MyFavCardState extends State<MyFavCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('\$${price}',
-                      style: TextStyle(
+                  Text('\$$price',
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       )),
@@ -110,27 +110,27 @@ class _MyFavCardState extends State<MyFavCard> {
               onPressed: () {
                 openChart();
               },
-              icon: Icon(Icons.add_chart),
+              icon: const Icon(Icons.add_chart),
               iconSize: 30,
-              color: Color.fromARGB(255, 9, 158, 148),
+              color: const Color.fromARGB(255, 9, 158, 148),
             ),
             IconButton(
               hoverColor: Colors.yellow,
               onPressed: () {
                 trade(); // Fixed typo from "tarde" to "trade"
               },
-              icon: Icon(Icons.account_balance_wallet),
+              icon: const Icon(Icons.account_balance_wallet),
               iconSize: 30,
-              color: Color.fromARGB(255, 203, 133, 2),
+              color: const Color.fromARGB(255, 203, 133, 2),
             ),
             IconButton(
               onPressed: () {
                 unFav();
               },
-              hoverColor: Color.fromARGB(255, 105, 9, 2),
+              hoverColor: const Color.fromARGB(255, 105, 9, 2),
               icon: const Icon(Icons.heart_broken),
               iconSize: 30,
-              color: Color.fromARGB(255, 222, 18, 18),
+              color: const Color.fromARGB(255, 222, 18, 18),
             ),
           ],
         ),

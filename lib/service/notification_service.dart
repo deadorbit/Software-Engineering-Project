@@ -1,8 +1,10 @@
-import 'package:software_engineering_project/pages/settings_page.dart';
+import 'dart:math';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 // import 'package:software_engineering_project/service/nav_bar.dart';
 import 'package:software_engineering_project/service/nav_bar.dart' as nav_bar;
+import '../pages/settings_page.dart';
 
 class NotificationService {
   static Future<void> initializeNotification() async {
@@ -31,21 +33,18 @@ class NotificationService {
       ],
       debug: true,
     );
-
     await AwesomeNotifications()
         .isNotificationAllowed()
         .then((isAllowed) async {
-      if (!isAllowed) {
-        await AwesomeNotifications().requestPermissionToSendNotifications();
+      if (isAllowed) {
+        await AwesomeNotifications().setListeners(
+          onActionReceivedMethod: onActionReceivedMethod,
+          onNotificationCreatedMethod: onNotificationCreatedMethod,
+          onNotificationDisplayedMethod: onNotificationDisplayedMethod,
+          onDismissActionReceivedMethod: onDismissActionReceiveMethod,
+        );
       }
     });
-
-    await AwesomeNotifications().setListeners(
-      onActionReceivedMethod: onActionReceivedMethod,
-      onNotificationCreatedMethod: onNotificationCreatedMethod,
-      onNotificationDisplayedMethod: onNotificationDisplayedMethod,
-      onDismissActionReceivedMethod: onDismissActionReceiveMethod,
-    );
   }
 
   static Future<void> onNotificationCreatedMethod(
@@ -56,6 +55,75 @@ class NotificationService {
   static Future<void> onNotificationDisplayedMethod(
       ReceivedNotification receivedNotification) async {
     debugPrint('onNotificationDisplayedMethod');
+    print(receivedNotification.category);
+
+    if (receivedNotification.category == NotificationCategory.Recommendation) {
+      create();
+    }
+  }
+
+  static void create() {
+    print(DateTime.now().hour);
+    if (DateTime.now().hour < 10) {
+      createAutomaticNineAmSchedule();
+    } else {
+      createAutomaticFourPmSchedule();
+    }
+  }
+
+  static DateTime _getNextWeekdayTime(DateTime now, int hour, int minute) {
+    DateTime nextTime = DateTime(now.year, now.month, now.day, hour, minute);
+    while (nextTime.weekday == 6 || nextTime.weekday == 7) {
+      nextTime = nextTime.add(const Duration(days: 1));
+    }
+    return nextTime;
+  }
+
+  static Future<void> createAutomaticNineAmSchedule() async {
+    await NotificationService.showNotification(
+      title: 'Scheduled Notification',
+      body: 'this is an am notificaiton',
+      scheduled: true,
+      category: NotificationCategory.Recommendation,
+      interval: _getDayInterval(),
+    );
+
+    print(_getDayInterval);
+  }
+
+  static Future<void> createAutomaticFourPmSchedule() async {
+    await NotificationService.showNotification(
+      title: 'This is the PM one',
+      body: "The market is about to close, come check it out",
+      scheduled: true,
+      category: NotificationCategory.Recommendation,
+      interval: _getNightInterval(),
+    );
+
+    print(_getNightInterval());
+  }
+
+  static int _getDayInterval() {
+    int dayInterval = 0;
+
+    final time = DateTime.now();
+
+    final nextMorningTime = _getNextWeekdayTime(time, 9, 52);
+    dayInterval = nextMorningTime.difference(time).inSeconds;
+
+    return dayInterval;
+  }
+
+  static int _getNightInterval() {
+    int nightInterval = 0;
+
+    final time = DateTime.now();
+
+    final nextAfternoonTime = _getNextWeekdayTime(time, 16, 22);
+    nightInterval = nextAfternoonTime.difference(time).inSeconds;
+
+    debugPrint("nightInvertal $nightInterval");
+    return nightInterval;
   }
 
   static Future<void> onDismissActionReceiveMethod(
@@ -88,13 +156,17 @@ class NotificationService {
     final List<NotificationActionButton>? actionButtons,
     final bool scheduled = false,
     final int? interval,
+    final bool wakeUpScheen = true,
   }) async {
     assert(!scheduled || (scheduled && interval != null));
 
+    Random random = Random();
+    int randomId = random.nextInt(100000);
+
     await AwesomeNotifications().createNotification(
         content: NotificationContent(
-          id: -1,
-          channelKey: 'basic_channel',
+          id: randomId,
+          channelKey: 'scheduled_channel',
           title: title,
           body: body,
           actionType: actionType,
@@ -111,7 +183,7 @@ class NotificationService {
                 timeZone:
                     await AwesomeNotifications().getLocalTimeZoneIdentifier(),
                 preciseAlarm: true,
-                repeats: true,
+                repeats: false,
                 allowWhileIdle: true,
               )
             : null);
