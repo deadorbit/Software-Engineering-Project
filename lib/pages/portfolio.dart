@@ -170,7 +170,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       bool newAreThereStocks = true;
 
       if (newDataMap.isEmpty) {
-        newDataMap["buy some stuff man"] = 0;
+        newDataMap["no stocks :(("] = 0;
         newAreThereStocks = false;
       }
 
