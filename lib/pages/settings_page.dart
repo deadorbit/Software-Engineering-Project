@@ -1,12 +1,17 @@
-import 'dart:math';
+import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:software_engineering_project/pages/auth/landing_page.dart';
 import 'package:software_engineering_project/service/controller.dart';
 import 'package:software_engineering_project/service/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../components/notification_button.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
@@ -23,7 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _notificationsAllowed = false;
   final db = DataBase_Controller();
   String userName = "";
-
+  File? image;
   @override
   void initState() {
     super.initState();
@@ -35,11 +40,44 @@ class _SettingsPageState extends State<SettingsPage> {
       });
     }
     getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
+    getProfilePicture();
   }
 
-  // Future<List<NotificationModel>> getSchedule() async {
-  //   return await AwesomeNotifications().listScheduledNotifications();
-  // }
+  Future selectImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if (image == null) return;
+
+      // final imageTemporary = File(image.path);
+
+      final imagePermanent = await saveImagePermanently(image.path);
+
+      setState(() => this.image = imagePermanent);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+
+    // _image = img;
+  }
+
+  Future<File> saveImagePermanently(String imagePath) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final name = basename(imagePath);
+    final image = File('${directory.path}/$name');
+
+    await db.saveProfilePicture(userId, imagePath);
+
+    return File(imagePath).copy(image.path);
+  }
+
+  Future<void> getProfilePicture() async {
+    String pathName = await db.getProfilePicture(userId);
+
+    setState(() {
+      image = File(pathName);
+    });
+  }
 
   Future<void> _toggleNotificationPermission(bool allow) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -49,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-  void _showNotificationPermissionDialog() {
+  void _showNotificationPermissionDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -111,16 +149,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Future<void> _createAutomaticFourPmSchedule() async {
-  //   await NotificationService.showNotification(
-  //     title: 'This is the PM one',
-  //     body: "The market is about to close, come check it out",
-  //     scheduled: true,
-  //     interval: _getNightInterval(),
-  //   );
-  // }
-
-  void goToPortof() {
+  void goToPortof(BuildContext context) {
     Navigator.pushNamed(context, '/portfolio');
   }
 
@@ -148,16 +177,6 @@ class _SettingsPageState extends State<SettingsPage> {
     return interval2;
   }
 
-  // int _getNightInterval() {
-  //   int nightInterval = 0;
-
-  //   Random random = Random();
-  //   nightInterval = random.nextInt(200) + 60;
-
-  //   debugPrint("nightInvertal $nightInterval");
-  //   return nightInterval;
-  // }
-
   void getUsers() async {
     if (userId.isNotEmpty) {
       userName = await db.getUserName(userId);
@@ -172,71 +191,124 @@ class _SettingsPageState extends State<SettingsPage> {
   //   if (userId.isNotEmpty) {}
   // }
 
+  void signUserOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut(); // Ensure sign out completes
+    // Instead of using Navigator.pushReplacementNamed, consider clearing all routes and pushing the landing page
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const LandingPage()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Stack(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: Text("Settings",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ),
-            ],
+      appBar: AppBar(
+        title: const Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Text("Settings",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+          ],
+        ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () => signUserOut(context),
+        //     icon: const Icon(Icons.logout),
+        //   ),
+        // ],
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.png'),
+            fit: BoxFit.cover,
           ),
         ),
-        body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background.png'),
-                fit: BoxFit.cover,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                image != null
+                    ? CircleAvatar(
+                        radius: 50,
+                        child: ClipOval(
+                          child: Image.file(
+                            image!,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+                      )
+                    : const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFdoXe8AoCq0BUuu6LhgSGqwUdMUwdLdyPnQ&usqp=CAU"),
+                      ),
+                Positioned(
+                  bottom: -3,
+                  left: 50,
+                  child: IconButton(
+                    onPressed: selectImage,
+                    icon: const Icon(Icons.add_a_photo),
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              "Hello, $userName!",
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(userName,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20)),
-                // ElevatedButton(onPressed: _getInterval, child: Text('press')),
-                ElevatedButton(
-                    onPressed: () async {
-                      await AwesomeNotifications().cancelAllSchedules();
-                    },
-                    child: Text('cancel')),
-                NotificationButton(
-                    text: 'Troubleshoot Notifications',
-                    onPressed: () async {
-                      await NotificationService.showNotification(
-                        title: 'This is a tester notification',
-                        body:
-                            'When you receive notifications from our app, they will look like this',
-                        category: NotificationCategory.Status,
-                      );
-                    }),
-                NotificationButton(
-                    text: 'Scheduled Notification',
-                    onPressed: () async {
-                      await NotificationService.showNotification(
-                          title: 'Scheduled Notification',
-                          body:
-                              'this notitification has been scheduled ahead of time',
-                          scheduled: true,
-                          interval: interval);
-                    }),
-                ElevatedButton(
-                  onPressed: _showNotificationPermissionDialog,
-                  child: Text("Allow Notifications"),
-                ),
-                ElevatedButton(onPressed: goToPortof, child: Text("Go")),
-              ],
-            )));
+            const Spacer(),
+            NotificationButton(
+              onPressed: () {},
+              text: "Change Username",
+            ),
+            NotificationButton(
+                text: 'Troubleshoot Notifications',
+                onPressed: () async {
+                  await NotificationService.showNotification(
+                    title: 'This is a tester notification',
+                    body:
+                        'When you receive notifications from our app, they will look like this',
+                    category: NotificationCategory.Status,
+                  );
+                }),
+            NotificationButton(
+              text: 'Change Notification Settings',
+              onPressed: () => _showNotificationPermissionDialog(context),
+            ),
+            NotificationButton(
+                onPressed: () => goToPortof(context), text: "View Portfolio"),
+            const Spacer(),
+            NotificationButton(
+              onPressed: () async {
+                await FirebaseAuth.instance
+                    .signOut(); // Ensure sign out completes
+                // Instead of using Navigator.pushReplacementNamed, consider clearing all routes and pushing the landing page
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const LandingPage()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              text: "Sign Out",
+            ),
+            // const Spacer(),
+          ],
+        ),
+      ),
+    );
   }
 }
