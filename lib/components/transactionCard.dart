@@ -14,6 +14,7 @@ class TransactionCard extends StatefulWidget {
   final bool open;
   final String transId;
   final VoidCallback onClose;
+  
 
   TransactionCard(
       {super.key,

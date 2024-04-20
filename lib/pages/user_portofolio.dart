@@ -1,35 +1,29 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:software_engineering_project/models/profit_helper.dart';
-import 'package:software_engineering_project/pages/user_portofolio.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 import '../models/profit_at_time.dart';
 import '../service/controller.dart';
 
-class PortfolioPage extends StatefulWidget {
+class UserPortfolioPage extends StatefulWidget {
   final String userId;
   final Map<String, double> dataMap;
   final List<ProfitInTime> chartData;
   final bool areThereStocks;
-  final GlobalKey<NavigatorState> navigatorKey;
 
-  const PortfolioPage({
-    super.key,
-    required this.userId,
-    required this.dataMap,
-    required this.chartData,
-    required this.areThereStocks,
-    required this.navigatorKey,
-  });
+  const UserPortfolioPage(
+      {super.key,
+      required this.userId,
+      required this.dataMap,
+      required this.chartData,
+      required this.areThereStocks});
 
   @override
-  State<PortfolioPage> createState() => _PortfolioPageState();
+  State<UserPortfolioPage> createState() => _UserPortfolioPageState();
 }
 
-class _PortfolioPageState extends State<PortfolioPage> {
+class _UserPortfolioPageState extends State<UserPortfolioPage> {
   final databaseController = DataBase_Controller();
   double aTProfit = 0.0;
   double unrealisedProfit = 0.0;
@@ -38,7 +32,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   String worstStock = "";
   double worstPercentage = 0.0;
   Map<String, double> adjustedDataMap = {};
-  TextEditingController nameController = TextEditingController();
+  TextEditingController balanceController = TextEditingController();
 
   @override
   void initState() {
@@ -114,80 +108,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
     setState(() {});
   }
 
-  void _showAlertDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          'Error',
-          style: TextStyle(color: Colors.red, fontSize: 35),
-        ), // Adds a title to the AlertDialog
-        content: Text(
-          message,
-          style: TextStyle(fontSize: 15),
-        ), // The main message text
-        shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.red, width: 3),
-            borderRadius: BorderRadius.circular(
-                15.0)), // Rounds the corners of the AlertDialog
-        backgroundColor: Colors.white, // Sets a custom background color
-        elevation: 24.0, // Shadow elevation for 3D effect
-        actions: <Widget>[
-          // Actions are typically buttons at the bottom of the dialog
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Closes the dialog
-            },
-            style: TextButton.styleFrom(
-              iconColor: Colors.blue, // Text color
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                    color: Colors.blue, width: 2), // Border color and width
-                borderRadius: BorderRadius.circular(16.0), // Border radius
-              ),
-              padding: EdgeInsets.symmetric(
-                  horizontal: 20, vertical: 10), // Button padding
-            ),
-            child: Text(
-              'OK',
-              style: TextStyle(color: Colors.blue),
-            ), // Text for the button
-          ),
-        ],
-      ),
-    );
-  }
-
-  void searchUser() async {
-    String searchedUserId =
-        await databaseController.getUserIdByName(nameController.text);
-
-    if (searchedUserId == "") {
-      _showAlertDialog("There is no user named ${nameController.text}");
-    } else {
-      Map<String, double> newDataMap =
-          await databaseController.getDataForChart(searchedUserId);
-      bool newAreThereStocks = true;
-
-      if (newDataMap.isEmpty) {
-        newDataMap["buy some stuff man"] = 0;
-        newAreThereStocks = false;
-      }
-
-      List<ProfitInTime> newChartData =
-          await databaseController.getProfits(searchedUserId);
-
-      widget.navigatorKey.currentState?.push(MaterialPageRoute(
-          builder: (context) => UserPortfolioPage(
-                userId: searchedUserId,
-                chartData: newChartData,
-                dataMap: newDataMap,
-                areThereStocks: newAreThereStocks,
-              )));
-    }
-    nameController.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,34 +121,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TextField(
-                          controller: nameController,
-                          decoration: InputDecoration(
-                            labelText: 'Search for another user',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.name),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white),
-                        child: Text("Search"),
-                        onPressed: searchUser,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               Expanded(
                 // Makes the chart flexible
                 flex: 2, // Adjust the flex factor as needed to allocate space

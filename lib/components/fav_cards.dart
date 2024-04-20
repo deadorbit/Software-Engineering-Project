@@ -12,6 +12,7 @@ class MyFavCard extends StatefulWidget {
   final VoidCallback onUnFav;
   final VoidCallback onOpenChart;
   final GlobalKey<NavigatorState> navigatorKey;
+  
 
   MyFavCard({
     super.key,
@@ -20,6 +21,7 @@ class MyFavCard extends StatefulWidget {
     required this.onUnFav,
     required this.onOpenChart,
     required this.navigatorKey,
+    
   });
 
   @override
