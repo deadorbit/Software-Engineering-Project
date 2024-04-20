@@ -26,6 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
   String userId = '';
   Map<String, double> dataMap = {};
   List<ProfitInTime> chartData = [];
+  bool areThereStocks = true;
 
   void goToPort() async {
     await data();
@@ -35,9 +36,11 @@ class _SettingsPageState extends State<SettingsPage> {
     if (navigatorKey.currentState != null) {
       navigatorKey.currentState!.push(MaterialPageRoute(
         builder: (context) => PortfolioPage(
+          navigatorKey: navigatorKey,
           userId: userId,
           dataMap: dataMap,
           chartData: chartData,
+          areThereStocks: areThereStocks,
         ),
       ));
     }
@@ -45,9 +48,12 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> data() async {
     dataMap = await databaseController.getDataForChart(userId);
+
     if (dataMap.isEmpty) {
       dataMap["buy some stuff man"] = 0;
+      areThereStocks = false;
     }
+
     setState(() {
       // This will trigger a rebuild with the updated dataMap
     });
@@ -63,7 +69,6 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     final user = FirebaseAuth.instance.currentUser;
-    data();
 
     if (user != null) {
       setState(() {

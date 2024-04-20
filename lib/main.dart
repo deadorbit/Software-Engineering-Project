@@ -85,6 +85,8 @@ class MyApp extends StatelessWidget {
             userId: args['userId'],
             dataMap: args['dataMap'],
             chartData: args['chartData'],
+            areThereStocks: args['areThereStocks'],
+            navigatorKey: args['navigatorKey'],
           );
         },
         '/trade': (context) {

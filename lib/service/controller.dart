@@ -113,6 +113,31 @@ class DataBase_Controller {
     }
   }
 
+  Future<String> getUserIdByName(String name) async {
+    try {
+      // Query the 'Users' collection to find the document with the matching custom ID
+      QuerySnapshot userQuerySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('name', isEqualTo: name)
+          .get();
+
+      // Check if a document with the custom ID exists
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        // Assuming the custom ID is unique and only one document should match
+        var userId = userQuerySnapshot.docs.first.id;
+
+        // Now that you have the Firebase document ID, you can query the 'stocks' sub-collection
+
+        return userId;
+      } else {
+        return "";
+      }
+    } catch (e) {
+      print(e);
+      return "";
+    }
+  }
+
   Future<void> addAStock(String userID, String name, String code) async {
     try {
       QuerySnapshot user = await FirebaseFirestore.instance

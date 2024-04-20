@@ -40,6 +40,7 @@ class _FavoritePageState extends State<FavoritePage> {
   final TextEditingController _queryController = TextEditingController();
   bool _isBrowsing = false;
   final List<bool> _favs = [];
+  
 
   @override
   void initState() {
