@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:software_engineering_project/pages/auth/profile_page.dart';
 import 'package:software_engineering_project/pages/portfolio.dart';
+import 'package:software_engineering_project/pages/settings_page.dart';
 import 'package:software_engineering_project/pages/trading_page.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
 import 'package:software_engineering_project/service/notification_service.dart';
@@ -70,8 +71,17 @@ class _MyAppState extends State<MyApp> {
         '/browsing': (context) => const BrowsingPage(),
         '/history': (context) => const HistoryPage(),
         '/nav': (context) => const NavBar(),
-        '/profile': (context) => ProfilePage(),
-        '/portfolio': (context) => const PortfolioPage(),
+        '/portfolio': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return PortfolioPage(
+            userId: args['userId'],
+            dataMap: args['dataMap'],
+            chartData: args['chartData'],
+            areThereStocks: args['areThereStocks'],
+            navigatorKey: args['navigatorKey'],
+          );
+        },
         '/trade': (context) {
           final args = ModalRoute.of(context)!.settings.arguments
               as Map<String, dynamic>;

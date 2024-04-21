@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:software_engineering_project/components/charts/chart.dart';
 
 class ChartDisplay extends StatelessWidget {
@@ -28,8 +31,8 @@ class ChartDisplay extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.only(
-                left: 10.0,
-                right: 10.0,
+                left: 25.0,
+                right: 25.0,
                 bottom: 10.0,
               ),
               child: Center(
@@ -37,10 +40,63 @@ class ChartDisplay extends StatelessWidget {
                   children: [
                     AppBar(
                       titleSpacing: 0,
-                      title: Text('Stock Prices ($stockTicker)'),
+                      title: Text(
+                        'Stock Prices ($stockTicker)',
+                        style: GoogleFonts.bodoniModa(
+                          color: const Color.fromARGB(255, 59, 59, 61),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
                     ),
-                    Expanded(
+                    const Divider(
+                      height: 2, // Adjust height as needed
+                      thickness: 2, // Adjust thickness as needed
+                      color: Colors.black,
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      child: Text(
+                        "Closing Prices (Daily)",
+                        style: GoogleFonts.bodoniModa(
+                          color: const Color.fromARGB(255, 59, 59, 61),
+                          fontSize: 15,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
                       child: Chart(stockTicker: stockTicker),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      shape: const ContinuousRectangleBorder(),
+                                      elevation: 2.0),
+                                  child: const Text('Week'))),
+                          Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      shape: const ContinuousRectangleBorder(),
+                                      elevation: 0,
+                                      backgroundColor: Colors.deepPurple[100]),
+                                  child: const Text('Month'))),
+                          Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      shape: const ContinuousRectangleBorder(),
+                                      elevation: 2.0),
+                                  child: const Text('Year'))),
+                        ],
+                      ),
                     ),
                   ],
                 ),

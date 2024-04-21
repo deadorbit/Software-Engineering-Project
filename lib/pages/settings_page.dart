@@ -13,6 +13,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
+//imports for portfolio page
+import 'package:software_engineering_project/models/profit_at_time.dart';
+import 'package:software_engineering_project/pages/portfolio.dart';
+import 'package:software_engineering_project/service/nav_bar.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
     super.key,
@@ -23,12 +28,22 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  int interval = 0;
   String userId = "";
-  bool _notificationsAllowed = false;
   final db = DataBase_Controller();
+
+  //initialize for notifs
+  int interval = 0;
+  bool _notificationsAllowed = false;
+
+  //initialize for username/pp
   String userName = "";
   File? image;
+
+  //initialize for portfolio
+  Map<String, double> dataMap = {};
+  List<ProfitInTime> chartData = [];
+  bool areThereStocks = true;
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
     if (user != null) {
       setState(() {
         userId = user.uid; // Assign userId if user is logged in
+        dataMap = dataMap;
       });
     }
     getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
@@ -45,7 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future selectImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
       if (image == null) return;
 
@@ -149,8 +165,41 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  void goToPortof(BuildContext context) {
-    Navigator.pushNamed(context, '/portfolio');
+  void goToPortof(BuildContext context) async {
+    await data();
+
+    await getListforProfits();
+
+    if (navigatorKey.currentState != null) {
+      navigatorKey.currentState!.push(MaterialPageRoute(
+        builder: (context) => PortfolioPage(
+          navigatorKey: navigatorKey,
+          userId: userId,
+          dataMap: dataMap,
+          chartData: chartData,
+          areThereStocks: areThereStocks,
+        ),
+      ));
+    }
+  }
+
+  Future<void> data() async {
+    dataMap = await db.getDataForChart(userId);
+
+    if (dataMap.isEmpty) {
+      dataMap["buy some stuff man"] = 0;
+      areThereStocks = false;
+    }
+
+    setState(() {
+      // This will trigger a rebuild with the updated dataMap
+    });
+  }
+
+  Future<void> getListforProfits() async {
+    chartData = await db.getProfits(userId);
+
+    setState(() {});
   }
 
   DateTime _getNextWeekdayTime(DateTime now, int hour, int minute) {
