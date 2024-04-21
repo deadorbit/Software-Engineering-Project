@@ -156,7 +156,7 @@ class _SettingsPageState extends State<SettingsPage> {
   DateTime _getNextWeekdayTime(DateTime now, int hour, int minute) {
     DateTime nextTime = DateTime(now.year, now.month, now.day, hour, minute);
     while (nextTime.weekday == 6 || nextTime.weekday == 7) {
-      nextTime = nextTime.add(Duration(days: 1));
+      nextTime = nextTime.add(const Duration(days: 1));
     }
     return nextTime;
   }
@@ -188,15 +188,15 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _showEditUsernameDialog(BuildContext context) async {
-    return showDialog(
+    showDialog(
       context: context,
       builder: (BuildContext context) {
         String newUsername = userName;
         return AlertDialog(
-          title: Text('Edit Username'),
+          title: const Text('Edit Username'),
           content: TextField(
             autofocus: true,
-            decoration: InputDecoration(labelText: 'Enter new username'),
+            decoration: const InputDecoration(labelText: 'Enter new username'),
             onChanged: (value) {
               newUsername = value;
             },
@@ -206,13 +206,16 @@ class _SettingsPageState extends State<SettingsPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+              ),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 setState(() {
                   userName = newUsername;
                 });
+                await db.updateUserName(userId, newUsername);
                 Navigator.of(context).pop();
               },
               child: const Text('Save changes'),
@@ -252,12 +255,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ],
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () => signUserOut(context),
-        //     icon: const Icon(Icons.logout),
-        //   ),
-        // ],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -266,98 +263,102 @@ class _SettingsPageState extends State<SettingsPage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Stack(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                image != null
-                    ? CircleAvatar(
-                        radius: 50,
-                        child: ClipOval(
-                          child: Image.file(
-                            image!,
-                            fit: BoxFit.cover,
-                            width: 100,
-                            height: 100,
+                Stack(
+                  children: [
+                    image != null
+                        ? CircleAvatar(
+                            radius: 50,
+                            child: ClipOval(
+                              child: Image.file(
+                                image!,
+                                fit: BoxFit.cover,
+                                width: 100,
+                                height: 100,
+                              ),
+                            ),
+                          )
+                        : const CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFdoXe8AoCq0BUuu6LhgSGqwUdMUwdLdyPnQ&usqp=CAU"),
                           ),
-                        ),
-                      )
-                    : const CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFdoXe8AoCq0BUuu6LhgSGqwUdMUwdLdyPnQ&usqp=CAU"),
+                    Positioned(
+                      bottom: -13,
+                      left: 60,
+                      child: IconButton(
+                        onPressed: selectImage,
+                        icon: const Icon(Icons.add_a_photo),
                       ),
-                Positioned(
-                  bottom: -3,
-                  left: 50,
-                  child: IconButton(
-                    onPressed: selectImage,
-                    icon: const Icon(Icons.add_a_photo),
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Hello $userName!',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    )),
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () => _showEditUsernameDialog(context),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Hello $userName!',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        )),
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      iconSize: 17,
+                      onPressed: () => _showEditUsernameDialog(context),
+                    )
+                  ],
+                ),
+                // const Spacer(),
+                const SizedBox(
+                  height: 170,
+                ),
+                NotificationButton(
+                    text: 'Troubleshoot Notifications',
+                    onPressed: () async {
+                      await NotificationService.showNotification(
+                        title: 'This is a tester notification',
+                        body:
+                            'When you receive notifications from our app, they will look like this',
+                        category: NotificationCategory.Status,
+                      );
+                    }),
+                NotificationButton(
+                  text: 'Change Notification Settings',
+                  onPressed: () => _showNotificationPermissionDialog(context),
+                ),
+                NotificationButton(
+                    onPressed: () => goToPortof(context),
+                    text: "View Portfolio"),
+                const SizedBox(
+                  height: 70,
+                ),
+                NotificationButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance
+                        .signOut(); // Ensure sign out completes
+                    // Instead of using Navigator.pushReplacementNamed, consider clearing all routes and pushing the landing page
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const LandingPage()),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                  text: "Sign Out",
+                ),
+                // const Spacer(),
+                const SizedBox(
+                  height: 40,
                 )
               ],
             ),
-            // Text(
-            //   "Hello, $userName!",
-            //   style: const TextStyle(
-            //     color: Colors.black,
-            //     fontWeight: FontWeight.bold,
-            //     fontSize: 25,
-            //   ),
-            // ),
-            const Spacer(),
-            NotificationButton(
-              onPressed: () {},
-              text: "Change Username",
-            ),
-            NotificationButton(
-                text: 'Troubleshoot Notifications',
-                onPressed: () async {
-                  await NotificationService.showNotification(
-                    title: 'This is a tester notification',
-                    body:
-                        'When you receive notifications from our app, they will look like this',
-                    category: NotificationCategory.Status,
-                  );
-                }),
-            NotificationButton(
-              text: 'Change Notification Settings',
-              onPressed: () => _showNotificationPermissionDialog(context),
-            ),
-            NotificationButton(
-                onPressed: () => goToPortof(context), text: "View Portfolio"),
-            const Spacer(),
-            NotificationButton(
-              onPressed: () async {
-                await FirebaseAuth.instance
-                    .signOut(); // Ensure sign out completes
-                // Instead of using Navigator.pushReplacementNamed, consider clearing all routes and pushing the landing page
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const LandingPage()),
-                  (Route<dynamic> route) => false,
-                );
-              },
-              text: "Sign Out",
-            ),
-            // const Spacer(),
-          ],
+          ),
         ),
       ),
     );

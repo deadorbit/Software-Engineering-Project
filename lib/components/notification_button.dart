@@ -13,7 +13,7 @@ class NotificationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 15, left: 15, top: 5, bottom: 5),
+      padding: const EdgeInsets.only(right: 55, left: 55, top: 5, bottom: 5),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: 70,
@@ -27,7 +27,7 @@ class NotificationButton extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             text,
-            style: const TextStyle(color: Colors.black, fontSize: 20),
+            style: const TextStyle(color: Colors.black, fontSize: 15),
           ),
         ),
       ),
