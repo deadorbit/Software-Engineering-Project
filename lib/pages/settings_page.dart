@@ -187,9 +187,45 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  // void changeUserName() async {
-  //   if (userId.isNotEmpty) {}
-  // }
+  Future<void> _showEditUsernameDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String newUsername = userName;
+        return AlertDialog(
+          title: Text('Edit Username'),
+          content: TextField(
+            autofocus: true,
+            decoration: InputDecoration(labelText: 'Enter new username'),
+            onChanged: (value) {
+              newUsername = value;
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  userName = newUsername;
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Save changes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void changeUserName() async {
+    if (userId.isNotEmpty) {}
+  }
 
   void signUserOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut(); // Ensure sign out completes
@@ -263,14 +299,29 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
-            Text(
-              "Hello, $userName!",
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Hello $userName!',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    )),
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () => _showEditUsernameDialog(context),
+                )
+              ],
             ),
+            // Text(
+            //   "Hello, $userName!",
+            //   style: const TextStyle(
+            //     color: Colors.black,
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 25,
+            //   ),
+            // ),
             const Spacer(),
             NotificationButton(
               onPressed: () {},
