@@ -81,8 +81,9 @@ class NotificationService {
 
   static Future<void> createAutomaticNineAmSchedule() async {
     await NotificationService.showNotification(
-      title: 'Scheduled Notification',
-      body: 'this is an am notificaiton',
+      title:
+          "${Emojis.money_money_bag + Emojis.time_ten_o_clock} Time to Trade!",
+      body: "The stock market is about to open! Hop on to trading.",
       scheduled: true,
       category: NotificationCategory.Recommendation,
       interval: _getDayInterval(),
@@ -93,8 +94,9 @@ class NotificationService {
 
   static Future<void> createAutomaticFourPmSchedule() async {
     await NotificationService.showNotification(
-      title: 'This is the PM one',
-      body: "The market is about to close, come check it out",
+      title: '${Emojis.smile_money_mouth_face} Time to check on your stocks!',
+      body:
+          "The stock market is about to close! Come check out your profits of the day",
       scheduled: true,
       category: NotificationCategory.Recommendation,
       interval: _getNightInterval(),

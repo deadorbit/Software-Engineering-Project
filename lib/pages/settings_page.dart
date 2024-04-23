@@ -151,16 +151,19 @@ class _SettingsPageState extends State<SettingsPage> {
     String title = "";
     String body = "";
     if (DateTime.now().hour < 10) {
-      title = "The stock market is about to open!";
-      body = "Here is placeholder text. This one should show up before 10 am";
+      title =
+          "${Emojis.money_money_bag + Emojis.time_ten_o_clock} Time to Trade!";
+      body = "The stock market is about to open! Hop on to trading.";
     } else {
-      title = "The stock market is about to close!";
-      body = "Here is placeholder text. This one should show up before 5 pm";
+      title = "${Emojis.smile_money_mouth_face} Time to check on your stocks!";
+      body =
+          "The stock market is about to close! Come check out your profits of the day";
     }
     await NotificationService.showNotification(
       title: title,
       body: body,
       scheduled: true,
+      category: NotificationCategory.Recommendation,
       interval: _getInterval(),
     );
   }

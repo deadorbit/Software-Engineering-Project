@@ -133,12 +133,51 @@ class _FavoritePageState extends State<FavoritePage> {
   Future<void> _createAutomaticSchedule() async {
     // await NotificationService.initializeNotification();
 
+    String title;
+    String body;
+
+    final time = DateTime.now();
+
+    if (time.hour < 10) {
+      title =
+          "${Emojis.money_money_bag + Emojis.time_ten_o_clock} Time to Trade!";
+      body = "The stock market is about to open! Hop on to trading.";
+    } else {
+      title = "${Emojis.smile_money_mouth_face} Time to check on your stocks!";
+      body =
+          "The stock market is about to close! Come check out your profits of the day";
+    }
+
     await NotificationService.showNotification(
-      title: 'Scheduled Notification',
-      body: 'this notitification has been scheduled ahead of time',
+      title: title,
+      body: body,
+      category: NotificationCategory.Recommendation,
       scheduled: true,
-      interval: 80,
+      interval: _getInterval(),
     );
+  }
+
+  DateTime _getNextWeekdayTime(DateTime now, int hour, int minute) {
+    DateTime nextTime = DateTime(now.year, now.month, now.day, hour, minute);
+    while (nextTime.weekday == 6 || nextTime.weekday == 7) {
+      nextTime = nextTime.add(const Duration(days: 1));
+    }
+    return nextTime;
+  }
+
+  int _getInterval() {
+    int interval2 = 0;
+    final time = DateTime.now();
+
+    if (time.hour < 9) {
+      final nextDayTime = _getNextWeekdayTime(time, 9, 50);
+      interval2 = nextDayTime.difference(time).inSeconds;
+    } else {
+      final nextAfternoonTime = _getNextWeekdayTime(time, 4, 20);
+      interval2 = nextAfternoonTime.difference(time).inSeconds;
+    }
+
+    return interval2;
   }
 
   //functions for browsing
