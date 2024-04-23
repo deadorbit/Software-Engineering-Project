@@ -85,8 +85,8 @@ class _LearnPageState extends State<LearnPage> {
             LinearPercentIndicator(
               lineHeight: 42.5,
               percent: $precent,
-              progressColor: Colors.green,
-              backgroundColor: Colors.red,
+              progressColor:  const Color.fromARGB(255, 29, 73, 44),
+              backgroundColor: const Color.fromARGB(222, 205, 136, 0),
               center: Text($userProgress.toStringAsFixed(2) + "%",),
             ),
             const SizedBox(height: 20),
@@ -2620,7 +2620,7 @@ class _LearnPageState extends State<LearnPage> {
                 icon: const Icon(Icons.bookmark),
                 label: const Text("All Done"),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: const Color.fromRGBO(204, 126, 0, 100),
+                  foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 205, 136, 0),
                 ),
               ),
             ),
