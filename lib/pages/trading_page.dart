@@ -156,64 +156,82 @@ class _TradingPageState extends State<TradingPage> {
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Text(
-                "Balance: \$${balance.toStringAsFixed(2)}",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.black),
-                child: Text("Deposit 5k \$"),
-                onPressed: depositMoney,
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Current price of ${widget.stockCode} is \$${widget.price}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                controller: balanceController,
-                decoration: InputDecoration(
-                  labelText: 'Amount to Invest in \$',
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.attach_money),
-                ),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))
-                ],
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Color.fromARGB(255, 0, 0, 0),
-                  backgroundColor:
-                      Colors.green, // Text color (Foreground color)
-                  shape: BeveledRectangleBorder(
-                    // Shape
-                    borderRadius: BorderRadius.circular(20), // Rounded corners
-                  ),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 30, vertical: 10), // Padding
-                ),
-                child: Text("Place Trade"),
-                onPressed: placeTrade,
-              ),
-            ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.png'),
+            fit: BoxFit.cover,
           ),
+        ),
+        padding: EdgeInsets.all(16),
+        alignment: Alignment.center,
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            Text(
+              "Balance: \$${balance.toStringAsFixed(2)}",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Color.fromARGB(198, 192, 162, 14),
+                backgroundColor: Colors.white,
+                side: BorderSide(
+                    color: Color.fromARGB(198, 192, 162, 14), width: 3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: Text(
+                "Deposit 5k dollars",
+                style: TextStyle(
+                    color: const Color.fromARGB(198, 192, 162, 14),
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: depositMoney,
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Current price of ${widget.stockCode} is \$${widget.price}",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: balanceController,
+              decoration: InputDecoration(
+                labelText: 'Amount to Invest in \$',
+                border: OutlineInputBorder(),
+                suffixIcon: Icon(Icons.attach_money),
+              ),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))
+              ],
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Color.fromARGB(198, 192, 162, 14),
+                backgroundColor: Colors.white,
+                side: BorderSide(
+                    color: Color.fromARGB(198, 192, 162, 14), width: 3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: Text(
+                "Place Trade",
+                style: TextStyle(
+                    color: const Color.fromARGB(198, 192, 162, 14),
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: placeTrade,
+            ),
+          ],
         ),
       ),
     );
