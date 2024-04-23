@@ -148,7 +148,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     fontWeight:
                                         FontWeight.bold, // Make text bold
                                     color: unrealized > 0
-                                        ? Colors.green
+                                        ? Colors.blue
                                         : unrealized < 0
                                             ? Colors.red
                                             : Colors.grey),

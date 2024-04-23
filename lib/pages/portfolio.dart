@@ -434,6 +434,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   flex: 2,
                   child: Container(
                       child: SfCartesianChart(
+
                           // Chart Title
                           primaryXAxis: DateTimeAxis(
                             dateFormat: DateFormat(
