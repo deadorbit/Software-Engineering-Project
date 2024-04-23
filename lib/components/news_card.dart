@@ -40,7 +40,7 @@ class _NewsCardState extends State<NewsCard> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(
-                  color: const Color.fromARGB(255, 204, 136, 0),
+                  color: const Color.fromARGB(255, 225, 177, 35),
                   width: 2.0,
                 )),
             child: Row(

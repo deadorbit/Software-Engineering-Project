@@ -379,11 +379,11 @@ class _FavoritePageState extends State<FavoritePage> {
                           borderSide: const BorderSide(
                             width: 2,
                             style: BorderStyle.solid,
-                            color: Color.fromARGB(255, 204, 136, 0),
+                            color: Color.fromARGB(255, 225, 177, 35),
                           )),
                       suffixIcon: const Icon(
                         Icons.search,
-                        color: Color.fromARGB(255, 204, 136, 0),
+                        color: Color.fromARGB(255, 225, 177, 35),
                       ),
                     )),
               ),

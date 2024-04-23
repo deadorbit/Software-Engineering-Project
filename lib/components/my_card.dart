@@ -73,7 +73,7 @@ class _MyCardState extends State<MyCard> {
                   icon: (widget.isFav
                       ? const Icon(Icons.favorite)
                       : const Icon(Icons.favorite_border_outlined)),
-                  color: Color.fromARGB(255, 216, 31, 18),
+                  color: Color.fromARGB(255, 225, 177, 35),
                 )
               ]),
         ));
