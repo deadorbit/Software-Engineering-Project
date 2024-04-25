@@ -71,8 +71,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
         uid: uid,
         name: name,
         email: email,
-        balance: 0.0,
-        totalProfit: 0.0,
+        balance: 0,
+        totalProfit: 0,
+        learnProgress: 0.0,
       );
 
       await userData

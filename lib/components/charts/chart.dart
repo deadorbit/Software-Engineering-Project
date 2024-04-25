@@ -53,11 +53,9 @@ List<FlSpot> stockDataPointToFLSpot(List<StockDataPoint> stockDataPoints) {
 
 class Chart extends StatefulWidget {
   final String stockTicker;
+  final String timeFrame;
 
-  const Chart({
-    super.key,
-    required this.stockTicker,
-  });
+  const Chart({super.key, required this.stockTicker, required this.timeFrame});
 
   @override
   State<Chart> createState() => _ChartState();
@@ -74,46 +72,77 @@ class _ChartState extends State<Chart> {
     _fetchData();
   }
 
+  @override
+  void didUpdateWidget(covariant Chart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if the timeFrame has actually changed
+    if (oldWidget.timeFrame != widget.timeFrame) {
+      _isLoading = true; // Show loading state while fetching
+      setState(() {}); // Update the UI to show loading if needed
+      _fetchData();
+    }
+  }
+
   void _fetchData() async {
-    final apiManipulation = APIManipulation();
-    final List<dynamic> APIstockPrices =
-        await apiManipulation.getOneMonthJson(widget.stockTicker);
-    final List<double> closePrices = [];
-
-    List<StockDataPoint> dataPoints = [];
     List<FlSpot> stockPrices = [];
+    try {
+      final apiManipulation = APIManipulation();
+      List<dynamic> apiStockPrices = [];
 
-    var maxY = 0.0;
-    var maxX = 0.0;
-
-    for (var record in APIstockPrices) {
-      double close = record['Close'].toDouble();
-      if (close > maxY) {
-        maxY = close;
+      if (widget.timeFrame == "mo") {
+        apiStockPrices =
+            await apiManipulation.getOneMonthJson(widget.stockTicker);
       }
-      if (close < minY) {
-        minY = close;
+      if (widget.timeFrame == "wk") {
+        apiStockPrices =
+            await apiManipulation.getOneWeekJson(widget.stockTicker);
+      }
+      if (widget.timeFrame == "yr") {
+        apiStockPrices =
+            await apiManipulation.getOneYearJson(widget.stockTicker);
+      }
+      final List<double> closePrices = [];
+
+      List<StockDataPoint> dataPoints = [];
+
+      var maxY = 0.0;
+      var maxX = 0.0;
+
+      for (var record in apiStockPrices) {
+        double close = record['Close'].toDouble();
+        if (close > maxY) {
+          maxY = close;
+        }
+        if (close < minY) {
+          minY = close;
+        }
+
+        closePrices.add(close);
       }
 
-      closePrices.add(close);
-    }
-
-    dataPoints = assignDates(closePrices);
-    stockPrices = stockDataPointToFLSpot(dataPoints);
-    for (var stock in stockPrices) {
-      if (stock.x > maxX) {
-        maxX = stock.x;
+      dataPoints = assignDates(closePrices);
+      stockPrices = stockDataPointToFLSpot(dataPoints);
+      for (var stock in stockPrices) {
+        if (stock.x > maxX) {
+          maxX = stock.x;
+        }
       }
-    }
 
-    stockPrices.add(FlSpot.nullSpot);
-    stockPrices.add(FlSpot(maxX, maxY * 1.02));
+      stockPrices.add(FlSpot.nullSpot);
+      stockPrices.add(FlSpot(maxX, maxY * 1.02));
 
-    setState(() {
       _stockPrices = stockPrices;
-      _isLoading = false;
-    });
-    //print(stockPrices.length);
+    } catch (error) {
+      print('Error updating chart: $error');
+    } finally {
+      setState(
+        () {
+          _stockPrices = stockPrices;
+          _isLoading = false;
+        },
+      );
+    }
   }
 
   List<LineTooltipItem> getCustomTooltipItems(FlSpot touchedSpot) {
@@ -130,14 +159,13 @@ class _ChartState extends State<Chart> {
     if (!_isLoading) {
       return Scaffold(
         body: SizedBox(
-          height: 300.0,
+          height: 800.0,
           child: LineChart(
             LineChartData(
+              clipData: const FlClipData.all(),
               lineTouchData: LineTouchData(
                 touchCallback:
-                    (FlTouchEvent event, LineTouchResponse? touchResponse) {
-                  // ...
-                },
+                    (FlTouchEvent event, LineTouchResponse? touchResponse) {},
                 touchTooltipData: LineTouchTooltipData(
                   tooltipBgColor: Colors.blueGrey,
                   getTooltipItems: (spots) =>
@@ -162,14 +190,14 @@ class _ChartState extends State<Chart> {
                       //begin: Alignment(300, 300),
                       transform: GradientRotation(1.57079633),
                       colors: [
-                        Color.fromRGBO(76, 175, 80, 1),
-                        Color.fromRGBO(255, 241, 118, 1)
+                        Color.fromRGBO(255, 241, 118, 1),
+                        Color.fromRGBO(63, 159, 255, 1),
                       ]),
                   barWidth: 3, // Adjust bar width as needed
                   belowBarData: BarAreaData(
                     // Optional for filling below the line
                     show: true,
-                    color: Colors.green[900]?.withOpacity(0.3),
+                    color: Colors.blue[900]?.withOpacity(0.3),
                   ),
                 ),
               ],
@@ -180,7 +208,6 @@ class _ChartState extends State<Chart> {
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-
                     reservedSize: 30,
                     //interval: 10.0,
                     getTitlesWidget: (value, titleConfig) => value ==
@@ -229,7 +256,13 @@ class _ChartState extends State<Chart> {
         ),
       );
     } else {
-      return const Scaffold();
+      return Center(
+        child: _isLoading
+            ? const CircularProgressIndicator(
+                color: Color.fromARGB(255, 21, 101, 192),
+              )
+            : Container(height: 200, width: 200, color: Colors.blue),
+      );
     }
   }
 }

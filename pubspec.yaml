@@ -35,7 +35,6 @@ dependencies:
   http: ^1.2.0
   firebase_core: ^2.25.2
   cloud_firestore: ^4.15.4
-  pie_chart: ^5.4.0 
   flutter_launcher_icons: ^0.13.1
   font_awesome_flutter: ^10.7.0
   awesome_notifications_core: ^0.9.3
@@ -52,8 +51,6 @@ dependencies:
   fl_chart: ^0.66.2
   modal_bottom_sheet: ^3.0.0
   percent_indicator: ^4.2.3
-  syncfusion_flutter_charts: ^25.1.38
-  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

@@ -14,8 +14,6 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   String userId = ""; // Initialize as empty string
   List _prices = [];
-  double balance = 0;
-  double unrealized = 0;
 
   @override
   void initState() {
@@ -27,8 +25,6 @@ class _HistoryPageState extends State<HistoryPage> {
       });
     }
     getTransactions(); // Invoke getUsers here or wherever it makes sense after userId is set
-    getbalace();
-    getUnrealiz();
   }
 
   // Function to get price by stock code
@@ -50,20 +46,9 @@ class _HistoryPageState extends State<HistoryPage> {
     getTransactions();
   }
 
-  void getbalace() async {
-    balance = await databaseController.getUserBalance(userId);
-    setState(() {});
-  }
-
-  void getUnrealiz() async {
-    unrealized = await databaseController.getUnrealisedProfit(userId);
-    setState(() {});
-  }
-
   final databaseController = DataBase_Controller();
   String result = "Loading..."; // Initial state of the result
   List<Trans> _transactions = [];
-
   void getTransactions() async {
     if (userId.isNotEmpty) {
       var updatedTransactions =
@@ -80,7 +65,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Transactions"),
+        title: const Text("Transaction"),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -89,106 +74,36 @@ class _HistoryPageState extends State<HistoryPage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Card(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: SizedBox(
-                        width: 130, // Set your desired width
-                        height: 50,
-                        child: Column(
-                          children: [
-                            Center(child: Text("Balance")),
-                            Center(
-                              child: Text(
-                                "${balance.toStringAsFixed(2)}",
-                                style: TextStyle(
-                                    fontSize: 20, // Size of the text
-                                    fontWeight:
-                                        FontWeight.bold, // Make text bold
-                                    color: Colors.black),
-                              ),
-                            )
-                          ],
-                        )),
+        child: _transactions.isEmpty
+            ? Center(
+                child: Text(
+                  'No transactions',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'serif',
                   ),
                 ),
-                Card(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: SizedBox(
-                        width: 130, // Set your desired width
-                        height: 50,
-                        child: Column(
-                          children: [
-                            Center(child: Text("Unrealized Profit")),
-                            Center(
-                              child: Text(
-                                "${unrealized.toStringAsFixed(2)}",
-                                style: TextStyle(
-                                    fontSize: 20, // Size of the text
-                                    fontWeight:
-                                        FontWeight.bold, // Make text bold
-                                    color: unrealized > 0
-                                        ? Colors.green
-                                        : unrealized < 0
-                                            ? Colors.red
-                                            : Colors.grey),
-                              ),
-                            )
-                          ],
-                        )),
-                  ),
-                ),
-              ],
-            ),
-            _transactions.isEmpty
-                ? Center(
-                    child: Text(
-                      'No transactions',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'serif',
+              )
+            : ListView.builder(
+                itemCount: _transactions.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      TransactionCard(
+                        onClose: onClose,
+                        open: _transactions[index].open,
+                        profitClosed: _transactions[index].profit,
+                        priceBought: _transactions[index].priceBought,
+                        stockCode: _transactions[index].code,
+                        userId: userId,
+                        amountDollar: _transactions[index].dollarAmount,
+                        amountStock: _transactions[index].stockAmount,
+                        transId: _transactions[index].ID,
                       ),
-                    ),
-                  )
-                : Expanded(
-                    child: ListView.builder(
-                      itemCount: _transactions.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            TransactionCard(
-                              key: ValueKey(_transactions[index].ID),
-                              onClose: onClose,
-                              open: _transactions[index].open,
-                              profitClosed: _transactions[index].profit,
-                              priceBought: _transactions[index].priceBought,
-                              stockCode: _transactions[index].code,
-                              userId: userId,
-                              amountDollar: _transactions[index].dollarAmount,
-                              amountStock: _transactions[index].stockAmount,
-                              transId: _transactions[index].ID,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-          ],
-        ),
+                    ],
+                  );
+                },
+              ),
       ),
     );
   }

@@ -42,7 +42,59 @@ class APIManipulation {
       //print(resp.body);
 
       if (resp.statusCode == 200) {
-        debugPrint(resp.body);
+        //debugPrint(resp.body);
+        final jsonData = jsonDecode(resp.body) as List<dynamic>;
+        return jsonData;
+      } else {
+        print('Server error: ${resp.statusCode}');
+        return [];
+      }
+    } on http.ClientException catch (e) {
+      print('HTTP error: $e');
+      return [];
+    } on FormatException catch (e) {
+      print('JSON Format error: $e');
+      return [];
+    } catch (e) {
+      print('Unknown error: $e');
+      return [];
+    }
+  }
+
+  Future<List> getOneWeekJson(String stockCode) async {
+    try {
+      var resp = await http
+          .get(Uri.parse('http://10.0.2.2:5000/stock/$stockCode/time/1wk'));
+      //print(resp.body);
+
+      if (resp.statusCode == 200) {
+        //debugPrint(resp.body);
+        final jsonData = jsonDecode(resp.body) as List<dynamic>;
+        return jsonData;
+      } else {
+        print('Server error: ${resp.statusCode}');
+        return [];
+      }
+    } on http.ClientException catch (e) {
+      print('HTTP error: $e');
+      return [];
+    } on FormatException catch (e) {
+      print('JSON Format error: $e');
+      return [];
+    } catch (e) {
+      print('Unknown error: $e');
+      return [];
+    }
+  }
+
+  Future<List> getOneYearJson(String stockCode) async {
+    try {
+      var resp = await http
+          .get(Uri.parse('http://10.0.2.2:5000/stock/$stockCode/time/1y'));
+      //print(resp.body);
+
+      if (resp.statusCode == 200) {
+        //debugPrint(resp.body);
         final jsonData = jsonDecode(resp.body) as List<dynamic>;
         return jsonData;
       } else {

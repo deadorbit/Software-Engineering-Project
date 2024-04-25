@@ -144,7 +144,6 @@ class _FavoritePageState extends State<FavoritePage> {
 
   void fuzzySearch(List stocks, String query) {
     if (query.isEmpty) {
-      _isBrowsing = false;
       _matches.clear();
       _matchedCodes.clear();
       _favs.clear();
@@ -254,16 +253,16 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Saved Stocks"),
-        actions: [
-          IconButton(
-            onPressed: () => signUserOut(context),
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: const Text("Saved Quotes"),
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () => signUserOut(context),
+      //       icon: const Icon(Icons.logout),
+      //     ),
+      //   ],
+      // ),
       body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -274,7 +273,7 @@ class _FavoritePageState extends State<FavoritePage> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(30),
                 child: TextField(
                     controller: _queryController,
                     onChanged: onQueryChanged,

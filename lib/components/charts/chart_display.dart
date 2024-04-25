@@ -1,16 +1,33 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:software_engineering_project/components/charts/chart.dart';
+import 'package:software_engineering_project/components/charts/chart_button_group.dart';
 
-class ChartDisplay extends StatelessWidget {
+class ChartDisplay extends StatefulWidget {
   final String stockTicker;
 
   const ChartDisplay({super.key, required this.stockTicker});
 
   @override
+  State<ChartDisplay> createState() => _ChartDisplayState();
+}
+
+class _ChartDisplayState extends State<ChartDisplay> {
+  String selectedRange = "mo";
+
+  void _handleRangeUpdate(int selectedValue) {
+    setState(() {
+      selectedRange = ["wk", "mo", "yr"][selectedValue];
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String _stockTicker = widget.stockTicker;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Padding(
@@ -41,7 +58,7 @@ class ChartDisplay extends StatelessWidget {
                     AppBar(
                       titleSpacing: 0,
                       title: Text(
-                        'Stock Prices ($stockTicker)',
+                        'Stock Prices ($_stockTicker)',
                         style: GoogleFonts.bodoniModa(
                           color: const Color.fromARGB(255, 59, 59, 61),
                           fontSize: 20,
@@ -57,7 +74,7 @@ class ChartDisplay extends StatelessWidget {
                     const SizedBox(height: 20),
                     SizedBox(
                       child: Text(
-                        "Closing Prices (Daily)",
+                        "Closing Prices",
                         style: GoogleFonts.bodoniModa(
                           color: const Color.fromARGB(255, 59, 59, 61),
                           fontSize: 15,
@@ -67,37 +84,10 @@ class ChartDisplay extends StatelessWidget {
                     ),
                     Flexible(
                       flex: 1,
-                      child: Chart(stockTicker: stockTicker),
+                      child: Chart(
+                          stockTicker: _stockTicker, timeFrame: selectedRange),
                     ),
-                    Flexible(
-                      flex: 1,
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                      shape: const ContinuousRectangleBorder(),
-                                      elevation: 2.0),
-                                  child: const Text('Week'))),
-                          Expanded(
-                              child: ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                      shape: const ContinuousRectangleBorder(),
-                                      elevation: 0,
-                                      backgroundColor: Colors.deepPurple[100]),
-                                  child: const Text('Month'))),
-                          Expanded(
-                              child: ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                      shape: const ContinuousRectangleBorder(),
-                                      elevation: 2.0),
-                                  child: const Text('Year'))),
-                        ],
-                      ),
-                    ),
+                    ChartButtonGroup(onChanged: _handleRangeUpdate),
                   ],
                 ),
               ),

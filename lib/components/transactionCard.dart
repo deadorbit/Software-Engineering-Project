@@ -64,11 +64,11 @@ class _TransactionCardState extends State<TransactionCard> {
 
   void closeTrade() async {
     double baalce = await databaseController.getUserBalance(widget.userId);
-    await databaseController.updateUserBalance(
+    databaseController.updateUserBalance(
         widget.userId, baalce + widget.amountDollar + profitOpen);
-    await databaseController.closeTransaction(
-        widget.userId, profitOpen, widget.transId); // Make sure this is awaited
-    widget.onClose(); // Call this after the above operations are complete
+    databaseController.closeTransaction(
+        widget.userId, profitOpen, widget.transId);
+    widget.onClose();
   }
 
   @override
