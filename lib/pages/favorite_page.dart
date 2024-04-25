@@ -4,12 +4,14 @@ import 'dart:convert';
 
 //import for notifications
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:software_engineering_project/components/charts/chart_display.dart';
 import 'package:software_engineering_project/service/nav_bar.dart';
+import 'package:software_engineering_project/service/notification_service.dart';
 import '../components/fav_cards.dart';
 import '../models/stock_model.dart';
 import '../service/controller.dart';
@@ -31,6 +33,8 @@ class _FavoritePageState extends State<FavoritePage> {
   List _prices = [];
   List<Stock> _stocks = [];
 
+  bool _notificationsAllowed = false;
+
   //asking for notification permission here because it's the first page the user will land on
 
   //initializing lists and variables for browsing part
@@ -44,38 +48,6 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
     super.initState();
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-              title: const Text('Allow Notifications'),
-              content:
-                  const Text('Our app would like to send you notifications'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Don\'t Allow',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 18,
-                        ))),
-                TextButton(
-                    onPressed: () => AwesomeNotifications()
-                        .requestPermissionToSendNotifications()
-                        .then((_) => Navigator.pop(context)),
-                    child: const Text('Allow',
-                        style: TextStyle(
-                          color: Colors.teal,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        )))
-              ]),
-        );
-      }
-    });
 
     readJson();
     final user = FirebaseAuth.instance.currentUser;
@@ -87,6 +59,125 @@ class _FavoritePageState extends State<FavoritePage> {
     }
 
     getUsers(); // Invoke getUsers here or wherever it makes sense after userId is set
+
+    _checkNotificationPermission();
+  }
+
+  //functions for notifications
+  Future<void> _checkNotificationPermission() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool notificationsAllowed = prefs.getBool('notifications_allowed') ?? false;
+    setState(() {
+      _notificationsAllowed = notificationsAllowed;
+    });
+
+    // If notifications are not allowed, show permission dialog
+    if (!_notificationsAllowed) {
+      _showNotificationPermissionDialog();
+    } else {
+      NotificationService.initializeNotification();
+    }
+  }
+
+  Future<void> _toggleNotificationPermission(bool allow) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('notifications_allowed', allow);
+    setState(() {
+      _notificationsAllowed = allow;
+    });
+  }
+
+  void _showNotificationPermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Allow Notifications"),
+          content: const Text("Our app would like to send you notifications"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                _toggleNotificationPermission(false);
+                Navigator.pop(context);
+              },
+              child: const Text('Don\'t Allow',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                  )),
+            ),
+            TextButton(
+              onPressed: () {
+                _toggleNotificationPermission(true);
+                AwesomeNotifications()
+                    .requestPermissionToSendNotifications()
+                    .then((_) {
+                  Navigator.pop(context);
+                  NotificationService.initializeNotification();
+                  _createAutomaticSchedule();
+                });
+              },
+              child: const Text('Allow',
+                  style: TextStyle(
+                    color: Colors.teal,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  )),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _createAutomaticSchedule() async {
+    // await NotificationService.initializeNotification();
+
+    String title;
+    String body;
+
+    final time = DateTime.now();
+
+    if (time.hour < 10) {
+      title =
+          "${Emojis.money_money_bag + Emojis.time_ten_o_clock} Time to Trade!";
+      body = "The stock market is about to open! Hop on to trading.";
+    } else {
+      title = "${Emojis.smile_money_mouth_face} Time to check on your stocks!";
+      body =
+          "The stock market is about to close! Come check out your profits of the day";
+    }
+
+    await NotificationService.showNotification(
+      title: title,
+      body: body,
+      category: NotificationCategory.Recommendation,
+      scheduled: true,
+      interval: _getInterval(),
+    );
+  }
+
+  DateTime _getNextWeekdayTime(DateTime now, int hour, int minute) {
+    DateTime nextTime = DateTime(now.year, now.month, now.day, hour, minute);
+    while (nextTime.weekday == 6 || nextTime.weekday == 7) {
+      nextTime = nextTime.add(const Duration(days: 1));
+    }
+    return nextTime;
+  }
+
+  int _getInterval() {
+    int interval2 = 0;
+    final time = DateTime.now();
+
+    if (time.hour < 9) {
+      final nextDayTime = _getNextWeekdayTime(time, 9, 50);
+      interval2 = nextDayTime.difference(time).inSeconds;
+    } else {
+      final nextAfternoonTime = _getNextWeekdayTime(time, 4, 20);
+      interval2 = nextAfternoonTime.difference(time).inSeconds;
+    }
+
+    return interval2;
   }
 
   //functions for browsing
@@ -144,6 +235,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   void fuzzySearch(List stocks, String query) {
     if (query.isEmpty) {
+      _isBrowsing = false;
       _matches.clear();
       _matchedCodes.clear();
       _favs.clear();
@@ -253,16 +345,6 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: const Text("Saved Quotes"),
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () => signUserOut(context),
-      //       icon: const Icon(Icons.logout),
-      //     ),
-      //   ],
-      // ),
       body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -272,8 +354,15 @@ class _FavoritePageState extends State<FavoritePage> {
           ),
           child: Column(
             children: [
+              SizedBox(
+                height: 50,
+              ),
               Container(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.only(
+                  bottom: 10,
+                  right: 20,
+                  left: 20,
+                ),
                 child: TextField(
                     controller: _queryController,
                     onChanged: onQueryChanged,
@@ -290,11 +379,11 @@ class _FavoritePageState extends State<FavoritePage> {
                           borderSide: const BorderSide(
                             width: 2,
                             style: BorderStyle.solid,
-                            color: Color.fromARGB(255, 204, 136, 0),
+                            color: Color.fromARGB(255, 225, 177, 35),
                           )),
                       suffixIcon: const Icon(
                         Icons.search,
-                        color: Color.fromARGB(255, 204, 136, 0),
+                        color: Color.fromARGB(255, 225, 177, 35),
                       ),
                     )),
               ),

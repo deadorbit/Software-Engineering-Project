@@ -40,38 +40,42 @@ class _MyCardState extends State<MyCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 1),
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: const Color.fromARGB(255, 204, 136, 0),
-            width: 2.0,
-          ),
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-            textDirection: TextDirection.ltr,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(widget.stockName,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text(
-                widget.stockCode,
-              ),
-              IconButton(
-                onPressed: () {
-                  addToFavourites(widget.stockName, widget.stockCode);
-                },
-                icon: (widget.isFav
-                    ? const Icon(Icons.heart_broken)
-                    : const Icon(Icons.heart_broken_outlined)),
-                color: const Color.fromARGB(255, 204, 136, 0),
-              )
-            ]));
+    return Card(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        // decoration: BoxDecoration(
+        //   color: Colors.white,
+        //   border: Border.all(
+        //     color: const Color.fromARGB(255, 204, 136, 0),
+        //     width: 2.0,
+        //   ),
+        //   borderRadius: BorderRadius.circular(8.0),
+        // ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+              textDirection: TextDirection.ltr,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(widget.stockName,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    )),
+                Text(
+                  widget.stockCode,
+                ),
+                IconButton(
+                  onPressed: () {
+                    addToFavourites(widget.stockName, widget.stockCode);
+                  },
+                  icon: (widget.isFav
+                      ? const Icon(Icons.favorite)
+                      : const Icon(Icons.favorite_border_outlined)),
+                  color: Color.fromARGB(255, 225, 177, 35),
+                )
+              ]),
+        ));
   }
 }
