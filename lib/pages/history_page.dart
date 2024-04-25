@@ -86,7 +86,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Transactions"),
+        title: const Text("Trades"),
       ),
       body: Container(
         decoration: BoxDecoration(
