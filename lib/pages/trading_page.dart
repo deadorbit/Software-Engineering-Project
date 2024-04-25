@@ -203,9 +203,15 @@ class _TradingPageState extends State<TradingPage> {
             TextField(
               controller: balanceController,
               decoration: InputDecoration(
-                labelText: 'Amount to Invest in \$',
-                border: OutlineInputBorder(),
-                suffixIcon: Icon(Icons.attach_money),
+                labelText: 'Amount to Invest',
+                labelStyle: TextStyle(color: Colors.black),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                ),
+                suffixIcon: Icon(
+                  Icons.attach_money,
+                  color: Colors.black,
+                ),
               ),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [

@@ -194,7 +194,7 @@ class _UserPortfolioPageState extends State<UserPortfolioPage> {
                                           FontWeight.bold, // Make text bold
                                       color: unrealisedProfit > 0
                                           ? Colors.blue
-                                          : aTProfit < 0
+                                          : unrealisedProfit < 0
                                               ? Colors.red
                                               : Colors.grey),
                                 ),
@@ -253,7 +253,7 @@ class _UserPortfolioPageState extends State<UserPortfolioPage> {
                                                         .bold, // Make text bold
                                                     color: bestPercentage > 0
                                                         ? Colors.blue
-                                                        : aTProfit < 0
+                                                        : bestPercentage < 0
                                                             ? Colors.red
                                                             : Colors.grey))
                                             : const Text("")),
@@ -307,7 +307,7 @@ class _UserPortfolioPageState extends State<UserPortfolioPage> {
                                                       .bold, // Make text bold
                                                   color: worstPercentage > 0
                                                       ? Colors.blue
-                                                      : aTProfit < 0
+                                                      : worstPercentage < 0
                                                           ? Colors.red
                                                           : Colors.grey))
                                           : const Text(""),

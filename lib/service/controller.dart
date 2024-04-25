@@ -29,11 +29,11 @@ class DataBase_Controller {
         return balance;
       } else {
         print("No user with the id");
-        return -2;
+        return 0;
       }
     } catch (error) {
       print("Failed to retrieve user balance: $error");
-      return -2;
+      return 0;
     }
   }
 
@@ -51,11 +51,11 @@ class DataBase_Controller {
         return profit;
       } else {
         print("No user with the id");
-        return -2;
+        return 0;
       }
     } catch (error) {
       print("Failed to retrieve user balance: $error");
-      return -2;
+      return 0;
     }
   }
 
