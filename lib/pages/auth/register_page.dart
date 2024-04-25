@@ -44,17 +44,18 @@ class _RegisterPageState extends State<RegisterPage> {
                           children: [
                             Text(
                               "TradeWise",
-                              style: GoogleFonts.bodoniModa(
+                              style: GoogleFonts.playfairDisplay(
                                 color: const Color.fromARGB(255, 59, 59, 61),
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: 16),
                             Text(
                               "Registration",
-                              style: GoogleFonts.bodoniModa(
-                                fontSize: 24,
+                              style: GoogleFonts.playfair(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500,
                                 color: Colors.black,
                               ),
                             ),

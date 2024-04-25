@@ -37,7 +37,7 @@ List<StockDataPoint> assignDates(List<double> closePrices) {
     dataPoints.add(StockDataPoint(businessDays, closePrices[i]));
   }
 
-  return dataPoints.reversed.toList(); // Reverse the order
+  return dataPoints; // Reverse the order
 }
 
 List<FlSpot> stockDataPointToFLSpot(List<StockDataPoint> stockDataPoints) {

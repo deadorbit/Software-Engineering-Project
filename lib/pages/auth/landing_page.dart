@@ -44,10 +44,10 @@ class _LandingPageState extends State<LandingPage> {
                           children: [
                             Text(
                               "TradeWise",
-                              style: GoogleFonts.bodoniModa(
+                              style: GoogleFonts.playfairDisplay(
                                 color: const Color.fromARGB(255, 59, 59, 61),
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: 100),
@@ -64,13 +64,17 @@ class _LandingPageState extends State<LandingPage> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(200,
-                                    50), // Use the same size for consistency
-                              ), // To Do: other button logic
-                              child: const Text(
+                                fixedSize: const Size(200, 50),
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blueAccent[50],
+                                surfaceTintColor: Colors.blueAccent[50],
+                              ),
+                              child: Text(
                                 'Login',
-                                style: TextStyle(
-                                  fontSize: 24.0, // Set desired font size
+                                style: GoogleFonts.playfair(
+                                  fontSize: 30.0, // Set desired font size
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
@@ -88,14 +92,17 @@ class _LandingPageState extends State<LandingPage> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(200,
-                                    50), // Use the same size for consistency
-                              ), // To Do: other button logic
-                              child: const Text(
+                                fixedSize: const Size(200, 50),
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blueAccent[50],
+                                surfaceTintColor: Colors.blueAccent[50],
+                              ),
+                              child: Text(
                                 'Register',
-                                style: TextStyle(
-                                  fontSize: 24.0, // Set desired font size
-                                ),
+                                style: GoogleFonts.playfair(
+                                    fontSize: 30.0, // Set desired font size
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
                               ),
                             ),
                           ],

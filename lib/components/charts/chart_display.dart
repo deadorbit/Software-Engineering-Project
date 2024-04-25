@@ -59,10 +59,10 @@ class _ChartDisplayState extends State<ChartDisplay> {
                       titleSpacing: 0,
                       title: Text(
                         'Stock Prices ($_stockTicker)',
-                        style: GoogleFonts.bodoniModa(
+                        style: GoogleFonts.playfairDisplay(
                           color: const Color.fromARGB(255, 59, 59, 61),
                           fontSize: 20,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -75,10 +75,10 @@ class _ChartDisplayState extends State<ChartDisplay> {
                     SizedBox(
                       child: Text(
                         "Closing Prices",
-                        style: GoogleFonts.bodoniModa(
+                        style: GoogleFonts.playfairDisplay(
                           color: const Color.fromARGB(255, 59, 59, 61),
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),

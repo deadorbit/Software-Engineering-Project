@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:software_engineering_project/components/auth/forgot_password.dart';
 import 'package:software_engineering_project/pages/auth/landing_page.dart';
@@ -105,7 +106,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 child: const Text(
                   'Forgot password?',
-                  style: TextStyle(color: Colors.green), // Style the text
+                  style: TextStyle(color: Colors.blueAccent), // Style the text
                 ),
               ),
             ],
@@ -116,14 +117,31 @@ class _LoginFormState extends State<LoginForm> {
                 MainAxisAlignment.spaceBetween, // Space buttons evenly
             children: [
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.blueAccent[50],
+                  surfaceTintColor: Colors.blueAccent[50],
+                ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     signUserIn();
                   }
                 },
-                child: const Text('Sign In'),
+                child: Text(
+                  'Sign In',
+                  style: GoogleFonts.playfair(
+                    fontSize: 18.0, // Set desired font size
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.blueAccent[50],
+                  surfaceTintColor: Colors.blueAccent[50],
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -134,7 +152,14 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   );
                 },
-                child: const Text("Cancel"),
+                child: Text(
+                  "Cancel",
+                  style: GoogleFonts.playfair(
+                    fontSize: 18.0, // Set desired font size
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ],
           ),
